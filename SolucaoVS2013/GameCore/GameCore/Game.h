@@ -6,6 +6,9 @@
 #include <GL\glut.h>
 
 #include "InputManager.h"
+#include "GameStateManager.h"
+#include "GameState.h"
+#include "GraphTestGameState.h"
 
 using namespace std;
 

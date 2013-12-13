@@ -8,7 +8,7 @@ class GameStateManager
 {
 private:
 	static GameStateManager* _instance;
-	std::stack<GameState> gameStateStack;
+	std::stack<GameState*> gameStateStack;
 
 	GameStateManager(){};
 	GameStateManager(GameStateManager &const){};
@@ -17,6 +17,7 @@ public:
 	static GameStateManager* Instance();
 	int PushState(GameState* gamestate);
 	void PopState();
+	GameState* GetCurrentState();
 	~GameStateManager();
 };
 

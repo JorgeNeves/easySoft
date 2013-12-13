@@ -11,3 +11,18 @@ GameStateManager* GameStateManager::Instance()
 	}
 	return _instance;
 }
+
+int GameStateManager::PushState(GameState* gamestate)
+{
+	if (GameState* test = dynamic_cast<GameState*>(gamestate))
+	{
+		gameStateStack.push(gamestate);
+		return 0;
+	}
+	return -1;
+}
+
+GameState* GameStateManager::GetCurrentState()
+{
+	return gameStateStack.top();
+}

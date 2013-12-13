@@ -24,13 +24,13 @@ InputManager* InputManager::Instance()
 void InputManager::KeyboardFunc(unsigned char key, int x, int y)
 {
 	keystates[key] = true;
-	printf("%c 1 (down)\n", key);
+	printf("[In]: %c 1 (down)\n", key);
 }
 
 void InputManager::KeyboardUpFunc(unsigned char key, int x, int y)
 {
 	keystates[key] = false;
-	printf("%c 0 ( up )\n", key);
+	printf("[In]: %c 0 ( up )\n", key);
 }
 
 void InputManager::KeyboardFuncWrapper(unsigned char key, int x, int y)
