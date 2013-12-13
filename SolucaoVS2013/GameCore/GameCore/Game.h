@@ -5,6 +5,8 @@
 #include <string>
 #include <GL\glut.h>
 
+#include "InputManager.h"
+
 using namespace std;
 
 class Game
@@ -14,6 +16,7 @@ private:
 	static Game* _instance;
 	static void Redraw();
 
+	// private object creators for singleton implementation
 	Game(){};
 	Game(Game &const){};
 	Game& operator=(Game const&){};
@@ -21,6 +24,8 @@ private:
 public:
 	static Game* Instance();
 	void Init(string title, int argc, char* argv[]);
+	void Start();
+	void Stop();
 
 	~Game();
 };

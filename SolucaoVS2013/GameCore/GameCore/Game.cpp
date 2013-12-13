@@ -32,10 +32,17 @@ void Game::Redraw()                           	//all drawing code goes here
 
 void Game::Init(string title, int argc, char* argv[])
 {
+	InputManager* input = InputManager::Instance();
+
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
 	glutCreateWindow(title.c_str());
+
+	// CALLBACK definitions
 	glutDisplayFunc(&Redraw);
+	glutKeyboardFunc(&input->KeyboardFuncWrapper);
+	glutKeyboardUpFunc(&input->KeyboardUpFuncWrapper);
+
 	glMatrixMode(GL_PROJECTION);   //changes the current matrix to the projection matrix
 	//sets up the projection matrix for a perspective transform
 	gluPerspective(45, 	//view angle
