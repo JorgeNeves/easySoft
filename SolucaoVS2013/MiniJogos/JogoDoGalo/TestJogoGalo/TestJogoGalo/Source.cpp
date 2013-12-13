@@ -15,17 +15,32 @@ GLdouble tam, ang, dif;
 GLint delay;
 int max_x = 500;
 int max_y = 500;
-int *matriz[3];
 
+typedef struct COLOR{
+	float vermelho;
+	float verde;
+	float azul;
+}color;
+
+
+
+color *matriz[3];
 
 void Init(void){
+
 	for (int i = 0; i < 3; i++){
-		matriz[i] = new int[3];
+		matriz[i] = new color[3];
+		for (int j = 0; j < 3; j++){
+			matriz[i][j] = { 1.0, 1.0, 1.0 };
+		}
+		
 	}
+	
 	
 	glClearColor(0.0, 0.0, 0.0, 0.0);   // define a cor para apagar a janela
 	tam = (2.0 / 3.0);
 }
+
 void OnMouseClick(int button, int state, int x, int y)
 {
 
@@ -38,45 +53,49 @@ void OnMouseClick(int button, int state, int x, int y)
 		if (x < xx){
 			//quadrado 1
 			if (y< xy){
-				matriz[0][0] = 1;
+				matriz[0][0] = { 0.0, 0.0, 1.0 };
+				
+				
 			}
 			//quadrado 4
 			else if (y >= xy && y <= xy * 2){
 				
+				matriz[0][1] = { 0.0, 0.0, 1.0 };
 			}
 			//quadrado 7
 			else {
 				
+				matriz[0][2] = { 0.0, 0.0, 1.0 };
 			}
 		}
 		//coluna 2
 		else if (x >= xx  && x <= xx*2 ){
 			//quadrado 2
 			if (y< xy){
-				
+				matriz[1][0] = { 0.0, 0.0, 1.0 };
 			}
 			//quadrado 5
 			else if (y >= xy && y <= xy * 2){
-				
+				matriz[1][1] = { 0.0, 0.0, 1.0 };
 			}
 			//quadrado 8
 			else {
-				
+				matriz[1][2] = { 0.0, 0.0, 1.0 };
 			}
 		}
 		//coluna 3
 		else {
 			//quadrado 3
 			if (y< xy){
-				
+				matriz[2][0] = { 0.0, 0.0, 1.0 };
 			}
 			//quadrado 6
 			else if (y >= xy && y <= xy * 2){
-				
+				matriz[2][1] = { 0.0, 0.0, 1.0 };
 			}
 			//quadrado 9
 			else {
-				
+				matriz[2][2] = { 0.0, 0.0, 1.0 };
 			}
 		}
 		glutPostRedisplay();
@@ -105,7 +124,8 @@ void Draw(void){
 	//quadrado 1
 	
 	glBegin(GL_QUADS);
-	glColor3f(1.0, 0.0, 1.0);
+	
+	glColor3f(matriz[0][0].vermelho, matriz[0][0].verde, matriz[0][0].azul);
 	glVertex2f(-(tam / 2.0), (tam)+(tam / 2.0));
 	glVertex2f(-((tam)+(tam) / 2.0), (tam)+(tam / 2.0));
 	glVertex2f(-((tam)+(tam) / 2.0), (tam / 2.0));
@@ -113,7 +133,8 @@ void Draw(void){
 	glEnd();
 	//quadrado 2
 	glBegin(GL_QUADS);
-	glColor3f(1.0, 1.0, 0.0);
+	
+	glColor3f(matriz[1][0].vermelho, matriz[1][0].verde, matriz[1][0].azul);
 	glVertex2f((tam) / 2.0, (tam / 2.0) + tam);
 	glVertex2f(-(tam) / 2.0, (tam / 2.0) + tam);
 	glVertex2f(-(tam) / 2.0, (tam) / 2.0);
@@ -121,7 +142,7 @@ void Draw(void){
 	glEnd();
 	//quadrado 3
 	glBegin(GL_QUADS);
-	glColor3f(1.0, 0.0, 1.0);
+	glColor3f(matriz[2][0].vermelho, matriz[2][0].verde, matriz[2][0].azul);
 	glVertex2f(((tam)+(tam) / 2.0), (tam)+(tam / 2.0));
 	glVertex2f((tam) / 2.0, (tam)+(tam / 2.0));
 	glVertex2f((tam) / 2.0, (tam / 2.0));
@@ -129,7 +150,8 @@ void Draw(void){
 	glEnd();
 	//quadrado 4
 	glBegin(GL_QUADS);
-	glColor3f(1.0, 1.0, 0.0);
+	
+	glColor3f(matriz[0][1].vermelho, matriz[0][1].verde, matriz[0][1].azul);
 	glVertex2f(-(tam / 2.0), (tam) / 2.0);
 	glVertex2f(-((tam)+(tam) / 2.0), (tam) / 2.0);
 	glVertex2f(-((tam)+(tam) / 2.0), -(tam / 2.0));
@@ -137,7 +159,8 @@ void Draw(void){
 	glEnd();
 	//quadrado 5
 	glBegin(GL_QUADS);
-	glColor3f(1.0, 0.0, 0.0);
+	
+	glColor3f(matriz[1][1].vermelho, matriz[1][1].verde, matriz[1][1].azul);
 	glVertex2f((tam) / 2.0, (tam) / 2.0);
 	glVertex2f(-(tam) / 2.0, (tam) / 2.0);
 	glVertex2f(-(tam) / 2.0, -(tam) / 2.0);
@@ -145,7 +168,8 @@ void Draw(void){
 	glEnd();
 	//quadrado 6
 	glBegin(GL_QUADS);
-	glColor3f(1.0, 1.0, 0.0);
+	
+	glColor3f(matriz[2][1].vermelho, matriz[2][1].verde, matriz[2][1].azul);
 	glVertex2f((tam)+(tam / 2.0), (tam) / 2.0);
 	glVertex2f((tam) / 2.0, (tam) / 2.0);
 	glVertex2f((tam) / 2.0, -(tam / 2.0));
@@ -153,7 +177,8 @@ void Draw(void){
 	glEnd();
 	//quadrado 7
 	glBegin(GL_QUADS);
-	glColor3f(1.0, 0.0, 1.0);
+	
+	glColor3f(matriz[0][2].vermelho, matriz[0][2].verde, matriz[0][2].azul);
 	glVertex2f(-(tam) / 2.0, -(tam / 2.0));
 	glVertex2f(-(tam + (tam / 2.0)), -(tam / 2.0));
 	glVertex2f(-(tam + (tam / 2.0)), -(tam + tam / 2.0));
@@ -161,7 +186,8 @@ void Draw(void){
 	glEnd();
 	//quadrado 8
 	glBegin(GL_QUADS);
-	glColor3f(1.0, 1.0, 0.0);
+	
+	glColor3f(matriz[1][2].vermelho, matriz[1][2].verde, matriz[1][2].azul);
 	glVertex2f((tam) / 2.0, -(tam) / 2.0);
 	glVertex2f(-(tam) / 2.0, -(tam) / 2.0);
 	glVertex2f(-(tam) / 2.0, - (tam + tam/2.0));
@@ -169,13 +195,42 @@ void Draw(void){
 	glEnd();
 	//quadrado 9
 	glBegin(GL_QUADS);
-	glColor3f(1.0, 0.0, 1.0);
+	
+	glColor3f(matriz[2][2].vermelho, matriz[2][2].verde, matriz[2][2].azul);
 	glVertex2f(((tam)+(tam) / 2.0), -(tam / 2.0));
 	glVertex2f((tam) / 2.0, -(tam / 2.0));
 	glVertex2f((tam) / 2.0, -(tam+tam / 2.0));
 	glVertex2f(((tam)+(tam) / 2.0), -(tam+tam / 2.0));
 	glEnd();
+
+	//Linhas
+	glBegin(GL_LINES);
+	glColor3f(0.0, 0.0, 0.0);
 	
+	glVertex2d(tam / 2, (tam + tam / 2.0));
+	glVertex2d(tam / 2, -(tam + tam / 2.0));
+	glEnd();
+
+	glBegin(GL_LINES);
+	glColor3f(0.0, 0.0, 0.0);
+	
+	glVertex2d(-tam / 2, (tam + tam / 2.0));
+	glVertex2d(-tam / 2, -(tam + tam / 2.0));
+	glEnd();
+
+	glBegin(GL_LINES);
+	glColor3f(0.0, 0.0, 0.0);
+	
+	glVertex2d(-(tam + tam / 2.0), tam / 2);
+	glVertex2d((tam + tam / 2.0), tam / 2);
+	glEnd();
+
+	glBegin(GL_LINES);
+	glColor3f(0.0, 0.0, 0.0);
+	
+	glVertex2d(-(tam + tam / 2.0), -tam / 2);
+	glVertex2d((tam + tam / 2.0), -tam / 2);
+	glEnd();
 	if (doubleBuffer) {
 		glutSwapBuffers();
 	}
