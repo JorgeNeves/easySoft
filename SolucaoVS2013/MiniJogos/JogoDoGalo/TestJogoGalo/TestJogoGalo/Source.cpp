@@ -4,6 +4,9 @@
 #include<math.h>
 #include<GL/glut.h>
 #include<Windows.h>
+#include<SWI-cpp.h>
+#include <iostream>
+using namespace std;
 #ifndef M_PI
 #define M_PI 3.1415926
 #endif
@@ -15,6 +18,7 @@ GLdouble tam, ang, dif;
 GLint delay;
 int max_x = 500;
 int max_y = 500;
+string tabuleiro[];
 
 typedef struct COLOR{
 	float vermelho;
@@ -267,42 +271,65 @@ void JogadaPC(){
 	if (checkWin()){
 		return;
 	}
-
-	if (matriz[0][0].verde == 1){
+	char* argv[] = { "libswipl.dll", "-s", "C:\\Users\\Pedro\\Documents\\easySoft\\ComponenteIA\\galo.pl", NULL };
+	PlEngine p(3,argv);
+	PlTermv av(2);
+	string tabuleiro="[";
+	for (int i = 0; i < 3; i++){
+		for (int j = 0; j < 3; j++){
+			if (matriz[j][i].verde != 1){
+				if (matriz[j][i].azul == 1){
+					tabuleiro += "x,";
+				}
+				else {
+					tabuleiro += "o,";
+				}
+			}
+			else {
+				tabuleiro += "A,";
+			}
+		}
+	}
+	
+	tabuleiro = tabuleiro.substr(0, tabuleiro.size() - 1);
+	tabuleiro += "]";
+	
+	av[0] = PlCompound(tabuleiro.c_str());
+	PlQuery query("proxima_jogada", av);
+	int posicao;
+	if (query.next_solution()){
+		
+		posicao = atoi((char*)av[1]);
+	}
+	
+	if (posicao == 1){
 		matriz[0][0] = { 1.0, 0.0, 0.0 };
 	}
-	else if (matriz[1][0].verde == 1)
-	{
+	else if (posicao == 2){
 		matriz[1][0] = { 1.0, 0.0, 0.0 };
 	}
-	else if (matriz[2][0].verde == 1)
-	{
+	else if (posicao == 3){
 		matriz[2][0] = { 1.0, 0.0, 0.0 };
 	}
-	else if (matriz[0][1].verde == 1)
-	{
+	else if (posicao == 4){
 		matriz[0][1] = { 1.0, 0.0, 0.0 };
 	}
-	else if (matriz[1][1].verde == 1)
-	{
+	else if (posicao == 5){
 		matriz[1][1] = { 1.0, 0.0, 0.0 };
 	}
-	else if (matriz[2][1].verde == 1)
-	{
+	else if (posicao == 6){
 		matriz[2][1] = { 1.0, 0.0, 0.0 };
 	}
-	else if (matriz[0][2].verde == 1)
-	{
+	else if (posicao == 7){
 		matriz[0][2] = { 1.0, 0.0, 0.0 };
 	}
-	else if (matriz[1][2].verde == 1)
-	{
+	else if (posicao == 8){
 		matriz[1][2] = { 1.0, 0.0, 0.0 };
 	}
-	else if (matriz[2][2].verde == 1)
-	{
+	else if (posicao == 9){
 		matriz[2][2] = { 1.0, 0.0, 0.0 };
 	}
+	
 	checkWin();
 	
 	
