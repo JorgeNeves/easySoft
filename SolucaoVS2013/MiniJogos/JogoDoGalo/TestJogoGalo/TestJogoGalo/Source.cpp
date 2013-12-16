@@ -3,7 +3,7 @@
 #include<string.h>
 #include<math.h>
 #include<GL/glut.h>
-
+#include<Windows.h>
 #ifndef M_PI
 #define M_PI 3.1415926
 #endif
@@ -40,91 +40,13 @@ void Init(void){
 	glClearColor(0.0, 0.0, 0.0, 0.0);   // define a cor para apagar a janela
 	tam = (2.0 / 3.0);
 }
-
-void OnMouseClick(int button, int state, int x, int y)
-{
-
-	
-	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
-	{
-		int xx = max_x / 3;
-		int xy = max_y / 3;
-		//coluna 1		
-		if (x < xx){
-			//quadrado 1
-			if (y< xy){
-				matriz[0][0] = { 0.0, 0.0, 1.0 };
-				
-				
-			}
-			//quadrado 4
-			else if (y >= xy && y <= xy * 2){
-				
-				matriz[0][1] = { 0.0, 0.0, 1.0 };
-			}
-			//quadrado 7
-			else {
-				
-				matriz[0][2] = { 0.0, 0.0, 1.0 };
-			}
-		}
-		//coluna 2
-		else if (x >= xx  && x <= xx*2 ){
-			//quadrado 2
-			if (y< xy){
-				matriz[1][0] = { 0.0, 0.0, 1.0 };
-			}
-			//quadrado 5
-			else if (y >= xy && y <= xy * 2){
-				matriz[1][1] = { 0.0, 0.0, 1.0 };
-			}
-			//quadrado 8
-			else {
-				matriz[1][2] = { 0.0, 0.0, 1.0 };
-			}
-		}
-		//coluna 3
-		else {
-			//quadrado 3
-			if (y< xy){
-				matriz[2][0] = { 0.0, 0.0, 1.0 };
-			}
-			//quadrado 6
-			else if (y >= xy && y <= xy * 2){
-				matriz[2][1] = { 0.0, 0.0, 1.0 };
-			}
-			//quadrado 9
-			else {
-				matriz[2][2] = { 0.0, 0.0, 1.0 };
-			}
-		}
-		glutPostRedisplay();
-		
-	}
-}
-void Reshape(int width, int height){
-	width = max_x;
-	height = max_y;
-	glViewport(0, 0, width, height);  // define o viewport como sendo a janela toda
-	glutPositionWindow(glutGet(GLUT_SCREEN_WIDTH)/3, glutGet(GLUT_SCREEN_HEIGHT)/4);
-	glMatrixMode(GL_PROJECTION);   // faz operações sobre a matriz GL_PROJECTION
-	glLoadIdentity();
-	gluOrtho2D(-1,1,-1,1);       // define as coordenada relativas do viewport
-	// esq, dir, baixo, cima
-	glMatrixMode(GL_MODELVIEW);    // faz operações sobre a matriz GL_MODELVIEW
-	glLoadIdentity();
-	glutMouseFunc(OnMouseClick);
-	glutReshapeWindow(500, 500);
-
-}
-
 void Draw(void){
 
 	glClear(GL_COLOR_BUFFER_BIT);
 	//quadrado 1
-	
+
 	glBegin(GL_QUADS);
-	
+
 	glColor3f(matriz[0][0].vermelho, matriz[0][0].verde, matriz[0][0].azul);
 	glVertex2f(-(tam / 2.0), (tam)+(tam / 2.0));
 	glVertex2f(-((tam)+(tam) / 2.0), (tam)+(tam / 2.0));
@@ -133,7 +55,7 @@ void Draw(void){
 	glEnd();
 	//quadrado 2
 	glBegin(GL_QUADS);
-	
+
 	glColor3f(matriz[1][0].vermelho, matriz[1][0].verde, matriz[1][0].azul);
 	glVertex2f((tam) / 2.0, (tam / 2.0) + tam);
 	glVertex2f(-(tam) / 2.0, (tam / 2.0) + tam);
@@ -150,7 +72,7 @@ void Draw(void){
 	glEnd();
 	//quadrado 4
 	glBegin(GL_QUADS);
-	
+
 	glColor3f(matriz[0][1].vermelho, matriz[0][1].verde, matriz[0][1].azul);
 	glVertex2f(-(tam / 2.0), (tam) / 2.0);
 	glVertex2f(-((tam)+(tam) / 2.0), (tam) / 2.0);
@@ -159,7 +81,7 @@ void Draw(void){
 	glEnd();
 	//quadrado 5
 	glBegin(GL_QUADS);
-	
+
 	glColor3f(matriz[1][1].vermelho, matriz[1][1].verde, matriz[1][1].azul);
 	glVertex2f((tam) / 2.0, (tam) / 2.0);
 	glVertex2f(-(tam) / 2.0, (tam) / 2.0);
@@ -168,7 +90,7 @@ void Draw(void){
 	glEnd();
 	//quadrado 6
 	glBegin(GL_QUADS);
-	
+
 	glColor3f(matriz[2][1].vermelho, matriz[2][1].verde, matriz[2][1].azul);
 	glVertex2f((tam)+(tam / 2.0), (tam) / 2.0);
 	glVertex2f((tam) / 2.0, (tam) / 2.0);
@@ -177,7 +99,7 @@ void Draw(void){
 	glEnd();
 	//quadrado 7
 	glBegin(GL_QUADS);
-	
+
 	glColor3f(matriz[0][2].vermelho, matriz[0][2].verde, matriz[0][2].azul);
 	glVertex2f(-(tam) / 2.0, -(tam / 2.0));
 	glVertex2f(-(tam + (tam / 2.0)), -(tam / 2.0));
@@ -186,48 +108,48 @@ void Draw(void){
 	glEnd();
 	//quadrado 8
 	glBegin(GL_QUADS);
-	
+
 	glColor3f(matriz[1][2].vermelho, matriz[1][2].verde, matriz[1][2].azul);
 	glVertex2f((tam) / 2.0, -(tam) / 2.0);
 	glVertex2f(-(tam) / 2.0, -(tam) / 2.0);
-	glVertex2f(-(tam) / 2.0, - (tam + tam/2.0));
-	glVertex2f((tam) / 2.0, -(tam+tam / 2.0));
+	glVertex2f(-(tam) / 2.0, -(tam + tam / 2.0));
+	glVertex2f((tam) / 2.0, -(tam + tam / 2.0));
 	glEnd();
 	//quadrado 9
 	glBegin(GL_QUADS);
-	
+
 	glColor3f(matriz[2][2].vermelho, matriz[2][2].verde, matriz[2][2].azul);
 	glVertex2f(((tam)+(tam) / 2.0), -(tam / 2.0));
 	glVertex2f((tam) / 2.0, -(tam / 2.0));
-	glVertex2f((tam) / 2.0, -(tam+tam / 2.0));
-	glVertex2f(((tam)+(tam) / 2.0), -(tam+tam / 2.0));
+	glVertex2f((tam) / 2.0, -(tam + tam / 2.0));
+	glVertex2f(((tam)+(tam) / 2.0), -(tam + tam / 2.0));
 	glEnd();
 
 	//Linhas
 	glBegin(GL_LINES);
 	glColor3f(0.0, 0.0, 0.0);
-	
+
 	glVertex2d(tam / 2, (tam + tam / 2.0));
 	glVertex2d(tam / 2, -(tam + tam / 2.0));
 	glEnd();
 
 	glBegin(GL_LINES);
 	glColor3f(0.0, 0.0, 0.0);
-	
+
 	glVertex2d(-tam / 2, (tam + tam / 2.0));
 	glVertex2d(-tam / 2, -(tam + tam / 2.0));
 	glEnd();
 
 	glBegin(GL_LINES);
 	glColor3f(0.0, 0.0, 0.0);
-	
+
 	glVertex2d(-(tam + tam / 2.0), tam / 2);
 	glVertex2d((tam + tam / 2.0), tam / 2);
 	glEnd();
 
 	glBegin(GL_LINES);
 	glColor3f(0.0, 0.0, 0.0);
-	
+
 	glVertex2d(-(tam + tam / 2.0), -tam / 2);
 	glVertex2d((tam + tam / 2.0), -tam / 2);
 	glEnd();
@@ -239,6 +161,245 @@ void Draw(void){
 	}
 	printf("Tam:%f Ang:%f\n", tam, ang);
 }
+bool checkWin(){
+	int vitoriaazul=0;
+	int vitoriavermelha=0;
+	for (int i = 0; i < 3; i++){
+		for (int j = 0; j < 3; j++){
+			if (matriz[i][j].verde != 1){
+				if (matriz[i][j].azul == 1){
+					vitoriaazul++;
+				}
+				else {
+					vitoriavermelha++;
+				}
+			}
+		}
+		if (vitoriaazul < 3) vitoriaazul = 0;
+		if (vitoriavermelha < 3) vitoriavermelha = 0;
+	}
+	for (int i = 0; i < 3; i++){
+		for (int j = 0; j < 3; j++){
+			if (matriz[j][i].verde != 1){
+				if (matriz[j][i].azul == 1){
+					vitoriaazul++;
+				}
+				else if (matriz[j][i].vermelho == 1){
+					vitoriavermelha++;
+				}
+			}
+		}
+		if (vitoriaazul < 3) vitoriaazul = 0;
+		if (vitoriavermelha < 3) vitoriavermelha = 0;
+	}
+	for (int i = 0; i < 3; i++){
+		if (matriz[i][i].verde != 1){
+			if (matriz[i][i].azul == 1){
+				vitoriaazul++;
+			}
+			else {
+				vitoriavermelha++;
+			}
+		}
+		if (i == 2){
+			if (vitoriaazul < 3) vitoriaazul = 0;
+			if (vitoriavermelha < 3) vitoriavermelha = 0;
+		}
+	}
+	
+	
+		if (matriz[2][0].verde != 1){
+			if (matriz[2][0].azul == 1){
+				vitoriaazul++;
+			}
+			else {
+				vitoriavermelha++;
+			}
+		}
+		if (matriz[1][1].verde != 1){
+			if (matriz[1][1].azul == 1){
+				vitoriaazul++;
+			}
+			else {
+				vitoriavermelha++;
+			}
+		}
+		if (matriz[0][2].verde != 1){
+			if (matriz[0][2].azul == 1){
+				vitoriaazul++;
+			}
+			else {
+				vitoriavermelha++;
+			}
+		}
+
+	
+	bool full=true;
+	for (int i = 0; i < 3; i++){
+		for (int j = 0; j < 3; j++){
+			if (matriz[i][j].verde == 1){
+				full = false;
+			}
+		}
+	}
+
+	if (vitoriaazul >= 3 && vitoriavermelha < 3){
+		Draw();
+		MessageBox(NULL, "YOU WON!", "Info", MB_ICONINFORMATION);
+		return true;
+	}
+	if (vitoriavermelha >= 3){
+		Draw();
+		MessageBox(NULL, "YOU LOSE!", "Info",
+			MB_ICONINFORMATION);
+		return true;
+	}
+	else if(full){
+		Draw();
+		MessageBox(NULL, "DRAW!", "Info",
+			MB_ICONINFORMATION);
+	}
+	return false;
+
+}
+void JogadaPC(){
+
+	if (checkWin()){
+		return;
+	}
+
+	if (matriz[0][0].verde == 1){
+		matriz[0][0] = { 1.0, 0.0, 0.0 };
+	}
+	else if (matriz[1][0].verde == 1)
+	{
+		matriz[1][0] = { 1.0, 0.0, 0.0 };
+	}
+	else if (matriz[2][0].verde == 1)
+	{
+		matriz[2][0] = { 1.0, 0.0, 0.0 };
+	}
+	else if (matriz[0][1].verde == 1)
+	{
+		matriz[0][1] = { 1.0, 0.0, 0.0 };
+	}
+	else if (matriz[1][1].verde == 1)
+	{
+		matriz[1][1] = { 1.0, 0.0, 0.0 };
+	}
+	else if (matriz[2][1].verde == 1)
+	{
+		matriz[2][1] = { 1.0, 0.0, 0.0 };
+	}
+	else if (matriz[0][2].verde == 1)
+	{
+		matriz[0][2] = { 1.0, 0.0, 0.0 };
+	}
+	else if (matriz[1][2].verde == 1)
+	{
+		matriz[1][2] = { 1.0, 0.0, 0.0 };
+	}
+	else if (matriz[2][2].verde == 1)
+	{
+		matriz[2][2] = { 1.0, 0.0, 0.0 };
+	}
+	checkWin();
+	
+	
+}
+void OnMouseClick(int button, int state, int x, int y)
+{
+
+	int i = 0;
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+	{
+		int xx = max_x / 3;
+		int xy = max_y / 3;
+		//coluna 1		
+		if (x < xx){
+			//quadrado 1
+			if (y < xy && matriz[0][0].verde==1.0){
+				matriz[0][0] = { 0.0, 0.0, 1.0 };
+				i = 1;
+				
+			}
+			//quadrado 4
+			else if (y >= xy && y <= xy * 2 && matriz[0][1].verde == 1.0){
+				
+				matriz[0][1] = { 0.0, 0.0, 1.0 };
+				i = 1;
+			}
+			//quadrado 7
+			else if (y >= xy*2 && matriz[0][2].verde == 1.0){
+				
+				matriz[0][2] = { 0.0, 0.0, 1.0 };
+				i = 1;
+			}
+		}
+		//coluna 2
+		else if (x >= xx  && x <= xx*2 ){
+			//quadrado 2
+			if (y< xy && matriz[1][0].verde == 1.0){
+				matriz[1][0] = { 0.0, 0.0, 1.0 };
+				i = 1;
+			}
+			//quadrado 5
+			else if (y >= xy && y <= xy * 2 && matriz[1][1].verde == 1.0){
+				matriz[1][1] = { 0.0, 0.0, 1.0 };
+				i = 1;
+			}
+			//quadrado 8
+			else if (y >= xy * 2 && matriz[1][2].verde == 1.0) {
+				matriz[1][2] = { 0.0, 0.0, 1.0 };
+				i = 1;
+			}
+		}
+		//coluna 3
+		else if (x > xx*2){
+			//quadrado 3
+			if (y< xy && matriz[2][0].verde == 1.0){
+				matriz[2][0] = { 0.0, 0.0, 1.0 };
+				i = 1;
+			}
+			//quadrado 6
+			else if (y >= xy && y <= xy * 2 && matriz[2][1].verde == 1.0){
+				matriz[2][1] = { 0.0, 0.0, 1.0 };
+				i = 1;
+			}
+			//quadrado 9
+			else if (y >= xy * 2 && matriz[2][2].verde == 1.0){
+				matriz[2][2] = { 0.0, 0.0, 1.0 };
+				i = 1;
+			}
+		}
+		if (i == 1){
+			glutPostRedisplay();
+			
+				
+			
+			JogadaPC();
+		}
+	}
+}
+
+
+void Reshape(int width, int height){
+	width = max_x;
+	height = max_y;
+	glViewport(0, 0, width, height);  // define o viewport como sendo a janela toda
+	glutPositionWindow(glutGet(GLUT_SCREEN_WIDTH)/3, glutGet(GLUT_SCREEN_HEIGHT)/4);
+	glMatrixMode(GL_PROJECTION);   // faz operações sobre a matriz GL_PROJECTION
+	glLoadIdentity();
+	gluOrtho2D(-1,1,-1,1);       // define as coordenada relativas do viewport
+	// esq, dir, baixo, cima
+	glMatrixMode(GL_MODELVIEW);    // faz operações sobre a matriz GL_MODELVIEW
+	glLoadIdentity();
+	glutMouseFunc(OnMouseClick);
+	glutReshapeWindow(500, 500);
+
+}
+
+
 
 
 void Timer(int valor) {
