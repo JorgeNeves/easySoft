@@ -1,8 +1,9 @@
-#ifndef _GAMESTATE
-#define _GAMESTATE
+#pragma once
+#include "GameStateController.h"
 
 class GameState
 {
+
 public:
 	GameState();
 	virtual ~GameState();
@@ -12,5 +13,3 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 };
-
-#endif

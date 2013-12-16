@@ -30,12 +30,12 @@ void GraphTestGameState::Draw()
 
 void GraphTestGameState::Update()
 {
-
+	printf("LLA");
 }
 
 void GraphTestGameState::Load()
 {
-
+	
 }
 
 void GraphTestGameState::Unload()

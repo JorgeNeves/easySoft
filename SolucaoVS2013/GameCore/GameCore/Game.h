@@ -1,10 +1,11 @@
-#ifndef _GAME
-#define _GAME
+#pragma once
 
 #include <stdlib.h>
 #include <string>
 #include <GL\glut.h>
 
+#include "Exception.h"
+#include "LOCALE_EN.h"
 #include "InputManager.h"
 #include "GameStateManager.h"
 #include "GameState.h"
@@ -19,9 +20,15 @@ private:
 	static Game* _instance;
 	static void Redraw();
 
+	// Components
+
+	InputManager* input;
+	GameStateManager* gsmanager;
+	//Renderer renderer;
+
 	// private object creators for singleton implementation
-	Game(){};
-	Game(Game &const){};
+	Game();
+	Game(Game &const);
 	Game& operator=(Game const&){};
 
 public:
@@ -32,5 +39,3 @@ public:
 
 	~Game();
 };
-
-#endif
