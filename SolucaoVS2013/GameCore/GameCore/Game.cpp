@@ -35,6 +35,7 @@ void Game::Init(string title, int argc, char* argv[])
 	glutDisplayFunc(&Redraw);
 	glutKeyboardFunc(&input->KeyboardFuncWrapper);
 	glutKeyboardUpFunc(&input->KeyboardUpFuncWrapper);
+	//glutTimerFunc(10, &(GameStateManager::Instance()->GetCurrentState()->Update),30);
 
 	glMatrixMode(GL_PROJECTION);   //changes the current matrix to the projection matrix
 	//sets up the projection matrix for a perspective transform

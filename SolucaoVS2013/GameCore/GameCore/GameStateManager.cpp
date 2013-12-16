@@ -11,6 +11,7 @@ NotGameStateException::~NotGameStateException()
 }
 
 GameStateManager* GameStateManager::_instance = nullptr;
+InputManager* GameStateManager::currentIN = nullptr;
 
 
 GameStateManager* GameStateManager::Instance()
@@ -28,7 +29,7 @@ void GameStateManager::PushState(GameState* gamestate)
 	{
 		gameStateStack.push(gamestate);
 		gamestate->Load();
-		//return;
+		return;
 	}
 	throw new NotGameStateException("GameStateManager::PushState");
 }

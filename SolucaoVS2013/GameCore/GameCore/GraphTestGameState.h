@@ -1,6 +1,7 @@
 #pragma once
 #include "GameState.h"
 #include <GL\glut.h>
+#include <stdio.h>
 class GraphTestGameState :
 	public GameState
 {
