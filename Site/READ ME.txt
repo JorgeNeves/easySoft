@@ -1,0 +1,11 @@
+1º commit
+	feito:
+	- connection string para ligação a base de dados criada e denominada de "easySoftEntities"
+	- base de dados instanciada como "easySoftContext"
+	- classes modelo criadas
+	- base do site criada
+	para fazer no proximo commit:
+	- disponibilizar registo de utilizadores
+	- editar paginas "Contact" e "About"
+	- criar as tabelas na base de dados
+	- adicionar valores as tabelas "EstadoDeLigaçao" e "EstadoDeHumor"

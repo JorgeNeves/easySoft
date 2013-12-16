@@ -2,6 +2,13 @@
 
 Game* Game::_instance = nullptr;
 
+Game::Game()
+{
+	input = nullptr;
+	gsmanager = nullptr;
+	//render = nullptr;
+}
+
 Game* Game::Instance()
 {
 	if (!_instance)
