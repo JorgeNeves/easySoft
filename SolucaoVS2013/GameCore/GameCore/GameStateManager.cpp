@@ -11,7 +11,12 @@ NotGameStateException::~NotGameStateException()
 }
 
 GameStateManager* GameStateManager::_instance = nullptr;
-InputManager* GameStateManager::currentIN = nullptr;
+
+void GameStateManager::CurrentStateTimer(int value)
+{
+	GetCurrentState()->Update();
+}
+
 
 
 GameStateManager* GameStateManager::Instance()
@@ -23,12 +28,19 @@ GameStateManager* GameStateManager::Instance()
 	return _instance;
 }
 
+void GameStateManager::CurrentStateTimerWrapper(int value)
+{
+	_instance->CurrentStateTimer(value);
+	glutTimerFunc(30, CurrentStateTimerWrapper, 10);
+}
+
 void GameStateManager::PushState(GameState* gamestate)
 {
 	if (GameState* test = dynamic_cast<GameState*>(gamestate))
 	{
 		gameStateStack.push(gamestate);
 		gamestate->Load();
+		printf("\tSize:%d\n", gameStateStack.size());
 		return;
 	}
 	throw new NotGameStateException("GameStateManager::PushState");
@@ -37,15 +49,12 @@ void GameStateManager::PushState(GameState* gamestate)
 void GameStateManager::PopState()
 {
 	GameState* gs = nullptr;
-	if (gameStateStack.size() > 0)
+	if (gameStateStack.size() > 1)
 	{
 		gs = gameStateStack.top();
 		gs->Unload();
 		gameStateStack.pop();
-	}
-	else
-	{
-		throw new Exception();
+		printf("\tSize:%d\n", gameStateStack.size());
 	}
 	return;
 }

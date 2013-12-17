@@ -86,7 +86,6 @@
   <ItemGroup>
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="GraphTestGameState.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -95,7 +94,6 @@
   <ItemGroup>
     <ClInclude Include="Exception.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="GraphTestGameState.h" />
     <ClInclude Include="InputManager.h" />
