@@ -4,6 +4,9 @@
 #include<math.h>
 #include<GL/glut.h>
 #include<Windows.h>
+#include<SWI-cpp.h>
+#include<iostream>
+using namespace std;
 #ifndef M_PI
 #define M_PI 3.1415926
 #endif
@@ -16,18 +19,17 @@ GLint delay;
 int max_x = 500;
 int max_y = 500;
 
+//estrutura para guardar as cores de cada quadrado do tabuleiro
 typedef struct COLOR{
 	float vermelho;
 	float verde;
 	float azul;
 }color;
 
-
-
 color *matriz[3];
 
 void Init(void){
-
+	//Inicia matriz tabuleiro (cor branca)
 	for (int i = 0; i < 3; i++){
 		matriz[i] = new color[3];
 		for (int j = 0; j < 3; j++){
@@ -35,10 +37,10 @@ void Init(void){
 		}
 		
 	}
-	
-	
+
 	glClearColor(0.0, 0.0, 0.0, 0.0);   // define a cor para apagar a janela
 	tam = (2.0 / 3.0);
+	glutPostRedisplay();
 }
 void Draw(void){
 
@@ -159,11 +161,15 @@ void Draw(void){
 	else {
 		glFlush();
 	}
-	printf("Tam:%f Ang:%f\n", tam, ang);
+	
 }
+/*
+	Verifica se alguem ganhou
+*/
 bool checkWin(){
 	int vitoriaazul=0;
 	int vitoriavermelha=0;
+	//verifica na vertical
 	for (int i = 0; i < 3; i++){
 		for (int j = 0; j < 3; j++){
 			if (matriz[i][j].verde != 1){
@@ -178,6 +184,7 @@ bool checkWin(){
 		if (vitoriaazul < 3) vitoriaazul = 0;
 		if (vitoriavermelha < 3) vitoriavermelha = 0;
 	}
+	//verifica na horizontal
 	for (int i = 0; i < 3; i++){
 		for (int j = 0; j < 3; j++){
 			if (matriz[j][i].verde != 1){
@@ -192,6 +199,7 @@ bool checkWin(){
 		if (vitoriaazul < 3) vitoriaazul = 0;
 		if (vitoriavermelha < 3) vitoriavermelha = 0;
 	}
+	//verifica na diagonal
 	for (int i = 0; i < 3; i++){
 		if (matriz[i][i].verde != 1){
 			if (matriz[i][i].azul == 1){
@@ -233,7 +241,7 @@ bool checkWin(){
 			}
 		}
 
-	
+	//verifica se o tabuleiro está cheio
 	bool full=true;
 	for (int i = 0; i < 3; i++){
 		for (int j = 0; j < 3; j++){
@@ -245,12 +253,13 @@ bool checkWin(){
 
 	if (vitoriaazul >= 3 && vitoriavermelha < 3){
 		Draw();
-		MessageBox(NULL, "YOU WON!", "Info", MB_ICONINFORMATION);
-		return true;
+		MessageBox(NULL, "YOU WON! Level UP!", "Info", MB_ICONINFORMATION);
+		exit(0);
+		
 	}
 	if (vitoriavermelha >= 3){
 		Draw();
-		MessageBox(NULL, "YOU LOSE!", "Info",
+		MessageBox(NULL, "YOU LOSE! Try Again!", "Info",
 			MB_ICONINFORMATION);
 		return true;
 	}
@@ -258,51 +267,77 @@ bool checkWin(){
 		Draw();
 		MessageBox(NULL, "DRAW!", "Info",
 			MB_ICONINFORMATION);
+		return true;
 	}
 	return false;
 
 }
+//Jogada aleatoria do computador (gerada pelo prolog)
 void JogadaPC(){
 
 	if (checkWin()){
+		Init();
 		return;
 	}
-
-	if (matriz[0][0].verde == 1){
+	char* argv[] = { "libswipl.dll", "-s", "C:\\Users\\Pedro\\Documents\\easySoft\\ComponenteIA\\galo.pl", NULL };
+	PlEngine p(3,argv);
+	PlTermv av(2);
+	string tabuleiro="[";
+	for (int i = 0; i < 3; i++){
+		for (int j = 0; j < 3; j++){
+			if (matriz[j][i].verde != 1){
+				if (matriz[j][i].azul == 1){
+					tabuleiro += "x,";
+				}
+				else {
+					tabuleiro += "o,";
+				}
+			}
+			else {
+				tabuleiro += "A,";
+			}
+		}
+	}
+	
+	tabuleiro = tabuleiro.substr(0, tabuleiro.size() - 1);
+	tabuleiro += "]";
+	
+	av[0] = PlCompound(tabuleiro.c_str());
+	PlQuery query("proxima_jogada", av);
+	int posicao;
+	if (query.next_solution()){
+		
+		posicao = atoi((char*)av[1]);
+	}
+	
+	if (posicao == 1){
 		matriz[0][0] = { 1.0, 0.0, 0.0 };
 	}
-	else if (matriz[1][0].verde == 1)
-	{
+	else if (posicao == 2){
 		matriz[1][0] = { 1.0, 0.0, 0.0 };
 	}
-	else if (matriz[2][0].verde == 1)
-	{
+	else if (posicao == 3){
 		matriz[2][0] = { 1.0, 0.0, 0.0 };
 	}
-	else if (matriz[0][1].verde == 1)
-	{
+	else if (posicao == 4){
 		matriz[0][1] = { 1.0, 0.0, 0.0 };
 	}
-	else if (matriz[1][1].verde == 1)
-	{
+	else if (posicao == 5){
 		matriz[1][1] = { 1.0, 0.0, 0.0 };
 	}
-	else if (matriz[2][1].verde == 1)
-	{
+	else if (posicao == 6){
 		matriz[2][1] = { 1.0, 0.0, 0.0 };
 	}
-	else if (matriz[0][2].verde == 1)
-	{
+	else if (posicao == 7){
 		matriz[0][2] = { 1.0, 0.0, 0.0 };
 	}
-	else if (matriz[1][2].verde == 1)
-	{
+	else if (posicao == 8){
 		matriz[1][2] = { 1.0, 0.0, 0.0 };
 	}
-	else if (matriz[2][2].verde == 1)
-	{
+	else if (posicao == 9){
 		matriz[2][2] = { 1.0, 0.0, 0.0 };
 	}
+	
 	checkWin();
 	
 	
@@ -311,6 +346,7 @@ void OnMouseClick(int button, int state, int x, int y)
 {
 
 	int i = 0;
+	//quando é feito um click sobre um quadrado
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
 		int xx = max_x / 3;
@@ -374,9 +410,6 @@ void OnMouseClick(int button, int state, int x, int y)
 		}
 		if (i == 1){
 			glutPostRedisplay();
-			
-				
-			
 			JogadaPC();
 		}
 	}
@@ -417,25 +450,6 @@ void Timer(int valor) {
 void Key(unsigned char key, int x, int y){
 
 	switch (key) {
-	case '<':    // diminui
-		if (tam >= 0.2) {
-			tam -= 0.1;
-			glutPostRedisplay();   // faz o redisplay da janela
-		}
-		break;
-	case '>':    // aumenta
-		if (tam <= 0.8) {
-			tam += 0.1;
-			glutPostRedisplay();   // faz o redisplay da janela
-		}
-		break;
-	case 'R':    // inicia rotação
-		rodar = GL_TRUE;
-		glutTimerFunc(delay, Timer, 0);  // define um callback de tempo (delay ms)
-		break;
-	case 'r':    // termina rotação
-		rodar = GL_FALSE;
-		break;
 	case 27:   // Se é escape sai
 		exit(0);
 	}
