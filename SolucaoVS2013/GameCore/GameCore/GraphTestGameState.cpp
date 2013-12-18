@@ -82,21 +82,21 @@ void GraphTestGameState::putLights(GLfloat* diffuse)
 	glLightfv(GL_LIGHT1, GL_POSITION, modelo.g_pos_luz2);
 
 	/* desenhar luz */
-	material(red_plastic);
-	glPushMatrix();
-	glTranslatef(modelo.g_pos_luz1[0], modelo.g_pos_luz1[1], modelo.g_pos_luz1[2]);
-	glDisable(GL_LIGHTING);
-	glColor3f(1.0, 1.0, 1.0);
-	glutSolidCube(0.1);
-	glEnable(GL_LIGHTING);
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(modelo.g_pos_luz2[0], modelo.g_pos_luz2[1], modelo.g_pos_luz2[2]);
-	glDisable(GL_LIGHTING);
-	glColor3f(1.0, 1.0, 1.0);
-	glutSolidCube(0.1);
-	glEnable(GL_LIGHTING);
-	glPopMatrix();
+	//material(red_plastic);
+	//glPushMatrix();
+	//	glTranslatef(modelo.g_pos_luz1[0], modelo.g_pos_luz1[1], modelo.g_pos_luz1[2]);
+	//	glDisable(GL_LIGHTING);
+	//	glColor3f(1.0, 1.0, 1.0);
+	//	glutSolidCube(0.1);
+	//	glEnable(GL_LIGHTING);
+	//glPopMatrix();
+	//glPushMatrix();
+	//	glTranslatef(modelo.g_pos_luz2[0], modelo.g_pos_luz2[1], modelo.g_pos_luz2[2]);
+	//	glDisable(GL_LIGHTING);
+	//	glColor3f(1.0, 1.0, 1.0);
+	//	glutSolidCube(0.1);
+	//	glEnable(GL_LIGHTING);
+	//glPopMatrix();
 
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHT1);
@@ -171,238 +171,57 @@ void desenhaNormal(GLdouble x, GLdouble y, GLdouble z, GLdouble normal[], tipo_m
 	glEnable(GL_LIGHTING);
 }
 
-void GraphTestGameState::desenhaParede(GLfloat xi, GLfloat yi, GLfloat zi, GLfloat xf, GLfloat yf, GLfloat zf){
-	GLdouble v1[3], v2[3], cross[3];
-	GLdouble length;
-	v1[0] = xf - xi;
-	v1[1] = yf - yi;
-	v1[2] = 0;
-	v2[0] = 0;
-	v2[1] = 0;
-	v2[2] = 1;
-	CrossProduct(v1, v2, cross);
-	//printf("cross x=%lf y=%lf z=%lf",cross[0],cross[1],cross[2]);
-	length = VectorNormalize(cross);
-	//printf("Normal x=%lf y=%lf z=%lf length=%lf\n",cross[0],cross[1],cross[2]);
 
-	material(emerald);
-	glBegin(GL_QUADS);
-	glNormal3dv(cross);
-	glVertex3f(xi, yi, zi);
-	glVertex3f(xf, yf, zf + 0);
-	glVertex3f(xf, yf, zf + 1);
-	glVertex3f(xi, yi, zi + 1);
-	glEnd();
-
-	if (estado.apresentaNormais) {
-		desenhaNormal(xi, yi, zi, cross, emerald);
-		desenhaNormal(xf, yf, zf, cross, emerald);
-		desenhaNormal(xf, yf, zf + 1, cross, emerald);
-		desenhaNormal(xi, yi, zi + 1, cross, emerald);
-	}
-}
-
-void GraphTestGameState::desenhaChao(GLfloat xi, GLfloat yi, GLfloat zi, GLfloat xf, GLfloat yf, GLfloat zf, int orient){
-	GLdouble v1[3], v2[3], cross[3];
-	GLdouble length;
-	v1[0] = xf - xi;
-	v1[1] = 0;
-	v2[0] = 0;
-	v2[1] = yf - yi;
-
-	switch (orient) {
-	case NORTE_SUL:
-		v1[2] = 0;
-		v2[2] = zf - zi;
-		CrossProduct(v1, v2, cross);
-		//printf("cross x=%lf y=%lf z=%lf",cross[0],cross[1],cross[2]);
-		length = VectorNormalize(cross);
-		//printf("Normal x=%lf y=%lf z=%lf length=%lf\n",cross[0],cross[1],cross[2]);
-
-		material(red_plastic);
-		glBegin(GL_QUADS);
-		glNormal3dv(cross);
-		glVertex3f(xi, yi, zi);
-		glVertex3f(xf, yi, zi);
-		glVertex3f(xf, yf, zf);
-		glVertex3f(xi, yf, zf);
-		glEnd();
-		if (estado.apresentaNormais) {
-			desenhaNormal(xi, yi, zi, cross, red_plastic);
-			desenhaNormal(xf, yi, zi, cross, red_plastic);
-			desenhaNormal(xf, yf, zf, cross, red_plastic);
-			desenhaNormal(xi, yi, zf, cross, red_plastic);
-		}
-		break;
-	case ESTE_OESTE:
-		v1[2] = zf - zi;
-		v2[2] = 0;
-		CrossProduct(v1, v2, cross);
-		//printf("cross x=%lf y=%lf z=%lf",cross[0],cross[1],cross[2]);
-		length = VectorNormalize(cross);
-		//printf("Normal x=%lf y=%lf z=%lf length=%lf\n",cross[0],cross[1],cross[2]);
-		material(red_plastic);
-		glBegin(GL_QUADS);
-		glNormal3dv(cross);
-		glVertex3f(xi, yi, zi);
-		glVertex3f(xf, yi, zf);
-		glVertex3f(xf, yf, zf);
-		glVertex3f(xi, yf, zi);
-		glEnd();
-		if (estado.apresentaNormais) {
-			desenhaNormal(xi, yi, zi, cross, red_plastic);
-			desenhaNormal(xf, yi, zf, cross, red_plastic);
-			desenhaNormal(xf, yf, zf, cross, red_plastic);
-			desenhaNormal(xi, yi, zi, cross, red_plastic);
-		}
-		break;
-	default:
-		cross[0] = 0;
-		cross[1] = 0;
-		cross[2] = 1;
-		material(azul);
-		glBegin(GL_QUADS);
-		glNormal3f(0, 0, 1);
-		glVertex3f(xi, yi, zi);
-		glVertex3f(xf, yi, zf);
-		glVertex3f(xf, yf, zf);
-		glVertex3f(xi, yf, zi);
-		glEnd();
-		if (estado.apresentaNormais) {
-			desenhaNormal(xi, yi, zi, cross, azul);
-			desenhaNormal(xf, yi, zf, cross, azul);
-			desenhaNormal(xf, yf, zf, cross, azul);
-			desenhaNormal(xi, yi, zi, cross, azul);
-		}
-		break;
-	}
-}
-
-void GraphTestGameState::desenhaNo(int no){
-	GLboolean norte, sul, este, oeste;
-	GLfloat larguraNorte, larguraSul, larguraEste, larguraOeste;
-	Arco arco = arcos[0];
-	No *noi = &nos[no], *nof;
-	norte = sul = este = oeste = GL_TRUE;
-	desenhaChao(nos[no].x - 0.5*noi->largura, nos[no].y - 0.5*noi->largura, nos[no].z, nos[no].x + 0.5*noi->largura, nos[no].y + 0.5*noi->largura, nos[no].z, PLANO);
-	for (int i = 0; i<numArcos; arco = arcos[++i]){
-		if (arco.noi == no)
-			nof = &nos[arco.nof];
-		else
-		if (arco.nof == no)
-			nof = &nos[arco.noi];
-		else
-			continue;
-		if (noi->x == nof->x)
-		if (noi->y<nof->y){
-			norte = GL_FALSE;
-			larguraNorte = arco.largura;
-		}
-		else{
-			sul = GL_FALSE;
-			larguraSul = arco.largura;
-		}
-		else
-		if (noi->y == nof->y)
-		if (noi->x<nof->x){
-			oeste = GL_FALSE;
-			larguraOeste = arco.largura;
-		}
-		else{
-			este = GL_FALSE;
-			larguraEste = arco.largura;
-		}
-		else
-			cout << "Arco dioagonal: " << arco.noi << " " << arco.nof << endl;
-		if (norte && sul && este && oeste)
-			return;
-	}
-	if (norte)
-		desenhaParede(nos[no].x - 0.5*noi->largura, nos[no].y + 0.5*noi->largura, nos[no].z, nos[no].x + 0.5*noi->largura, nos[no].y + 0.5*noi->largura, nos[no].z);
-	else
-	if (larguraNorte < noi->largura){
-		desenhaParede(nos[no].x - 0.5*noi->largura, nos[no].y + 0.5*noi->largura, nos[no].z, nos[no].x - 0.5*larguraNorte, nos[no].y + 0.5*noi->largura, nos[no].z);
-		desenhaParede(nos[no].x + 0.5*larguraNorte, nos[no].y + 0.5*noi->largura, nos[no].z, nos[no].x + 0.5*noi->largura, nos[no].y + 0.5*noi->largura, nos[no].z);
-	}
-	if (sul)
-		desenhaParede(nos[no].x + 0.5*noi->largura, nos[no].y - 0.5*noi->largura, nos[no].z, nos[no].x - 0.5*noi->largura, nos[no].y - 0.5*noi->largura, nos[no].z);
-	else
-	if (larguraSul < noi->largura){
-		desenhaParede(nos[no].x + 0.5*noi->largura, nos[no].y - 0.5*noi->largura, nos[no].z, nos[no].x + 0.5*larguraSul, nos[no].y - 0.5*noi->largura, nos[no].z);
-		desenhaParede(nos[no].x - 0.5*larguraSul, nos[no].y - 0.5*noi->largura, nos[no].z, nos[no].x - 0.5*noi->largura, nos[no].y - 0.5*noi->largura, nos[no].z);
-	}
-	if (este)
-		desenhaParede(nos[no].x - 0.5*noi->largura, nos[no].y - 0.5*noi->largura, nos[no].z, nos[no].x - 0.5*noi->largura, nos[no].y + 0.5*noi->largura, nos[no].z);
-	else
-	if (larguraEste < noi->largura){
-		desenhaParede(nos[no].x - 0.5*noi->largura, nos[no].y - 0.5*noi->largura, nos[no].z, nos[no].x - 0.5*noi->largura, nos[no].y - 0.5*larguraEste, nos[no].z);
-		desenhaParede(nos[no].x - 0.5*noi->largura, nos[no].y + 0.5*larguraEste, nos[no].z, nos[no].x - 0.5*noi->largura, nos[no].y + 0.5*noi->largura, nos[no].z);
-	}
-	if (oeste)
-		desenhaParede(nos[no].x + 0.5*noi->largura, nos[no].y + 0.5*noi->largura, nos[no].z, nos[no].x + 0.5*noi->largura, nos[no].y - 0.5*noi->largura, nos[no].z);
-	else
-	if (larguraOeste < noi->largura){
-		desenhaParede(nos[no].x + 0.5*noi->largura, nos[no].y + 0.5*noi->largura, nos[no].z, nos[no].x + 0.5*noi->largura, nos[no].y + 0.5*larguraOeste, nos[no].z);
-		desenhaParede(nos[no].x + 0.5*noi->largura, nos[no].y - 0.5*larguraOeste, nos[no].z, nos[no].x + 0.5*noi->largura, nos[no].y - 0.5*noi->largura, nos[no].z);
-	}
+void GraphTestGameState::desenhaNo(No no)
+{
+	glTranslatef(no.x, no.y, no.z + 0.25);
+	glutSolidSphere(2.0, 10, 10);
 }
 
 
-void GraphTestGameState::desenhaArco(Arco arco){
-	No *noi, *nof;
+void GraphTestGameState::desenhaArco(Arco arco)
+{
+	float xi = nos[arco.noi].x;
+	float yi = nos[arco.noi].y;
+	float zi = nos[arco.noi].z;
 
-	if (nos[arco.noi].x == nos[arco.nof].x){
-		// arco vertical
-		if (nos[arco.noi].y<nos[arco.nof].y){
-			noi = &nos[arco.noi];
-			nof = &nos[arco.nof];
-		}
-		else{
-			nof = &nos[arco.noi];
-			noi = &nos[arco.nof];
-		}
+	float xj = nos[arco.nof].x;
+	float yj = nos[arco.nof].y;
+	float zj = nos[arco.nof].z;
 
-		desenhaChao(noi->x - 0.5*arco.largura, noi->y + 0.5*noi->largura, noi->z, nof->x + 0.5*arco.largura, nof->y - 0.5*nof->largura, nof->z, NORTE_SUL);
-		desenhaParede(noi->x - 0.5*arco.largura, noi->y + 0.5*noi->largura, noi->z, nof->x - 0.5*arco.largura, nof->y - 0.5*nof->largura, nof->z);
-		desenhaParede(nof->x + 0.5*arco.largura, nof->y - 0.5*nof->largura, nof->z, noi->x + 0.5*arco.largura, noi->y + 0.5*noi->largura, noi->z);
-	}
-	else{
-		if (nos[arco.noi].y == nos[arco.nof].y){
-			//arco horizontal
-			if (nos[arco.noi].x<nos[arco.nof].x){
-				noi = &nos[arco.noi];
-				nof = &nos[arco.nof];
-			}
-			else{
-				nof = &nos[arco.noi];
-				noi = &nos[arco.nof];
-			}
-			desenhaChao(noi->x + 0.5*noi->largura, noi->y - 0.5*arco.largura, noi->z, nof->x - 0.5*nof->largura, nof->y + 0.5*arco.largura, nof->z, ESTE_OESTE);
-			desenhaParede(noi->x + 0.5*noi->largura, noi->y + 0.5*arco.largura, noi->z, nof->x - 0.5*nof->largura, nof->y + 0.5*arco.largura, nof->z);
-			desenhaParede(nof->x - 0.5*nof->largura, nof->y - 0.5*arco.largura, nof->z, noi->x + 0.5*noi->largura, noi->y - 0.5*arco.largura, noi->z);
-		}
-		else{
-			cout << "arco diagonal... não será desenhado";
-		}
-	}
+	float oxyproj = sqrt(pow((xj - xi), 2) + pow((yj - yi), 2));
+	float delevel = zj - zi;
+
+	float beta = atan2(delevel, oxyproj);
+	float alpha = atan2((yj - yi), (xj - xi));
+
+	glTranslatef(xi, yi, zi);
+	glRotatef(graus(alpha), 0, 0, 1);
+	glRotatef(graus((M_PI / 2.0) - beta), 0, 1, 0);
+
+	float length = sqrt(pow(oxyproj, 2) + pow(delevel, 2));
+
+	GLUquadricObj* quadric = gluNewQuadric();
+	gluCylinder(quadric, arco.peso, arco.peso, length, 10, 10);
 }
 
-void GraphTestGameState::desenhaLabirinto(){
+void GraphTestGameState::desenhaLabirinto()
+{
 	glPushMatrix();
 	glTranslatef(0, 0, 0.05);
 	glScalef(5, 5, 5);
-	material(red_plastic);
 	for (int i = 0; i<numNos; i++){
 		glPushMatrix();
-		material(preto);
-		glTranslatef(nos[i].x, nos[i].y, nos[i].z + 0.25);
-		glutSolidCube(0.5);
+		desenhaNo(nos[i]);
 		glPopMatrix();
-		desenhaNo(i);
 	}
 	material(emerald);
-	for (int i = 0; i<numArcos; i++)
+	for (int i = 0; i < numArcos; i++)
+	{
+		glPushMatrix();
 		desenhaArco(arcos[i]);
+		glPopMatrix();
+	}
 	glPopMatrix();
 }
 
@@ -454,6 +273,7 @@ void GraphTestGameState::desenhaPlanoDrag(int eixo){
 	glEnd();
 	glPopMatrix();
 }
+
 
 void GraphTestGameState::desenhaEixos(){
 
@@ -511,7 +331,7 @@ GraphTestGameState::GraphTestGameState()
 	estado.light = GL_FALSE;
 	estado.apresentaNormais = GL_FALSE;
 	estado.lightViewer = 1;
-	estado.eixoTranslaccao = EIXO_X;
+	estado.eixoTranslaccao = 0;
 
 	modelo.escala = 0.2;
 
