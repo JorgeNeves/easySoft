@@ -87,16 +87,16 @@
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
+    <ClCompile Include="grafos.cpp" />
     <ClCompile Include="GraphTestGameState.cpp" />
-    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Exception.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameStateManager.h" />
+    <ClInclude Include="grafos.h" />
     <ClInclude Include="GraphTestGameState.h" />
-    <ClInclude Include="InputManager.h" />
     <ClInclude Include="LOCALE_EN.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
