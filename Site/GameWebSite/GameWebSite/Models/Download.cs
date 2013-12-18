@@ -8,9 +8,9 @@ namespace GameWebSite.Models
 {
     public class Download
     {
-        [Key]
-        private string DownloadID { get; set; }
+        
+        private int DownloadID { get; set; }
         private DateTime Data { get; set; }
-        private string UserID { get; set; }
+        private int UserID { get; set; }
     }
 }

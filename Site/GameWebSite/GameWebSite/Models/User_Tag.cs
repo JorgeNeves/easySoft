@@ -8,9 +8,9 @@ namespace GameWebSite.Models
 {
     public class User_Tag
     {
-        [Key]
-        private string User_TagID { get; set; }
-        private string UserID { get; set; }
-        private string TagID { get; set; }
+        
+        private int User_TagID { get; set; }
+        private int UserID { get; set; }
+        private int TagID { get; set; }
     }
 }

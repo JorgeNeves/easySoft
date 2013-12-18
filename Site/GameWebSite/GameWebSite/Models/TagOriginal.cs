@@ -8,8 +8,8 @@ namespace GameWebSite.Models
 {
     public class TagOriginal
     {
-        [Key]
-        public string TagOriginalID { get; set; }
+        
+        public int TagOriginalID { get; set; }
         public string PalavraOriginal { get; set; }
     }
 }

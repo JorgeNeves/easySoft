@@ -8,8 +8,8 @@ namespace GameWebSite.Models
 {
     public class EstadoDeLigacao
     {
-        [Key]
-        private string EstadoDeLigacaoID { get; set; }
+        
+        private int EstadoDeLigacaoID { get; set; }
         private string Estado { get; set; }
     }
 }

@@ -8,9 +8,9 @@ namespace GameWebSite.Models
 {
     public class Ligacao_Tag
     {
-        [Key]
-        private string Ligacao_TagID { get; set; }
-        private string LigacaoID { get; set; }
-        private string TagID { get; set; }
+        
+        private int Ligacao_TagID { get; set; }
+        private int LigacaoID { get; set; }
+        private int TagID { get; set; }
     }
 }
