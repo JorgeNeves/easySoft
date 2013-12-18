@@ -1,10 +1,10 @@
 #include <stdio.h>
-#include <string.h>
+#include <string>
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
 #include <GL/glut.h>
-
+using namespace std;
 #ifndef M_PI
 #define M_PI 3.1415926535897932384626433832795
 #endif
@@ -30,6 +30,14 @@ typedef struct {
 	Horas       hora;
 }Modelo;
 
+typedef struct {
+	GLint		nletras;
+	string      pal;
+}Palavra;
+
+typedef struct{
+	GLint	nerros;
+}Jogo;
 
 Estado estado;
 Modelo modelo;
@@ -195,6 +203,23 @@ void perna(int n){
 
 }
 
+void tracinhos(Palavra palavra){
+	
+	float n = palavra.nletras / 2.0;
+
+	//negativos
+	float posxi = -n*0.25;
+	for (int i = 0; i <palavra.nletras; i++){
+
+		glBegin(GL_LINES);
+		glColor3f(1.0f, 1.0f, 0.0f); //sets color of line
+		glVertex3f(posxi,-0.7f, 0.0f); //Here are two vertices that are used as 
+		glVertex3f(posxi+0.2f, -0.7f, 0.0f); //endpoints for the line. Adjust the numbers inside glVertex3f() to move the line
+		glEnd(); //End drawing
+		posxi +=0.25;
+	}
+}
+
 void ponteiros(GLfloat tamanho)
 {
 	GLfloat ang;
@@ -250,6 +275,10 @@ void Draw(void)
 	braco(2);
 	perna(1);
 	perna(2);
+	Palavra Teste;
+	Teste.nletras = 5;
+	Teste.pal = "TESTE";
+	tracinhos(Teste);
 	//ponteiros(modelo.raio);
 
 	glFlush();
