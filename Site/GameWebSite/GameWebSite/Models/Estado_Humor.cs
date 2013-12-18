@@ -8,8 +8,8 @@ namespace GameWebSite.Models
 {
     public class Estado_Humor
     {
-        [Key]
-        private string Estado_HumorID { get; set; }
+        
+        private int Estado_HumorID { get; set; }
         private string Sentimento { get; set; }
     }
 }

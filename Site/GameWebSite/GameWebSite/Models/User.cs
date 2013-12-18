@@ -8,8 +8,8 @@ namespace GameWebSite.Models
 {
     public class User
     {
-        [Key]
-        private string UserID { get; set; }
+        
+        private int UserID { get; set; }
         private string Nick { get; set; }
         private string Password { get; set; }
         private string Mail { get; set; }
@@ -17,7 +17,7 @@ namespace GameWebSite.Models
         private string UltimoNome { get; set; }
         private DateTime DataDeNascimento { get; set; }
         private string Pais { get; set; }
-        private string EstadoDeHumorID { get; set; }
+        private int EstadoDeHumorID { get; set; }
         private string AvatarUrl { get; set; }
         private string PerfilFacebook { get; set; }
         private string PerfilLinkedIn { get; set; }

@@ -8,9 +8,9 @@ namespace GameWebSite.Models
 {
     public class Tag
     {
-        [Key]
-        private string TagID { get; set; }
-        private string TagOriginalID { get; set; }
+        
+        private int TagID { get; set; }
+        private int TagOriginalID { get; set; }
         private string Palavra { get; set; }
     }
 }
