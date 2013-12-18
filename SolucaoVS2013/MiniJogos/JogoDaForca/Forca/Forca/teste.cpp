@@ -35,19 +35,21 @@ Palavra palavra;
 /* Inicialização do ambiente OPENGL */
 void Init(void)
 {
-
-	struct tm *current_time;
-	time_t timer = time(0);
+	
+	palavra.pal = "AVALIACAO";
+	palavra.nletras = palavra.pal.length();
+	//tracinhos();
 
 	//delay para o timer
 	estado.delay = 10;
 	jogo.nerros = 0;
 
 	glClearColor(0.0, 0.0, 0.0, 0.0);
-
+	/*
 	glEnable(GL_POINT_SMOOTH);
 	glEnable(GL_LINE_SMOOTH);
-	glEnable(GL_POLYGON_SMOOTH);
+	glEnable(GL_POLYGON_SMOOTH);*/
+
 
 }
 
@@ -68,7 +70,6 @@ void Reshape(int width, int height)
 
 	// glViewport(botom, left, width, height)
 	// define parte da janela a ser utilizada pelo OpenGL
-
 	glViewport(0, 0, (GLint)size, (GLint)size);
 
 
@@ -86,7 +87,6 @@ void Reshape(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
-
 
 // ... definicao das rotinas auxiliares de desenho ...
 
@@ -166,6 +166,7 @@ void braco(int n){
 		}
 	
 }
+
 void perna(int n){
 
 	glBegin(GL_LINES);
@@ -183,26 +184,32 @@ void perna(int n){
 
 }
 
-void tracinhos(Palavra palavra){
+void tracinhos(){
 	
-	float n = palavra.nletras / 2.0;
-
+	float n = palavra.nletras*0.5;
+	
 	//negativos
 	float posxi = -n*0.25;
+
 	for (int i = 0; i <palavra.nletras; i++){
 
 		glBegin(GL_LINES);
 		glColor3f(1.0f, 1.0f, 0.0f); //sets color of line
 		glVertex3f(posxi,-0.7f, 0.0f); //Here are two vertices that are used as 
-		glVertex3f(posxi+0.2f, -0.7f, 0.0f); //endpoints for the line. Adjust the numbers inside glVertex3f() to move the line
+		glVertex3f(posxi+0.05f, -0.7f, 0.0f); //endpoints for the line. Adjust the numbers inside glVertex3f() to move the line
 		glEnd(); //End drawing
+
 		glColor3f(1.0f, 1.0f, 0.3f);
 		glRectf(posxi, -0.65f, posxi + 0.2f, -0.45f);
+
+			
+			glColor3f(1.0f, 0.0f, 0.3f);
+			glRasterPos2f(posxi + 0.05f, -0.6f);
+			const char* p = palavra.pal.c_str();
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,p[i]);
+
 		posxi +=0.25;
-
 		
-
-
 	}
 
 }
@@ -217,17 +224,43 @@ void Draw(void)
 	// ... chamada das rotinas auxiliares de desenho ...
 
 	forca();
-	//cabeca();
-	//pescoco();
-	//tronco();
-	//braco(1);
-	//braco(2);
-	//perna(1);
-	//perna(2);
-	Palavra Teste;
-	Teste.nletras = 7;
-	Teste.pal = "TESTE";
-	tracinhos(Teste);	
+
+	tracinhos();
+
+	if (jogo.nerros == 1){
+		cabeca();
+	}
+	if (jogo.nerros == 2){
+		cabeca();
+		pescoco();
+		tronco();
+	}
+	if (jogo.nerros == 3){
+		cabeca();
+		pescoco();
+		tronco();
+		braco(1);
+	}
+	if (jogo.nerros == 4){
+		cabeca();
+		pescoco();
+		tronco();
+		braco(2);
+	}
+	if (jogo.nerros == 5){
+		cabeca();
+		pescoco();
+		tronco();
+		braco(2);
+		perna(1);
+	}
+	if (jogo.nerros == 6){
+		cabeca();
+		pescoco();
+		tronco();
+		braco(2);
+		perna(2);
+	}
 
 	glFlush();
 	if (estado.doubleBuffer)
@@ -255,24 +288,7 @@ void Timer(int value)
 {
 	// ... accoes do temporizador ... 
 
-	if (jogo.nerros == 1){
-		cabeca();
-	}
-	if (jogo.nerros == 2){
-		tronco();
-	}
-	if (jogo.nerros == 3){
-		braco(1);
-	}
-	if (jogo.nerros == 4){
-		braco(2);
-	}
-	if (jogo.nerros == 5){
-		perna(1);
-	}
-	if (jogo.nerros == 6){
-		perna(2);
-	}
+	
 	glutTimerFunc(estado.delay, Timer, 0);
 
 	// redesenhar o ecra 
@@ -359,7 +375,7 @@ int main(int argc, char **argv)
 
 	glutInit(&argc, argv);
 	glutInitWindowPosition(0, 0);
-	glutInitWindowSize(300, 300);
+	glutInitWindowSize(600, 600);
 	glutInitDisplayMode(((estado.doubleBuffer) ? GLUT_DOUBLE : GLUT_SINGLE) | GLUT_RGB);
 	if (glutCreateWindow("Exemplo") == GL_FALSE)
 		exit(1);
