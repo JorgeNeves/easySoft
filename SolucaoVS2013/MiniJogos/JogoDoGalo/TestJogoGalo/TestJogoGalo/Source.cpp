@@ -261,6 +261,7 @@ bool checkWin(){
 		Draw();
 		MessageBox(NULL, "YOU LOSE! Try Again!", "Info",
 			MB_ICONINFORMATION);
+		
 		return true;
 	}
 	else if(full){
@@ -277,9 +278,10 @@ void JogadaPC(){
 
 	if (checkWin()){
 		Init();
+		Draw();
 		return;
 	}
-	char* argv[] = { "libswipl.dll", "-s", "C:\\Users\\Pedro\\Documents\\easySoft\\ComponenteIA\\galo.pl", NULL };
+	char* argv[] = { "libswipl.dll", "-s", "galo.pl", NULL };
 	PlEngine p(3,argv);
 	PlTermv av(2);
 	string tabuleiro="[";
@@ -338,7 +340,11 @@ void JogadaPC(){
 		matriz[2][2] = { 1.0, 0.0, 0.0 };
 	}
 	
-	checkWin();
+	if (checkWin()){
+		Init();
+		Draw();
+		return;
+	}
 	
 	
 }
@@ -411,6 +417,7 @@ void OnMouseClick(int button, int state, int x, int y)
 		if (i == 1){
 			glutPostRedisplay();
 			JogadaPC();
+			Draw();
 		}
 	}
 }
