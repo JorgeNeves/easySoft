@@ -6,7 +6,6 @@
 
 #include "Exception.h"
 #include "LOCALE_EN.h"
-#include "InputManager.h"
 #include "GameStateManager.h"
 #include "GraphTestGameState.h"
 
@@ -20,8 +19,6 @@ private:
 	static void Redraw();
 
 	// Components
-
-	InputManager* input;
 	GameStateManager* gsmanager;
 	//Renderer renderer;
 

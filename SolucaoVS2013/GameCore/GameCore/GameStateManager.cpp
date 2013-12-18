@@ -59,13 +59,29 @@ void GameStateManager::PopState()
 	return;
 }
 
-void GameStateManager::attachInput(InputManager* input)
-{
-	if (input != NULL)
-		currentIN = input;
-}
-
 GameState* GameStateManager::GetCurrentState()
 {
 	return gameStateStack.top();
+}
+
+// Keyboard input handling
+
+void GameStateManager::KeyboardFunc(unsigned char key, int x, int y)
+{
+	gameStateStack.top()->HandleInput(key, 0, true);
+}
+
+void GameStateManager::KeyboardUpFunc(unsigned char key, int x, int y)
+{
+	gameStateStack.top()->HandleInput(key, 0, false);
+}
+
+void GameStateManager::KeyboardFuncWrapper(unsigned char key, int x, int y)
+{
+	_instance->KeyboardFunc(key, x, y);
+}
+
+void GameStateManager::KeyboardUpFuncWrapper(unsigned char key, int x, int y)
+{
+	_instance->KeyboardUpFunc(key, x, y);
 }
