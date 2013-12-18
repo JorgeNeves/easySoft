@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace GameWebSite.Models
+namespace MvcApplication1.Models
 {
     public class TagOriginal
     {

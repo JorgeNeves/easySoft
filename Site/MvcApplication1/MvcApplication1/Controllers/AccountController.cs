@@ -10,7 +10,7 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using MvcApplication1.Filters;
 using MvcApplication1.Models;
-
+using MvcApplication1.DAL;
 namespace MvcApplication1.Controllers
 {
     [Authorize]
@@ -263,7 +263,7 @@ namespace MvcApplication1.Controllers
             if (ModelState.IsValid)
             {
                 // Insert a new user into the database
-                using (UsersContext db = new UsersContext())
+                using (easySoftContext db = new easySoftContext())
                 {
                     UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
                     // Check if user already exists

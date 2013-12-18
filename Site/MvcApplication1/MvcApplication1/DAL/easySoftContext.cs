@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
-using GameWebSite.Models;
+using MvcApplication1.Models;
 
-namespace GameWebSite.DAL
+
+namespace MvcApplication1.DAL
 {
     public class easySoftContext : DbContext
     {
@@ -13,7 +14,7 @@ namespace GameWebSite.DAL
             : base("easySoftEntities")
         { }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<Download> Downloads { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<TagOriginal> TagsOriginais { get; set; }

@@ -8,34 +8,8 @@ using System.Web.Security;
 
 namespace MvcApplication1.Models
 {
-    public class UsersContext : DbContext
-    {
-        public UsersContext()
-            : base("DefaultConnection")
-        {
-        }
 
-        public DbSet<UserProfile> UserProfiles { get; set; }
-    }
-
-    [Table("UserProfile")]
-    public class UserProfile
-    {
-        [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int UserId { get; set; }
-        public string UserName { get; set; }
-
-        private string Mail { get; set; }
-        private string PrimeiroNome { get; set; }
-        private string UltimoNome { get; set; }
-        private DateTime DataDeNascimento { get; set; }
-        private string Pais { get; set; }
-        private int EstadoDeHumorID { get; set; }
-        private string AvatarUrl { get; set; }
-        private string PerfilFacebook { get; set; }
-        private string PerfilLinkedIn { get; set; }
-    }
+    
 
     public class RegisterExternalLoginModel
     {
