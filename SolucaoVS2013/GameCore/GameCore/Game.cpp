@@ -20,7 +20,10 @@ Game* Game::Instance()
 
 void Game::Redraw()                           	//all drawing code goes here
 {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  //clears the colour and depth buffers
 	GameStateManager::Instance()->GetCurrentState()->Draw();
+	glutSwapBuffers();      //swaps the front and back buffers
+	glutPostRedisplay();
 }
 
 void Game::Init(string title, int argc, char* argv[])
@@ -35,8 +38,6 @@ void Game::Init(string title, int argc, char* argv[])
 	glutDisplayFunc(&Redraw);
 	glutKeyboardFunc(&input->KeyboardFuncWrapper);
 	glutKeyboardUpFunc(&input->KeyboardUpFuncWrapper);
-	//glutTimerFunc(10, &(GameStateManager::Instance()->GetCurrentState()->Update),30);
-
 	glMatrixMode(GL_PROJECTION);   //changes the current matrix to the projection matrix
 	//sets up the projection matrix for a perspective transform
 	gluPerspective(45, 	//view angle
@@ -46,5 +47,8 @@ void Game::Init(string title, int argc, char* argv[])
 	glMatrixMode(GL_MODELVIEW);   //changes the current matrix to the modelview matrix
 	GraphTestGameState* test = new GraphTestGameState();
 	GameStateManager::Instance()->PushState(test);
+	glutTimerFunc(30, GameStateManager::Instance()->CurrentStateTimerWrapper, 10);
+	//GameStateManager::Instance()->GetCurrentState()->Update();
+
 	glutMainLoop();           	//the main loop of the GLUT framework
 }

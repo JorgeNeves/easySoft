@@ -1,10 +1,13 @@
 #pragma once
-#include "GameState.h"
 #include <GL\glut.h>
 #include <stdio.h>
-class GraphTestGameState :
-	public GameState
+#include "GameStateManager.h"
+#include "InputManager.h"
+class GraphTestGameState : public GameState
 {
+private:
+	float x;
+	GameStateManager* manager;
 public:
 	GraphTestGameState();
 	~GraphTestGameState();
