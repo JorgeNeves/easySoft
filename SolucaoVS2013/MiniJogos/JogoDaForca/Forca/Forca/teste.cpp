@@ -216,8 +216,15 @@ void tracinhos(Palavra palavra){
 		glVertex3f(posxi,-0.7f, 0.0f); //Here are two vertices that are used as 
 		glVertex3f(posxi+0.2f, -0.7f, 0.0f); //endpoints for the line. Adjust the numbers inside glVertex3f() to move the line
 		glEnd(); //End drawing
+		glColor3f(1.0f, 1.0f, 0.3f);
+		glRectf(posxi, -0.65f, posxi + 0.2f, -0.45f);
 		posxi +=0.25;
+
+		
+
+
 	}
+
 }
 
 void ponteiros(GLfloat tamanho)
