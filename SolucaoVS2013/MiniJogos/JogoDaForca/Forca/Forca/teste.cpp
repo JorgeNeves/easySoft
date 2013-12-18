@@ -19,30 +19,17 @@ typedef struct {
 }Estado;
 
 typedef struct {
-	GLint       hor, min, seg;
-}Horas;
-
-typedef struct {
-	GLint       numLados;
-	GLfloat     raio;
-	GLfloat     tamLado;
-	GLenum      tipoPoligono;
-	Horas       hora;
-}Modelo;
-
-typedef struct {
 	GLint		nletras;
 	string      pal;
 }Palavra;
 
 typedef struct{
-	GLint	nerros;
+	int	nerros;
 }Jogo;
 
 Estado estado;
-Modelo modelo;
-
-
+Jogo jogo;
+Palavra palavra;
 
 
 /* Inicialização do ambiente OPENGL */
@@ -54,14 +41,7 @@ void Init(void)
 
 	//delay para o timer
 	estado.delay = 10;
-
-	modelo.tamLado = 1;
-	modelo.numLados = 32;
-	modelo.raio = 0.5;
-	modelo.tipoPoligono = GL_TRIANGLE_FAN;
-
-
-	
+	jogo.nerros = 0;
 
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 
@@ -227,44 +207,6 @@ void tracinhos(Palavra palavra){
 
 }
 
-void ponteiros(GLfloat tamanho)
-{
-	GLfloat ang;
-
-	glLineWidth(1 * tamanho);
-	glBegin(GL_LINES);
-	ang = modelo.hora.seg * 2 * M_PI / 60;
-	glColor3f(1.0f, 1.0f, 0.0f);
-
-	glVertex2f(0.0f, 0.0f);
-	glVertex2f(0.95 * tamanho * cos(M_PI / 2 - ang), 0.95 * tamanho *sin(M_PI / 2 - ang));
-	glEnd();
-
-	glLineWidth(2 * tamanho);
-	glBegin(GL_LINES);
-	ang = modelo.hora.min * 2 * M_PI / 60;
-
-	glVertex2f(0.0f, 0.0f);
-	glVertex2f(0.8 * tamanho * cos(M_PI / 2 - ang), 0.8 * tamanho *sin(M_PI / 2 - ang));
-	glEnd();
-
-
-	glLineWidth(3 * tamanho);
-	glBegin(GL_LINES);
-	ang = modelo.hora.hor * 2 * M_PI / 12;
-
-	glVertex2f(0.0f, 0.0f);
-	glVertex2f(0.6 * tamanho * cos(M_PI / 2 - ang), 0.6 * tamanho *sin(M_PI / 2 - ang));
-	glEnd();
-
-	glPointSize(10 * tamanho);
-	glBegin(GL_POINTS);
-	glVertex2f(0.0f, 0.0f);
-	glEnd();
-
-
-}
-
 
 // Callback de desenho
 
@@ -275,18 +217,17 @@ void Draw(void)
 	// ... chamada das rotinas auxiliares de desenho ...
 
 	forca();
-	cabeca();
-	pescoco();
-	tronco();
-	braco(1);
-	braco(2);
-	perna(1);
-	perna(2);
+	//cabeca();
+	//pescoco();
+	//tronco();
+	//braco(1);
+	//braco(2);
+	//perna(1);
+	//perna(2);
 	Palavra Teste;
-	Teste.nletras = 5;
+	Teste.nletras = 7;
 	Teste.pal = "TESTE";
-	tracinhos(Teste);
-	//ponteiros(modelo.raio);
+	tracinhos(Teste);	
 
 	glFlush();
 	if (estado.doubleBuffer)
@@ -312,22 +253,27 @@ void Idle(void)
 
 void Timer(int value)
 {
-	glutTimerFunc(estado.delay, Timer, 0);
 	// ... accoes do temporizador ... 
 
-	modelo.hora.seg++;
-	if (modelo.hora.seg>59)
-	{
-		modelo.hora.seg = 0;
-		modelo.hora.min++;
-		if (modelo.hora.min>59)
-		{
-			modelo.hora.min = 0;
-			modelo.hora.hor++;
-			if (modelo.hora.hor>23)
-				modelo.hora.hor = 0;
-		}
+	if (jogo.nerros == 1){
+		cabeca();
 	}
+	if (jogo.nerros == 2){
+		tronco();
+	}
+	if (jogo.nerros == 3){
+		braco(1);
+	}
+	if (jogo.nerros == 4){
+		braco(2);
+	}
+	if (jogo.nerros == 5){
+		perna(1);
+	}
+	if (jogo.nerros == 6){
+		perna(2);
+	}
+	glutTimerFunc(estado.delay, Timer, 0);
 
 	// redesenhar o ecra 
 	glutPostRedisplay();
@@ -368,18 +314,10 @@ void Key(unsigned char key, int x, int y)
 		imprime_ajuda();
 		break;
 	case '+':
-		if (modelo.numLados<32)
-		{
-			modelo.numLados++;
-			glutPostRedisplay(); // redesenhar o ecrã
-		}
+		jogo.nerros += 1;
+		printf("numero de erros = %d", jogo.nerros);
 		break;
 	case '-':
-		if (modelo.numLados>3)
-		{
-			modelo.numLados--;
-			glutPostRedisplay(); // redesenhar o ecrã
-		}
 		break;
 	case 'D':
 		if (estado.delay<1000)
@@ -395,32 +333,16 @@ void Key(unsigned char key, int x, int y)
 		break;
 	case 'p':
 	case 'P':
-		modelo.tipoPoligono = GL_POLYGON;
-		glutPostRedisplay(); // redesenhar o ecrã
 		break;
 	case 't':
 	case 'T':
-		modelo.tipoPoligono = GL_TRIANGLE_FAN;
-		glutPostRedisplay(); // redesenhar o ecrã
 		break;
 	case 'l':
 	case 'L':
-		modelo.tipoPoligono = GL_LINE_LOOP;
-		glutPostRedisplay(); // redesenhar o ecrã
 		break;
 	case 'R':
-		if (modelo.raio<0.9)
-		{
-			modelo.raio += 0.05;
-			glutPostRedisplay(); // redesenhar o ecrã
-		}
 		break;
 	case 'r':
-		if (modelo.raio>.2)
-		{
-			modelo.raio -= 0.05;
-			glutPostRedisplay(); // redesenhar o ecrã
-		}
 		break;
 
 	}
@@ -429,52 +351,6 @@ void Key(unsigned char key, int x, int y)
 		printf("Carregou na tecla %c\n", key);
 
 }
-
-// Callback para interacção via teclado (largar a tecla)
-
-/*void KeyUp(unsigned char key, int x, int y)
-{
-
-if(DEBUG)
-printf("Largou a tecla %c\n",key);
-}/*/
-
-// Callback para interacção via teclas especiais  (carregar na tecla)
-
-/*void SpecialKey(int key, int x, int y)
-{
-// ... accoes sobre outras teclas especiais ...
-//    GLUT_KEY_F1 ... GLUT_KEY_F12
-//    GLUT_KEY_UP
-//    GLUT_KEY_DOWN
-//    GLUT_KEY_LEFT
-//    GLUT_KEY_RIGHT
-//    GLUT_KEY_PAGE_UP
-//    GLUT_KEY_PAGE_DOWN
-//    GLUT_KEY_HOME
-//    GLUT_KEY_END
-//    GLUT_KEY_INSERT
-
-switch (key) {
-
-// redesenhar o ecra
-//glutPostRedisplay();
-}
-
-
-if(DEBUG)
-printf("Carregou na tecla especial %d\n",key);
-}/*/
-
-// Callback para interacção via teclas especiais (largar a tecla)
-
-/*void SpecialKeyUp(int key, int x, int y)
-{
-
-if(DEBUG)
-printf("Largou a tecla especial %d\n",key);
-
-}/*/
 
 
 int main(int argc, char **argv)
