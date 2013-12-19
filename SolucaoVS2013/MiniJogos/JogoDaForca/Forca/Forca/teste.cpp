@@ -4,6 +4,9 @@
 #include <math.h>
 #include <time.h>
 #include <GL/glut.h>
+#include <algorithm>
+#include <ctype.h>
+
 using namespace std;
 #ifndef M_PI
 #define M_PI 3.1415926535897932384626433832795
@@ -21,10 +24,13 @@ typedef struct {
 typedef struct {
 	GLint		nletras;
 	string      pal;
+	const char* p;
+	const char* paux;
 }Palavra;
 
 typedef struct{
 	int	nerros;
+	char* letra;
 }Jogo;
 
 Estado estado;
@@ -36,8 +42,14 @@ Palavra palavra;
 void Init(void)
 {
 	
-	palavra.pal = "AVALIACAO";
+	palavra.pal = "AVAL IACAO";
 	palavra.nletras = palavra.pal.length();
+	palavra.p = palavra.pal.c_str();
+	//string newString;
+	
+	//transform(palavra.pal.begin(),palavra.pal.end(),newString.begin(),tolower);
+
+	//palavra.paux = newString.c_str();
 	//tracinhos();
 
 	//delay para o timer
@@ -84,7 +96,7 @@ void Reshape(int width, int height)
 
 	// Matriz Modelview
 	// Matriz onde são realizadas as tranformacões dos modelos desenhados
-	glMatrixMode(GL_MODELVIEW);
+	glMatrixMode(GL_MODELVIEW_MATRIX);
 	glLoadIdentity();
 }
 
@@ -184,37 +196,54 @@ void perna(int n){
 
 }
 
+void desenhaLetra(int pos){
+	float inc = 1.8 / palavra.nletras;
+	float posxi = -0.9;
+
+	for (int i = 0; i < pos+1; i++){
+		glColor3f(1.0f, 0.0f, 0.3f);
+		glRasterPos2f(posxi + 0.05f, -0.6f);
+
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, palavra.p[i]);
+		posxi += inc;
+	}
+}
+
 void tracinhos(){
 	
 	float n = palavra.nletras*0.5;
 	
 	//negativos
-	float posxi = -n*0.25;
+	float inc = 1.8 / palavra.nletras;
+	float inc_D = 1.5 / palavra.nletras;
+	float posxi =-0.9;
 
-	for (int i = 0; i <palavra.nletras; i++){
+	for (int i = 0; i < palavra.nletras; i++){
+		if (palavra.p[i] != ' '){
+			glBegin(GL_LINES);
+			glColor3f(1.0f, 1.0f, 0.0f); //sets color of line
+			glVertex3f(posxi, -0.7f, 0.0f); //Here are two vertices that are used as 
+			glVertex3f(posxi + inc_D, -0.7f, 0.0f); //endpoints for the line. Adjust the numbers inside glVertex3f() to move the line
+			glEnd(); //End drawing
 
-		glBegin(GL_LINES);
-		glColor3f(1.0f, 1.0f, 0.0f); //sets color of line
-		glVertex3f(posxi,-0.7f, 0.0f); //Here are two vertices that are used as 
-		glVertex3f(posxi+0.05f, -0.7f, 0.0f); //endpoints for the line. Adjust the numbers inside glVertex3f() to move the line
-		glEnd(); //End drawing
+			glColor3f(1.0f, 1.0f, 0.3f);
 
-		glColor3f(1.0f, 1.0f, 0.3f);
-		glRectf(posxi, -0.65f, posxi + 0.2f, -0.45f);
+			glRectf(posxi, -0.65f, posxi + inc_D, -0.45f);
 
-			
-			glColor3f(1.0f, 0.0f, 0.3f);
-			glRasterPos2f(posxi + 0.05f, -0.6f);
-			const char* p = palavra.pal.c_str();
-			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,p[i]);
+			desenhaLetra(i);
 
-		posxi +=0.25;
+		}
+		posxi += inc;
 		
 	}
 
 }
 
-
+void existe(){
+	if (palavra.p[0] == toupper((char)jogo.letra)){
+		printf("Existe %c\n", jogo.letra);
+	}
+}
 // Callback de desenho
 
 void Draw(void)
@@ -324,45 +353,10 @@ void Key(unsigned char key, int x, int y)
 	case 27:
 		exit(1);
 		// ... accoes sobre outras teclas ... 
-
-	case 'h':
-	case 'H':
-		imprime_ajuda();
-		break;
-	case '+':
-		jogo.nerros += 1;
-		printf("numero de erros = %d", jogo.nerros);
-		break;
-	case '-':
-		break;
-	case 'D':
-		if (estado.delay<1000)
-		{
-			estado.delay += 50;
-		}
-		break;
-	case 'd':
-		if (estado.delay >= 100)
-		{
-			estado.delay -= 50;
-		}
-		break;
-	case 'p':
-	case 'P':
-		break;
-	case 't':
-	case 'T':
-		break;
-	case 'l':
-	case 'L':
-		break;
-	case 'R':
-		break;
-	case 'r':
-		break;
-
 	}
-
+	jogo.letra = (char *)key;
+	
+	existe();
 	if (DEBUG)
 		printf("Carregou na tecla %c\n", key);
 
