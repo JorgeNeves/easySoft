@@ -6,7 +6,9 @@
 #include <GL/glut.h>
 #include <algorithm>
 #include <ctype.h>
-
+#include <Windows.h>
+#include <SWI-cpp.h>
+#include<iostream>
 using namespace std;
 #ifndef M_PI
 #define M_PI 3.1415926535897932384626433832795
@@ -31,6 +33,7 @@ typedef struct {
 typedef struct{
 	int	nerros;
 	char* letra;
+	//letras usadas
 }Jogo;
 
 Estado estado;
@@ -38,10 +41,17 @@ Jogo jogo;
 Palavra palavra;
 
 
+void ligacao(void){
+		/*char* argv[] = { "libswipl.dll", "-s", "forca.pl", NULL };*/
+		char* argv[] = { "libswipl.dll", "forca.pl", NULL };
+		PlEngine p(3, argv);
+		PlTermv av(2);
+}
+
 /* Inicialização do ambiente OPENGL */
 void Init(void)
 {
-	
+		
 	palavra.pal = "AVAL IACAO";
 	palavra.nletras = palavra.pal.length();
 	palavra.p = palavra.pal.c_str();
@@ -242,6 +252,7 @@ void tracinhos(){
 void existe(){
 	if (palavra.p[0] == toupper((char)jogo.letra)){
 		printf("Existe %c\n", jogo.letra);
+		
 	}
 }
 // Callback de desenho

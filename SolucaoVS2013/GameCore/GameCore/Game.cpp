@@ -17,28 +17,31 @@ Game* Game::Instance()
 	return _instance;
 }
 
-void Game::Redraw()                           	//all drawing code goes here
+void Game::RegisterGSM(GameStateManager* gsm, int delay)
 {
-	GameStateManager::Instance()->GetCurrentState()->Draw();
+	gsmanager = gsm;
+	glutKeyboardFunc(&gsmanager->KeyboardFuncWrapper);
+	glutKeyboardUpFunc(&gsmanager->KeyboardUpFuncWrapper);
+	glutSpecialFunc(&gsmanager->SpecialFuncWrapper);
+	glutSpecialUpFunc(&gsmanager->SpecialUpFuncWrapper);
+	glutDisplayFunc(&gsmanager->RedrawWrapper);
+	glutTimerFunc(delay, &gsmanager->CurrentStateTimerWrapper, 0);
 }
+
 
 void Game::Init(string title, int argc, char* argv[])
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
 	glutCreateWindow(title.c_str());
-
-	gsmanager = GameStateManager::Instance();
-
-	// CALLBACK definitions
-	glutDisplayFunc(&Redraw);
-	glutKeyboardFunc(&gsmanager->KeyboardFuncWrapper);
-	glutKeyboardUpFunc(&gsmanager->KeyboardUpFuncWrapper);
 	
-	GraphTestGameState* test = new GraphTestGameState();
-	GameStateManager::Instance()->PushState(test);
-	glutTimerFunc(30, GameStateManager::Instance()->CurrentStateTimerWrapper, 10);
-	//GameStateManager::Instance()->GetCurrentState()->Update();
+	RegisterGSM(GameStateManager::Instance(), 30);
+	gsmanager->PushState(new SocialGraphState());
 
 	glutMainLoop();           	//the main loop of the GLUT framework
+}
+
+void Game::Start()
+{
+	glutMainLoop();
 }
