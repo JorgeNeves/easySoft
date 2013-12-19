@@ -27,7 +27,7 @@ namespace WebApplication5.Profile
             Label2.Text = Session["username"].ToString();
             Label1.Text = FirstName + " " + LastName;
             Label3.Text = date;
-           
+            Label4.Text = Users.getEstado(EstadoHumor);
             Label5.Text = Mail;
             Label6.Text = facebook;
             Label7.Text = LinkedIn;
@@ -52,7 +52,7 @@ namespace WebApplication5.Profile
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("EditProfile.aspx");
         }
     }
 }
