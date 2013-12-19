@@ -42,36 +42,29 @@ Palavra palavra;
 
 
 void ligacao(void){
-		/*char* argv[] = { "libswipl.dll", "-s", "forca.pl", NULL };*/
-		char* argv[] = { "libswipl.dll", "forca.pl", NULL };
+		char* argv[] = { "libswipl.dll", "-s", "forca.pl", NULL };
+
 		PlEngine p(3, argv);
-		PlTermv av(2);
+		PlTermv av(1);
+
+		PlQuery query("gera_palavra", av);
+		query.next_solution();
+		palavra.pal = (char*)av[0];
+
+		palavra.nletras = palavra.pal.length();
+		palavra.p = palavra.pal.c_str();
+
 }
 
 /* Inicialização do ambiente OPENGL */
 void Init(void)
 {
-		
-	palavra.pal = "AVAL IACAO";
-	palavra.nletras = palavra.pal.length();
-	palavra.p = palavra.pal.c_str();
-	//string newString;
-	
-	//transform(palavra.pal.begin(),palavra.pal.end(),newString.begin(),tolower);
 
-	//palavra.paux = newString.c_str();
-	//tracinhos();
+	ligacao();
 
-	//delay para o timer
-	estado.delay = 10;
 	jogo.nerros = 0;
 
 	glClearColor(0.0, 0.0, 0.0, 0.0);
-	/*
-	glEnable(GL_POINT_SMOOTH);
-	glEnable(GL_LINE_SMOOTH);
-	glEnable(GL_POLYGON_SMOOTH);*/
-
 
 }
 
@@ -240,7 +233,7 @@ void tracinhos(){
 
 			glRectf(posxi, -0.65f, posxi + inc_D, -0.45f);
 
-			desenhaLetra(i);
+			//desenhaLetra(i);
 
 		}
 		posxi += inc;
@@ -249,11 +242,29 @@ void tracinhos(){
 
 }
 
-void existe(){
-	if (palavra.p[0] == toupper((char)jogo.letra)){
-		printf("Existe %c\n", jogo.letra);
+void existe(){	
+	printf("Letra -----  %c\n", jogo.letra);
 		
+
+	char* argv[] = { "libswipl.dll", "-s", "forca.pl", NULL };
+	PlEngine p(3, argv);
+	PlTermv av(3);
+	string palavraTemp = "" + palavra.pal;
+	av[0] = PlCompound(palavraTemp.c_str());
+
+	string letra = jogo.letra;
+	av[1] = PlCompound(letra.c_str());
+	PlQuery query("comparacont", av);
+	
+	if (!query.next_solution()){
+		palavra.nletras += 1;
+	}else{
+		char *pos = (char*)av[2];
+		int xxx = 0;
 	}
+
+
+
 }
 // Callback de desenho
 

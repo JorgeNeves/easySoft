@@ -1,6 +1,17 @@
 %% Recebe uma string no formato compara("FORCA","A",L) e devolve o
 %% codigo ASCII da palavra encontrada ou seja L=[65].
 %% Outro exemplo: compara ("JOAO","O",L) retorna L=[79,79].
+palavra(1,"OLX").
+palavra(2,"INFORMATICA").
+palavra(3,"ANGELO").
+palavra(4,"PDF").
+palavra(5,"FACEBOOK").
+palavra(6,"GOOGLE").
+palavra(7,"ALGAV").
+
+gera_palavra(P):-
+			random(1,8,Pos),
+			palavra(Pos,P).
 
 compara(Palavra,Tentativa,L):-compara1(Palavra,Tentativa,L).
 compara1([],_,[]).
