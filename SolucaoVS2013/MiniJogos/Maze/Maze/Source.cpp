@@ -70,7 +70,14 @@ void Init(void)
 			maze[i][j].east = 1;
 			maze[i][j].south = 1;
 			maze[i][j].west = 1;
-			maze[i][j].value = 0;
+			if ((i % 2) == 0)
+			{
+				maze[i][j].value = 3;
+			}
+			else
+			{
+				maze[i][j].value = 0;
+			}
 		}
 
 	}
@@ -82,7 +89,7 @@ void Init(void)
 
 
 	maze[30][30].north = 1;
-	maze[0][30].east = 0;
+	maze[30][30].east = 0;
 	maze[30][30].south = 1;
 	maze[30][30].west = 1;
 	maze[30][30].value = 2;
@@ -216,50 +223,52 @@ void Draw(void)
 				glColor3f(1.0, 1.0, 1.0);
 			}
 			if (maze[i][j].value == 3){
-
+				glBegin(GL_QUADS);
+				glVertex2f(SIDE * j + MARGEM, SIDE*i + MARGEM);
+				glVertex2f(SIDE * j + MARGEM, SIDE*i + SIDE - MARGEM);
+				glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + SIDE - MARGEM);
+				glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + MARGEM);
+				glEnd();
 			}
-			else
-			{
-				if (maze[i][j].south == 1) {
+			if (maze[i][j].south == 1) {
 
-					glBegin(GL_LINES);
-					glVertex2f(SIDE * j, SIDE + SIDE*i);
-					glVertex2f(SIDE + SIDE * j, SIDE + SIDE*i);
-					glEnd();
-				}
-				if (maze[i][j].north == 1) {
-					/*glTranslatef(j * 2 + 2, 0, i * 2);
-					glutSolidCube(2);*/
-					glBegin(GL_LINES);
-					glVertex2f(SIDE + SIDE * j, SIDE*i);
-					glVertex2f(SIDE * j, SIDE*i);
+				glBegin(GL_LINES);
+				glVertex2f(SIDE * j, SIDE + SIDE*i);
+				glVertex2f(SIDE + SIDE * j, SIDE + SIDE*i);
+				glEnd();
+			}
+			if (maze[i][j].north == 1) {
+				/*glTranslatef(j * 2 + 2, 0, i * 2);
+				glutSolidCube(2);*/
+				glBegin(GL_LINES);
+				glVertex2f(SIDE + SIDE * j, SIDE*i);
+				glVertex2f(SIDE * j, SIDE*i);
 
-					glEnd();
-				}
-				if (maze[i][j].east == 1) {
-					glBegin(GL_LINES);
-					glVertex2f(SIDE + SIDE * j, SIDE + SIDE * i);
-					glVertex2f(SIDE + SIDE * j, SIDE*i);
-					glEnd();
-				}
-				if (maze[i][j].west == 1) {
-					glBegin(GL_LINES);
-					glVertex2f(SIDE * j, SIDE*i);
-					glVertex2f(SIDE * j, SIDE + SIDE * i);
-					glEnd();
-				}
-				if (maze[i][j].value == 1){
-					glColor3f(0.0, 0.2, 1.0);
-					glBegin(GL_LINE_LOOP);
+				glEnd();
+			}
+			if (maze[i][j].east == 1) {
+				glBegin(GL_LINES);
+				glVertex2f(SIDE + SIDE * j, SIDE + SIDE * i);
+				glVertex2f(SIDE + SIDE * j, SIDE*i);
+				glEnd();
+			}
+			if (maze[i][j].west == 1) {
+				glBegin(GL_LINES);
+				glVertex2f(SIDE * j, SIDE*i);
+				glVertex2f(SIDE * j, SIDE + SIDE * i);
+				glEnd();
+			}
+			if (maze[i][j].value == 1){
+				glColor3f(0.0, 0.2, 1.0);
+				glBegin(GL_LINE_LOOP);
 
-					glVertex2f(SIDE * j + MARGEM, SIDE*i + MARGEM);
-					glVertex2f(SIDE * j + MARGEM, SIDE*i + SIDE - MARGEM);
-					glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + SIDE - MARGEM);
-					glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + MARGEM);
+				glVertex2f(SIDE * j + MARGEM, SIDE*i + MARGEM);
+				glVertex2f(SIDE * j + MARGEM, SIDE*i + SIDE - MARGEM);
+				glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + SIDE - MARGEM);
+				glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + MARGEM);
 
-					glEnd();
-					glColor3f(1.0, 1.0, 1.0);
-				}
+				glEnd();
+				glColor3f(1.0, 1.0, 1.0);
 			}
 			if (maze[i][j].value == 2){
 				glColor3f(1.0, 0.2, 0.0);

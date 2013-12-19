@@ -36,6 +36,61 @@ vector<string> explode(const string& str, const char& ch) {
 	return result;
 }
 
+//função para conversão de strings em inteiros (atoi dava erro)
+//http://www.kumobius.com/2013/08/c-string-to-int/
+// Does this handle all the edge cases? Who knows...
+// Better make sure you test it thoroughly if you write it yourself!
+bool String2Int(const std::string& str, int& result)
+{
+	std::string::const_iterator i = str.begin();
+
+	if (i == str.end())
+		return false;
+
+	bool negative = false;
+
+	if (*i == '-')
+	{
+		negative = true;
+		++i;
+
+		if (i == str.end())
+			return false;
+	}
+
+	result = 0;
+
+	for (; i != str.end(); ++i)
+	{
+		if (*i < '0' || *i > '9')
+			return false;
+
+		result *= 10;
+		result += *i - '0';
+	}
+
+	if (negative)
+	{
+		result = -result;
+	}
+
+	return true;
+}
+
+//criar um quadrado no labirinto
+Maze& createQuadrado(const int n, const int s, const int e, const int w, const int v)
+{
+	//inserir valores no quadrado
+	Maze* quad = new Maze; 
+	quad->north = n;
+	quad->south = s;
+	quad->east = e;
+	quad->west = w;
+	quad->value = v;
+
+	return *quad;
+}
+
 //descobrir o quadrado correspondente ao tipo escolhido e devolver
 Maze& getQuadrado(const int numQuadrado)
 {
@@ -95,19 +150,6 @@ Maze& getQuadrado(const int numQuadrado)
 	}
 }
 
-//criar um quadrado no labirinto
-Maze& createQuadrado(const int n, const int s, const int e, const int w, const int v)
-{
-	//inserir valores no quadrado
-	Maze* quad;
-	quad->north = n;
-	quad->south = s;
-	quad->east = e;
-	quad->west = w;
-	quad->value = v;
-	return *quad;
-}
-
 //define o value de uma posição no labirinto
 void makePos(Maze*** m, const int value, const int size)
 {
@@ -131,7 +173,8 @@ int Reader::getMazeSize(const string f)
 	string str;
 	int size;
 	getline(file, str);
-	return atoi(str.c_str);
+	String2Int(str,size);
+	return size;
 }
 
 //criar o labirinto
@@ -144,7 +187,7 @@ Maze*** Reader::getMaze(const string f)
 
 	//retira o tamanho do labirinto na primeira linha: 20*20 // 30*30 // 40*40
 	getline(file, str);
-	size = atoi(str.c_str);
+	String2Int(str,size);
 
 	//inicialização do labirinto
 	Maze*** labirinto = new Maze**[size];
@@ -163,8 +206,9 @@ Maze*** Reader::getMaze(const string f)
 			for (int j = 0; j < size; j++)
 			{
 				//obter quadrado
-				string textQuadrado = linha.at(i);
-				Maze quadrado = getQuadrado(atoi(textQuadrado.c_str));
+				int quad;
+				String2Int(linha.at(i), quad);
+				Maze quadrado = getQuadrado(quad);
 				labirinto[i][j] = &quadrado;
 			}
 		}
