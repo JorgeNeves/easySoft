@@ -11,8 +11,9 @@ using namespace std;
 
 #ifndef M_PI
 #define M_PI 3.1415926535897932384626433832795
-#define SIDE 150
-#define MARGEM 20
+#define SIDE 300
+#define MARGEM 5
+#define RAIO 5
 #endif
 
 #define DEBUG 1
@@ -32,10 +33,11 @@ typedef struct {
 }Modelo;
 
 typedef struct {
-	int       west;
-	int     north;
-	int     east;
-	int      south;
+	int west;
+	int north;
+	int east;
+	int south;
+	int value; // 0 representa um caminho, 1 representa o inicio, 2 representa o fim
 }Maze;
 
 typedef struct {
@@ -43,11 +45,18 @@ typedef struct {
 	int     b;
 }Liga;
 
+typedef struct {
+	int       mPosX;
+	int     mPosY;
+}Avatar;
+
 
 
 Estado estado;
+Maze maze[40][40];
 Modelo modelo;
-Maze maze[2][2];
+Avatar avatar;
+int mSize;
 
 
 
@@ -56,28 +65,61 @@ Maze maze[2][2];
 void Init(void)
 {
 
+	mSize = 40;
 
 	//delay para o timer
 	estado.delay = 1000;
+	for (int i = 0; i < 40; i++)
+	{
+		for (int j = 0; j < 40; j++)
+		{
+			maze[i][j].north = 1;
+			maze[i][j].east = 1;
+			maze[i][j].south = 1;
+			maze[i][j].west = 1;
+			maze[i][j].value = 0;
+		}
+
+	}
 	maze[0][0].north=1;
-	maze[0][0].east = 1;
-	maze[0][0].south = 0;
+	maze[0][0].east = 0;
+	maze[0][0].south = 1;
 	maze[0][0].west = 1;
+	maze[0][0].value = 1;
 
-	maze[0][1].north = 1;
+
+	maze[30][30].north = 1;
+	maze[0][30].east = 0;
+	maze[30][30].south = 1;
+	maze[30][30].west = 1;
+	maze[30][30].value = 2;
+	/*maze[0][1].north = 1;
 	maze[0][1].east = 1;
-	maze[0][1].south = 1;
-	maze[0][1].west = 1;
+	maze[0][1].south = 0;
+	maze[0][1].west = 0;
+	maze[0][1].value = 1;
 
-	maze[1][0].north = 0;
-	maze[1][0].east = 0;
+	maze[1][0].north = 1;
+	maze[1][0].east = 1;
 	maze[1][0].south = 1;
 	maze[1][0].west = 1;
+	maze[1][0].value = 0;
 
-	maze[1][1].north = 1;
+	maze[1][1].north = 0;
 	maze[1][1].east = 1;
 	maze[1][1].south = 1;
-	maze[1][1].west = 0;
+	maze[1][1].west = 1;
+	maze[1][1].value = 2;*/
+
+	for (int i = 0; i < mSize; i++) {
+		for (int j = 0; j < mSize; j++) {
+			if (maze[i][j].value == 1)
+			{
+				avatar.mPosX = i;
+				avatar.mPosY = j;
+			}
+		}
+	}
 	
 
 	
@@ -93,9 +135,9 @@ void Init(void)
 void ligacoes(int value)
 {
 	std::list<Liga> p;
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < mSize; i++)
 	{
-		for (int j = 0; j < 2; j++)
+		for (int j = 0; j < mSize; j++)
 		{
 			if (maze[i][j].north == 0){ Liga l; l.a = i * 10 + j; l.b = (i - 1) * 10 + j;  p.push_back(l); }
 			if (maze[i][j].south == 0){ Liga l; l.a = i * 10 + j; l.b = i + 1 * 10 + j;  p.push_back(l); }
@@ -144,7 +186,7 @@ void Reshape(int width, int height)
 
 	// gluOrtho2D(left,right,bottom,top); 
 	// projeccao ortogonal 2D, com profundidade (Z) entre -1 e 1
-	gluOrtho2D(-20, 320, 320, -20);
+	gluOrtho2D(-20, SIDE * 40, SIDE * 40 + 20, -20);
 
 	// Matriz Modelview
 	// Matriz onde são realizadas as tranformacoes dos modelos desenhados
@@ -160,23 +202,35 @@ void Reshape(int width, int height)
 void Draw(void)
 {
 	ligacoes(0);
-	for (int i = 0; i < 2; i++) {
-		for (int j = 0; j < 2; j++) {
+	for (int i = 0; i < mSize; i++) {
+		for (int j = 0; j < mSize; j++) {
+			
+			if (avatar.mPosX == i && avatar.mPosY == j){
+				cout << "avatar:" << avatar.mPosX << "," << avatar.mPosY << endl;
+				glColor3f(0.2, 0.3, 1.0);
+				glBegin(GL_TRIANGLE_FAN);
+				float x1 = SIDE*.5 + SIDE * j + RAIO;
+				float y1 = SIDE*.5 + SIDE * i - RAIO;
+				//glVertex2f(x1, y1);
+
+				for (int angle = 0; angle < 360; angle += 5){
+
+					glVertex2f(x1 + sin(angle) * RAIO, y1 + cos(angle) * RAIO);
+
+
+				}
+				glEnd();
+				glColor3f(1.0, 1.0, 1.0);
+			}
+
 			if (maze[i][j].south == 1) {
-				glPushMatrix();
-				//glTranslatef(j * 2 - 2, 0, i * 2);
-				//glutSolidCube(2);
+
 				glBegin(GL_LINES);
 				glVertex2f(SIDE * j, SIDE + SIDE*i);
 				glVertex2f(SIDE + SIDE * j, SIDE + SIDE*i);
-				cout << " [" << i << "," << j << "]  -----------" << endl;
-				cout << SIDE * j << " - " << SIDE*j << endl;
-				cout << SIDE +  SIDE * j << " - " << SIDE*j << endl;
 				glEnd();
-				glPopMatrix();
 			}
 			if (maze[i][j].north == 1) {
-				glPushMatrix();
 				/*glTranslatef(j * 2 + 2, 0, i * 2);
 				glutSolidCube(2);*/
 				glBegin(GL_LINES);
@@ -184,26 +238,48 @@ void Draw(void)
 				glVertex2f(SIDE * j, SIDE*i);
 				
 				glEnd();
-				glPopMatrix();
 			}
 			if (maze[i][j].east == 1) {
-				glPushMatrix();
 				glBegin(GL_LINES);
 				glVertex2f(SIDE + SIDE * j, SIDE + SIDE * i);
 				glVertex2f(SIDE + SIDE * j, SIDE*i);
 				glEnd();
-				glPopMatrix();
 			}
 			if (maze[i][j].west == 1) {
-				glPushMatrix();
 				glBegin(GL_LINES);
 				glVertex2f(SIDE * j, SIDE*i);
 				glVertex2f(SIDE * j, SIDE + SIDE * i);
 				glEnd();
-				glPopMatrix();
 			}
+			if (maze[i][j].value == 1){
+				glColor3f(0.0, 0.2, 1.0);
+				glBegin(GL_LINE_LOOP);
+				
+				glVertex2f(SIDE * j + MARGEM, SIDE*i + MARGEM);
+				glVertex2f(SIDE * j + MARGEM, SIDE*i + SIDE - MARGEM);
+					glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + SIDE - MARGEM);
+					glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + MARGEM);
+
+					glEnd();
+					glColor3f(1.0, 1.0, 1.0);
+			}
+			if (maze[i][j].value == 2){
+				glColor3f(1.0, 0.2, 0.0);
+				glBegin(GL_LINE_LOOP);
+
+				glVertex2f(SIDE * j + MARGEM, SIDE*i + MARGEM);
+				glVertex2f(SIDE * j + MARGEM, SIDE*i + SIDE - MARGEM);
+				glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + SIDE - MARGEM);
+				glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + MARGEM);
+
+				glEnd();
+				glColor3f(1.0, 1.0, 1.0);
+			}
+			
 		}
 	}
+
+
 
 	glFlush();
 	if (estado.doubleBuffer)
@@ -285,10 +361,36 @@ void Key(unsigned char key, int x, int y)
 		modelo.tipoPoligono = GL_TRIANGLE_FAN;
 		glutPostRedisplay(); // redesenhar o ecrã
 		break;
-	case 'l':
-	case 'L':
-		modelo.tipoPoligono = GL_LINE_LOOP;
-		glutPostRedisplay(); // redesenhar o ecrã
+	case 's':
+	case 'S':
+		if (maze[avatar.mPosX][avatar.mPosY].south == 0)
+		{ avatar.mPosX++;
+		  glutPostRedisplay(); // redesenhar o ecrã
+		}
+		break;
+	case 'w':
+	case 'W':
+		if (maze[avatar.mPosX][avatar.mPosY].north == 0)
+		{
+			avatar.mPosX--;
+			glutPostRedisplay(); // redesenhar o ecrã
+		}
+		break;
+	case 'd':
+	case 'D':
+		if (maze[avatar.mPosX][avatar.mPosY].east == 0)
+		{
+			avatar.mPosY++;
+			glutPostRedisplay(); // redesenhar o ecrã
+		}
+		break;
+	case 'a':
+	case 'A':
+		if (maze[avatar.mPosX][avatar.mPosY].west == 0)
+		{
+			avatar.mPosY--;
+			glutPostRedisplay(); // redesenhar o ecrã
+		}
 		break;
 	case 'R':
 		if (modelo.raio<0.9)
@@ -365,7 +467,7 @@ int main(int argc, char **argv)
 
 	glutInit(&argc, argv);
 	glutInitWindowPosition(0, 0);
-	glutInitWindowSize(300, 300);
+	glutInitWindowSize(600, 6000);
 	glutInitDisplayMode(((estado.doubleBuffer) ? GLUT_DOUBLE : GLUT_SINGLE) | GLUT_RGB);
 	if (glutCreateWindow("Exemplo") == GL_FALSE)
 		exit(1);
