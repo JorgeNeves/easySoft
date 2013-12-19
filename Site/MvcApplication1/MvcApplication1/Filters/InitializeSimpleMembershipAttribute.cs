@@ -5,6 +5,7 @@ using System.Threading;
 using System.Web.Mvc;
 using WebMatrix.WebData;
 using MvcApplication1.Models;
+using MvcApplication1.DAL;
 
 namespace MvcApplication1.Filters
 {
@@ -25,11 +26,11 @@ namespace MvcApplication1.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(null);
+                Database.SetInitializer<easySoftContext>(null);
 
                 try
                 {
-                    using (var context = new UsersContext())
+                    using (var context = new easySoftContext())
                     {
                         if (!context.Database.Exists())
                         {

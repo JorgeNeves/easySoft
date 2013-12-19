@@ -4,13 +4,13 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace GameWebSite.Models
+namespace MvcApplication1.Models
 {
     public class User_Tag
     {
-        
-        private int User_TagID { get; set; }
-        private int UserID { get; set; }
-        private int TagID { get; set; }
+
+        public int User_TagID { get; set; }
+        public int UserID { get; set; }
+        public int TagID { get; set; }
     }
 }

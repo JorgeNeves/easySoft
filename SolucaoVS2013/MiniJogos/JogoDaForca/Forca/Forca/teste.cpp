@@ -4,6 +4,9 @@
 #include <math.h>
 #include <time.h>
 #include <GL/glut.h>
+#include <algorithm>
+#include <ctype.h>
+
 using namespace std;
 #ifndef M_PI
 #define M_PI 3.1415926535897932384626433832795
@@ -21,10 +24,13 @@ typedef struct {
 typedef struct {
 	GLint		nletras;
 	string      pal;
+	const char* p;
+	const char* paux;
 }Palavra;
 
 typedef struct{
 	int	nerros;
+	char* letra;
 }Jogo;
 
 Estado estado;
@@ -35,19 +41,27 @@ Palavra palavra;
 /* Inicialização do ambiente OPENGL */
 void Init(void)
 {
+	
+	palavra.pal = "AVAL IACAO";
+	palavra.nletras = palavra.pal.length();
+	palavra.p = palavra.pal.c_str();
+	//string newString;
+	
+	//transform(palavra.pal.begin(),palavra.pal.end(),newString.begin(),tolower);
 
-	struct tm *current_time;
-	time_t timer = time(0);
+	//palavra.paux = newString.c_str();
+	//tracinhos();
 
 	//delay para o timer
 	estado.delay = 10;
 	jogo.nerros = 0;
 
 	glClearColor(0.0, 0.0, 0.0, 0.0);
-
+	/*
 	glEnable(GL_POINT_SMOOTH);
 	glEnable(GL_LINE_SMOOTH);
-	glEnable(GL_POLYGON_SMOOTH);
+	glEnable(GL_POLYGON_SMOOTH);*/
+
 
 }
 
@@ -68,7 +82,6 @@ void Reshape(int width, int height)
 
 	// glViewport(botom, left, width, height)
 	// define parte da janela a ser utilizada pelo OpenGL
-
 	glViewport(0, 0, (GLint)size, (GLint)size);
 
 
@@ -83,10 +96,9 @@ void Reshape(int width, int height)
 
 	// Matriz Modelview
 	// Matriz onde são realizadas as tranformacões dos modelos desenhados
-	glMatrixMode(GL_MODELVIEW);
+	glMatrixMode(GL_MODELVIEW_MATRIX);
 	glLoadIdentity();
 }
-
 
 // ... definicao das rotinas auxiliares de desenho ...
 
@@ -166,6 +178,7 @@ void braco(int n){
 		}
 	
 }
+
 void perna(int n){
 
 	glBegin(GL_LINES);
@@ -183,31 +196,54 @@ void perna(int n){
 
 }
 
-void tracinhos(Palavra palavra){
+void desenhaLetra(int pos){
+	float inc = 1.8 / palavra.nletras;
+	float posxi = -0.9;
+
+	for (int i = 0; i < pos+1; i++){
+		glColor3f(1.0f, 0.0f, 0.3f);
+		glRasterPos2f(posxi + 0.05f, -0.6f);
+
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, palavra.p[i]);
+		posxi += inc;
+	}
+}
+
+void tracinhos(){
 	
-	float n = palavra.nletras / 2.0;
-
+	float n = palavra.nletras*0.5;
+	
 	//negativos
-	float posxi = -n*0.25;
-	for (int i = 0; i <palavra.nletras; i++){
+	float inc = 1.8 / palavra.nletras;
+	float inc_D = 1.5 / palavra.nletras;
+	float posxi =-0.9;
 
-		glBegin(GL_LINES);
-		glColor3f(1.0f, 1.0f, 0.0f); //sets color of line
-		glVertex3f(posxi,-0.7f, 0.0f); //Here are two vertices that are used as 
-		glVertex3f(posxi+0.2f, -0.7f, 0.0f); //endpoints for the line. Adjust the numbers inside glVertex3f() to move the line
-		glEnd(); //End drawing
-		glColor3f(1.0f, 1.0f, 0.3f);
-		glRectf(posxi, -0.65f, posxi + 0.2f, -0.45f);
-		posxi +=0.25;
+	for (int i = 0; i < palavra.nletras; i++){
+		if (palavra.p[i] != ' '){
+			glBegin(GL_LINES);
+			glColor3f(1.0f, 1.0f, 0.0f); //sets color of line
+			glVertex3f(posxi, -0.7f, 0.0f); //Here are two vertices that are used as 
+			glVertex3f(posxi + inc_D, -0.7f, 0.0f); //endpoints for the line. Adjust the numbers inside glVertex3f() to move the line
+			glEnd(); //End drawing
 
+			glColor3f(1.0f, 1.0f, 0.3f);
+
+			glRectf(posxi, -0.65f, posxi + inc_D, -0.45f);
+
+			desenhaLetra(i);
+
+		}
+		posxi += inc;
 		
-
-
 	}
 
 }
 
-
+void existe(){
+	if (palavra.p[0] == toupper((char)jogo.letra)){
+		printf("Existe %c\n", jogo.letra);
+	}
+}
 // Callback de desenho
 
 void Draw(void)
@@ -217,17 +253,43 @@ void Draw(void)
 	// ... chamada das rotinas auxiliares de desenho ...
 
 	forca();
-	//cabeca();
-	//pescoco();
-	//tronco();
-	//braco(1);
-	//braco(2);
-	//perna(1);
-	//perna(2);
-	Palavra Teste;
-	Teste.nletras = 7;
-	Teste.pal = "TESTE";
-	tracinhos(Teste);	
+
+	tracinhos();
+
+	if (jogo.nerros == 1){
+		cabeca();
+	}
+	if (jogo.nerros == 2){
+		cabeca();
+		pescoco();
+		tronco();
+	}
+	if (jogo.nerros == 3){
+		cabeca();
+		pescoco();
+		tronco();
+		braco(1);
+	}
+	if (jogo.nerros == 4){
+		cabeca();
+		pescoco();
+		tronco();
+		braco(2);
+	}
+	if (jogo.nerros == 5){
+		cabeca();
+		pescoco();
+		tronco();
+		braco(2);
+		perna(1);
+	}
+	if (jogo.nerros == 6){
+		cabeca();
+		pescoco();
+		tronco();
+		braco(2);
+		perna(2);
+	}
 
 	glFlush();
 	if (estado.doubleBuffer)
@@ -255,24 +317,7 @@ void Timer(int value)
 {
 	// ... accoes do temporizador ... 
 
-	if (jogo.nerros == 1){
-		cabeca();
-	}
-	if (jogo.nerros == 2){
-		tronco();
-	}
-	if (jogo.nerros == 3){
-		braco(1);
-	}
-	if (jogo.nerros == 4){
-		braco(2);
-	}
-	if (jogo.nerros == 5){
-		perna(1);
-	}
-	if (jogo.nerros == 6){
-		perna(2);
-	}
+	
 	glutTimerFunc(estado.delay, Timer, 0);
 
 	// redesenhar o ecra 
@@ -308,45 +353,10 @@ void Key(unsigned char key, int x, int y)
 	case 27:
 		exit(1);
 		// ... accoes sobre outras teclas ... 
-
-	case 'h':
-	case 'H':
-		imprime_ajuda();
-		break;
-	case '+':
-		jogo.nerros += 1;
-		printf("numero de erros = %d", jogo.nerros);
-		break;
-	case '-':
-		break;
-	case 'D':
-		if (estado.delay<1000)
-		{
-			estado.delay += 50;
-		}
-		break;
-	case 'd':
-		if (estado.delay >= 100)
-		{
-			estado.delay -= 50;
-		}
-		break;
-	case 'p':
-	case 'P':
-		break;
-	case 't':
-	case 'T':
-		break;
-	case 'l':
-	case 'L':
-		break;
-	case 'R':
-		break;
-	case 'r':
-		break;
-
 	}
-
+	jogo.letra = (char *)key;
+	
+	existe();
 	if (DEBUG)
 		printf("Carregou na tecla %c\n", key);
 
@@ -359,7 +369,7 @@ int main(int argc, char **argv)
 
 	glutInit(&argc, argv);
 	glutInitWindowPosition(0, 0);
-	glutInitWindowSize(300, 300);
+	glutInitWindowSize(600, 600);
 	glutInitDisplayMode(((estado.doubleBuffer) ? GLUT_DOUBLE : GLUT_SINGLE) | GLUT_RGB);
 	if (glutCreateWindow("Exemplo") == GL_FALSE)
 		exit(1);

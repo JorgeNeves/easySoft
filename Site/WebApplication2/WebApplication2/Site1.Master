@@ -1,0 +1,36 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="WebApplication2.Site1" %>
+
+<!DOCTYPE html>
+
+<script runat="server">
+
+</script>
+    
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title>Untitled Page</title>
+    <link href="default.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    
+    
+<div id="headercontent">
+<img src="brand.gif" alt="CodefixerLogo" />
+</div>
+
+<div id="leftcontent">
+<asp:contentplaceholder id="ContentPlaceHolder1" runat="server">
+        </asp:contentplaceholder>
+</div>
+
+<div id="rightcontent">
+<a href="page1.aspx">Page 1</a><br />
+<a href="page1.aspx">Page 2</a><br />
+<a href="page1.aspx">Page 3</a><br />
+<a href="page1.aspx">Page 4</a><br />
+<a href="page1.aspx">Page 5</a><br />
+</div>
+
+
+</body>
+</html>

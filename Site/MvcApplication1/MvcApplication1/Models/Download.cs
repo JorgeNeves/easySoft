@@ -4,13 +4,13 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace GameWebSite.Models
+namespace MvcApplication1.Models
 {
     public class Download
     {
         
-        private int DownloadID { get; set; }
-        private DateTime Data { get; set; }
-        private int UserID { get; set; }
+        public int DownloadID { get; set; }
+        public DateTime Data { get; set; }
+        public int UserID { get; set; }
     }
 }

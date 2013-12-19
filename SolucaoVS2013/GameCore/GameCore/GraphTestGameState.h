@@ -102,9 +102,7 @@ private:
 	void myInit();
 	void imprime_ajuda();
 	void putLights(GLfloat*);
-	void desenhaParede(GLfloat xi, GLfloat yi, GLfloat zi, GLfloat xf, GLfloat yf, GLfloat zf);
-	void desenhaChao(GLfloat xi, GLfloat yi, GLfloat zi, GLfloat xf, GLfloat yf, GLfloat zf, int orient);
-	void desenhaNo(int no);
+	void desenhaNo(No no);
 	void desenhaArco(Arco arco);
 	void desenhaLabirinto();
 	void desenhaEixo();

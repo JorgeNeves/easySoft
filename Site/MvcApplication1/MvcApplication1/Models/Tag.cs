@@ -4,13 +4,13 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace GameWebSite.Models
+namespace MvcApplication1.Models
 {
     public class Tag
     {
-        
-        private int TagID { get; set; }
-        private int TagOriginalID { get; set; }
-        private string Palavra { get; set; }
+
+        public int TagID { get; set; }
+        public int TagOriginalID { get; set; }
+        public string Palavra { get; set; }
     }
 }
