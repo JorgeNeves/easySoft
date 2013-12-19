@@ -42,7 +42,8 @@ Palavra palavra;
 
 
 void ligacao(void){
-		char* argv[] = { "libswipl.dll", "-s", "forca.pl", NULL };
+		/*char* argv[] = { "libswipl.dll", "-s", "forca.pl", NULL };*/
+		char* argv[] = { "libswipl.dll", "forca.pl", NULL };
 		PlEngine p(3, argv);
 		PlTermv av(2);
 }
