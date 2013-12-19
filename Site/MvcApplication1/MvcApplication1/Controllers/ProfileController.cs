@@ -22,7 +22,7 @@ namespace MvcApplication1.Controllers
             string name = HttpContext.User.Identity.Name;
             DbSet users = db.UserProfiles;
             
-            return View(db.UserProfiles.Find());
+            return View(db.UserProfiles.ToString());
         }
 
         //
