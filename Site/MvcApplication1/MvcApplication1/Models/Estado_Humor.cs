@@ -4,12 +4,12 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace GameWebSite.Models
+namespace MvcApplication1.Models
 {
     public class Estado_Humor
     {
-        
-        private int Estado_HumorID { get; set; }
-        private string Sentimento { get; set; }
+
+        public int Estado_HumorID { get; set; }
+        public string Sentimento { get; set; }
     }
 }
