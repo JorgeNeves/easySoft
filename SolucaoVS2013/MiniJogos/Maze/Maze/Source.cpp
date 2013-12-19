@@ -6,6 +6,7 @@
 #include <time.h>
 #include <iostream>
 #include <GL/glut.h>
+#include "Reader.h"
 
 using namespace std;
 
@@ -31,14 +32,6 @@ typedef struct {
 	GLfloat     tamLado;
 	GLenum      tipoPoligono;
 }Modelo;
-
-typedef struct {
-	int west;
-	int north;
-	int east;
-	int south;
-	int value; // 0 representa um caminho, 1 representa o inicio, 2 representa o fim
-}Maze;
 
 typedef struct {
 	int       a;
@@ -77,11 +70,18 @@ void Init(void)
 			maze[i][j].east = 1;
 			maze[i][j].south = 1;
 			maze[i][j].west = 1;
-			maze[i][j].value = 0;
+			if ((i % 2) == 0)
+			{
+				maze[i][j].value = 3;
+			}
+			else
+			{
+				maze[i][j].value = 0;
+			}
 		}
 
 	}
-	maze[0][0].north=1;
+	maze[0][0].north = 1;
 	maze[0][0].east = 0;
 	maze[0][0].south = 1;
 	maze[0][0].west = 1;
@@ -89,7 +89,7 @@ void Init(void)
 
 
 	maze[30][30].north = 1;
-	maze[0][30].east = 0;
+	maze[30][30].east = 0;
 	maze[30][30].south = 1;
 	maze[30][30].west = 1;
 	maze[30][30].value = 2;
@@ -120,9 +120,9 @@ void Init(void)
 			}
 		}
 	}
-	
 
-	
+
+
 
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 
@@ -204,7 +204,7 @@ void Draw(void)
 	ligacoes(0);
 	for (int i = 0; i < mSize; i++) {
 		for (int j = 0; j < mSize; j++) {
-			
+
 			if (avatar.mPosX == i && avatar.mPosY == j){
 				cout << "avatar:" << avatar.mPosX << "," << avatar.mPosY << endl;
 				glColor3f(0.2, 0.3, 1.0);
@@ -222,7 +222,14 @@ void Draw(void)
 				glEnd();
 				glColor3f(1.0, 1.0, 1.0);
 			}
-
+			if (maze[i][j].value == 3){
+				glBegin(GL_QUADS);
+				glVertex2f(SIDE * j + MARGEM, SIDE*i + MARGEM);
+				glVertex2f(SIDE * j + MARGEM, SIDE*i + SIDE - MARGEM);
+				glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + SIDE - MARGEM);
+				glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + MARGEM);
+				glEnd();
+			}
 			if (maze[i][j].south == 1) {
 
 				glBegin(GL_LINES);
@@ -236,7 +243,7 @@ void Draw(void)
 				glBegin(GL_LINES);
 				glVertex2f(SIDE + SIDE * j, SIDE*i);
 				glVertex2f(SIDE * j, SIDE*i);
-				
+
 				glEnd();
 			}
 			if (maze[i][j].east == 1) {
@@ -254,14 +261,14 @@ void Draw(void)
 			if (maze[i][j].value == 1){
 				glColor3f(0.0, 0.2, 1.0);
 				glBegin(GL_LINE_LOOP);
-				
+
 				glVertex2f(SIDE * j + MARGEM, SIDE*i + MARGEM);
 				glVertex2f(SIDE * j + MARGEM, SIDE*i + SIDE - MARGEM);
-					glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + SIDE - MARGEM);
-					glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + MARGEM);
+				glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + SIDE - MARGEM);
+				glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + MARGEM);
 
-					glEnd();
-					glColor3f(1.0, 1.0, 1.0);
+				glEnd();
+				glColor3f(1.0, 1.0, 1.0);
 			}
 			if (maze[i][j].value == 2){
 				glColor3f(1.0, 0.2, 0.0);
@@ -275,7 +282,7 @@ void Draw(void)
 				glEnd();
 				glColor3f(1.0, 1.0, 1.0);
 			}
-			
+
 		}
 	}
 
@@ -364,8 +371,9 @@ void Key(unsigned char key, int x, int y)
 	case 's':
 	case 'S':
 		if (maze[avatar.mPosX][avatar.mPosY].south == 0)
-		{ avatar.mPosX++;
-		  glutPostRedisplay(); // redesenhar o ecrã
+		{
+			avatar.mPosX++;
+			glutPostRedisplay(); // redesenhar o ecrã
 		}
 		break;
 	case 'w':

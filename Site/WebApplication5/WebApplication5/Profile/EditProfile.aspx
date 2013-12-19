@@ -11,6 +11,13 @@
         .auto-style3 {
             height: 31px;
         }
+        .auto-style4 {
+            width: 239px;
+        }
+        .auto-style5 {
+            height: 31px;
+            width: 239px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="FeaturedContent" runat="server">
@@ -22,9 +29,9 @@
             <td>
                 <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
             </td>
-            <td>&nbsp;Password Antiga</td>
+            <td class="auto-style4">Password Antiga</td>
             <td>
-                <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TextBox7" runat="server" TextMode="Password"></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -32,9 +39,9 @@
             <td>
                 <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
             </td>
-            <td>Nova Password</td>
+            <td class="auto-style4">Nova Password</td>
             <td>
-                <asp:TextBox ID="TextBox8" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TextBox8" runat="server" TextMode="Password"></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -42,9 +49,9 @@
             <td>
                 <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
             </td>
-            <td>Reescreve Nova Password</td>
+            <td class="auto-style4">Reescreve Nova Password</td>
             <td>
-                <asp:TextBox ID="TextBox9" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TextBox9" runat="server" TextMode="Password"></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -52,7 +59,7 @@
             <td class="auto-style3">
                 <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
             </td>
-            <td class="auto-style3"></td>
+            <td class="auto-style5"></td>
             <td class="auto-style3">
                 <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Alterar Password" />
             </td>
@@ -62,15 +69,19 @@
             <td class="auto-style3">
                 <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
             </td>
-            <td class="auto-style3"></td>
-            <td class="auto-style3">&nbsp;</td>
+            <td class="auto-style5"></td>
+            <td class="auto-style3">
+                <asp:Label ID="Label1" runat="server" ForeColor="#33CC33" Text="Alterada com sucesso" Visible="False"></asp:Label>
+                <br />
+                <asp:Label ID="Label2" runat="server" ForeColor="Red" Text="Erro ao alterar password" Visible="False"></asp:Label>
+            </td>
         </tr>
         <tr>
             <td class="auto-style1">LinkedIn</td>
             <td>
                 <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
             </td>
-            <td>&nbsp;</td>
+            <td class="auto-style4">&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
@@ -80,7 +91,7 @@
                 </asp:DropDownList>
                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:DefaultConnection %>" SelectCommand="SELECT [Sentimento] FROM [EstadoDeHumors]"></asp:SqlDataSource>
             </td>
-            <td>&nbsp;</td>
+            <td class="auto-style4">&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
@@ -88,7 +99,7 @@
             <td>
                 <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Atualizar" />
             </td>
-            <td>&nbsp;</td>
+            <td class="auto-style4">&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
@@ -96,15 +107,19 @@
             <td>
                 <asp:FileUpload ID="FileUpload1" runat="server" Width="364px" />
             </td>
-            <td>&nbsp;</td>
+            <td class="auto-style4">&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style1">&nbsp;</td>
             <td>
-                <asp:Button ID="Button3" runat="server" Text="Upload" />
+                <asp:Button ID="Button3" runat="server" Text="Upload" OnClick="Button3_Click" />
             </td>
-            <td>&nbsp;</td>
+            <td class="auto-style4">
+                <asp:Label ID="Label3" runat="server" ForeColor="#33CC33" Text="Upload com sucesso" Visible="False"></asp:Label>
+                <br />
+                <asp:Label ID="Label4" runat="server" ForeColor="Red" Text="Erro no upload" Visible="False"></asp:Label>
+            </td>
             <td>&nbsp;</td>
         </tr>
     </table>

@@ -64,7 +64,42 @@ namespace WebApplication5.TabelModel.BLL
             return (string)rs.Tables[0].Rows[0]["tipo"];
 
         }
+        public static void updateUserInfo(string username, string nome, string apelido, string email,string pais, int estado, string facebook, string LinkedIn)
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "UPDATE Users SET PrimeiroNome='"+nome+"', UltimoNome='"+apelido+"', Mail='"+email+"',Pais='"+pais+"',EstadoDeHumorID="+estado+" ,PerfilFacebook='"+facebook+"',PerfilLinkedIn='"+LinkedIn+"' WHERE Nick='"+username+"'";
+            DataSet rs = dal.ReturnDataSet(sql);
 
+
+        }
+
+        public static void updateUserPass(string username, string password)
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "UPDATE Users SET Password='" + password + "' WHERE Nick='" + username + "'";
+            DataSet rs = dal.ReturnDataSet(sql);
+
+
+        }
+
+        public static void updateUserAvatar(string username, string avatar)
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "UPDATE Users SET AvatarUrl='" + avatar + "' WHERE Nick='" + username + "'";
+            DataSet rs = dal.ReturnDataSet(sql);
+
+
+        }
+
+        public static string getEstado(int estado)
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "select Sentimento from EstadoDeHumors where EstadoDeHumorID = '" + estado + "'";
+            DataSet rs = dal.ReturnDataSet(sql);
+            return (string)rs.Tables[0].Rows[0][0];
+
+
+        }
         public static DataSet getUser(string username)
         {
             BDAcess dal = new BDAcess();

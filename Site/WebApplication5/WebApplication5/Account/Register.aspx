@@ -36,7 +36,7 @@
         <tr>
             <td class="auto-style2">Password</td>
             <td class="auto-style3">
-                <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TextBox2" runat="server" TextMode="Password"></asp:TextBox>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
             <td>
                 <asp:Label ID="Label2" runat="server" ForeColor="Red" Text="* must be filled" Visible="False"></asp:Label>
@@ -45,7 +45,7 @@
         <tr>
             <td class="auto-style2">Repeat Password</td>
             <td class="auto-style3">
-                <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TextBox3" runat="server" TextMode="Password"></asp:TextBox>
             </td>
             <td>
                 <asp:Label ID="Label3" runat="server" ForeColor="Red" Text="* must be filled" Visible="False"></asp:Label>

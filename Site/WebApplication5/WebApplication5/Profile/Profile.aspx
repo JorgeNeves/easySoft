@@ -52,22 +52,27 @@
                 <asp:Image ID="Image1" runat="server" Height="135px" Width="130px" />
 &nbsp;&nbsp;&nbsp;
                 <br />
-                Idade
+                Data de Nascimento :
                 <asp:Label ID="Label3" runat="server"></asp:Label>
                 <br />
                 Estado de Humor
+                : Está
                 <asp:Label ID="Label4" runat="server"></asp:Label>
                 <br />
                 Mail
+                :
                 <asp:Label ID="Label5" runat="server"></asp:Label>
                 <br />
                 Facebook
+                :
                 <asp:Label ID="Label6" runat="server"></asp:Label>
                 <br />
                 LinkedIn
+                :
                 <asp:Label ID="Label7" runat="server"></asp:Label>
                 <br />
                 Pais
+                :
                 <asp:Label ID="Label8" runat="server"></asp:Label>
             </td>
             <td class="auto-style4">&nbsp;<br />
