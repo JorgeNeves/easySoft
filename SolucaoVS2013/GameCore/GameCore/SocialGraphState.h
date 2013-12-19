@@ -60,12 +60,15 @@ typedef	GLdouble Vertice[3];
 typedef	GLdouble Vector[4];
 
 
+#define CAMVEL 2
+
 typedef struct Camera{
 	GLfloat fov;
 	GLdouble dir_lat;
 	GLdouble dir_long;
 	GLfloat dist;
 	Vertice center;
+	GLboolean moving;
 
 }Camera;
 
@@ -93,34 +96,31 @@ typedef struct Modelo {
 	GLUquadric *quad;
 }Modelo;
 
-class GraphTestGameState : public GameState
+class SocialGraphState : public GameState
 {
 private:
 	Estado estado;
 	Modelo modelo;
-	static GraphTestGameState* activeInst;
-	void myInit();
-	void imprime_ajuda();
+	static SocialGraphState* activeInst;
 	void putLights(GLfloat*);
 	void desenhaNo(No no);
 	void desenhaArco(Arco arco);
 	void desenhaLabirinto();
 	void desenhaEixo();
-	void desenhaPlanoDrag(int eixo);
 	void desenhaEixos();
 	void setCamera();
 	void setProjection(int x, int y, GLboolean picking);
-	void myReshape(int w, int h);
+	void Reshape(int w, int h);
 
 public:
-	GraphTestGameState();
-	~GraphTestGameState();
+	SocialGraphState();
+	~SocialGraphState();
 
 	void Load();
 	void Unload();
 	void HandleInput(unsigned char key, int special, bool val);
 	void Update();
 	void Draw();
-	static void myReshapeWrapper(int w, int h);
+	static void ReshapeWrapper(int w, int h);
 };
 

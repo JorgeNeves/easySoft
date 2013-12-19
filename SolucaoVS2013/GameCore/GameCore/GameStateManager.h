@@ -32,22 +32,22 @@ private:
 	std::stack<GameState*> gameStateStack;
 
 	GameStateManager(){};
-	GameStateManager(GameStateManager &const){};
-	GameStateManager& operator=(GameStateManager const&){};
+	GameStateManager(const GameStateManager&){};
+	GameStateManager& operator=(const GameStateManager&){};
 
 
 	// Timer
 	void CurrentStateTimer(int value);
-
-	// Keyboard Input Callbacks
-	void KeyboardFunc(unsigned char key, int x, int y);
-	void KeyboardUpFunc(unsigned char key, int x, int y);
 
 public:
 	static GameStateManager* Instance();
 	static void CurrentStateTimerWrapper(int value);
 	static void KeyboardFuncWrapper(unsigned char key, int x, int y);
 	static void KeyboardUpFuncWrapper(unsigned char key, int x, int y);
+	static void SpecialFuncWrapper(int key, int x, int y);
+	static void SpecialUpFuncWrapper(int key, int x, int y);
+	static void RedrawWrapper();
+
 
 	void PushState(GameState* gamestate);
 	void PopState();

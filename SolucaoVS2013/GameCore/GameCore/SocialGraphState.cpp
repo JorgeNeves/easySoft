@@ -1,57 +1,6 @@
-#include "GraphTestGameState.h"
+#include "SocialGraphState.h"
 
-GraphTestGameState* GraphTestGameState::activeInst = nullptr;
-
-void GraphTestGameState::myInit()
-{
-
-	GLfloat LuzAmbiente[] = { 0.5, 0.5, 0.5, 0.0 };
-
-	glClearColor(0.0, 0.0, 0.0, 0.0);
-
-	glEnable(GL_SMOOTH); /*enable smooth shading */
-	glEnable(GL_LIGHTING); /* enable lighting */
-	glEnable(GL_DEPTH_TEST); /* enable z buffer */
-	glEnable(GL_NORMALIZE);
-
-	glDepthFunc(GL_LESS);
-
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LuzAmbiente);
-	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, estado.lightViewer);
-	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
-
-	modelo.quad = gluNewQuadric();
-	gluQuadricDrawStyle(modelo.quad, GLU_FILL);
-	gluQuadricNormals(modelo.quad, GLU_OUTSIDE);
-
-	leGrafo();
-}
-
-void GraphTestGameState::imprime_ajuda(void)
-{
-	printf("\n\nDesenho de um labirinto a partir de um grafo\n");
-	printf("h,H - Ajuda \n");
-	printf("i,I - Reset dos Valores \n");
-	printf("******* Diversos ******* \n");
-	printf("l,L - Alterna o calculo luz entre Z e eye (GL_LIGHT_MODEL_LOCAL_VIEWER)\n");
-	printf("k,K - Alerna luz de camera com luz global \n");
-	printf("s,S - PolygonMode Fill \n");
-	printf("w,W - PolygonMode Wireframe \n");
-	printf("p,P - PolygonMode Point \n");
-	printf("c,C - Liga/Desliga Cull Face \n");
-	printf("n,N - Liga/Desliga apresentação das normais \n");
-	printf("******* grafos ******* \n");
-	printf("F1  - Grava grafo do ficheiro \n");
-	printf("F2  - Lê grafo para ficheiro \n");
-	printf("F6  - Cria novo grafo\n");
-	printf("******* Camera ******* \n");
-	printf("Botão esquerdo - Arrastar os eixos (centro da camera)\n");
-	printf("Botão direito  - Rodar camera\n");
-	printf("Botão direito com CTRL - Zoom-in/out\n");
-	printf("PAGE_UP, PAGE_DOWN - Altera distância da camara \n");
-	printf("ESC - Sair\n");
-}
-
+SocialGraphState* SocialGraphState::activeInst = nullptr;
 
 void material(enum tipo_material mat)
 {
@@ -67,7 +16,7 @@ const GLfloat blue_light[] = { 0.0, 0.0, 1.0, 1.0 };
 const GLfloat white_light[] = { 1.0, 1.0, 1.0, 1.0 };
 
 
-void GraphTestGameState::putLights(GLfloat* diffuse)
+void SocialGraphState::putLights(GLfloat* diffuse)
 {
 	const GLfloat white_amb[] = { 0.2, 0.2, 0.2, 1.0 };
 
@@ -108,10 +57,10 @@ void desenhaSolo(){
 	glNormal3f(0, 0, 1);
 	for (int i = -300; i<300; i += STEP)
 	for (int j = -300; j<300; j += STEP){
-		glVertex2f(i, j);
-		glVertex2f(i + STEP, j);
-		glVertex2f(i + STEP, j + STEP);
-		glVertex2f(i, j + STEP);
+		glVertex2f((GLfloat)i, (GLfloat)j);
+		glVertex2f((GLfloat)i + STEP, (GLfloat)j);
+		glVertex2f((GLfloat)i + STEP, (GLfloat)j + STEP);
+		glVertex2f((GLfloat)i, (GLfloat)j + STEP);
 	}
 	glEnd();
 }
@@ -171,16 +120,17 @@ void desenhaNormal(GLdouble x, GLdouble y, GLdouble z, GLdouble normal[], tipo_m
 	glEnable(GL_LIGHTING);
 }
 
-
-void GraphTestGameState::desenhaNo(No no)
+void SocialGraphState::desenhaNo(No no)
 {
+	material(red_plastic);
 	glTranslatef(no.x, no.y, no.z + 0.25);
 	glutSolidSphere(2.0, 10, 10);
 }
 
-
-void GraphTestGameState::desenhaArco(Arco arco)
+void SocialGraphState::desenhaArco(Arco arco)
 {
+	material(emerald);
+
 	float xi = nos[arco.noi].x;
 	float yi = nos[arco.noi].y;
 	float zi = nos[arco.noi].z;
@@ -205,17 +155,16 @@ void GraphTestGameState::desenhaArco(Arco arco)
 	gluCylinder(quadric, arco.peso, arco.peso, length, 10, 10);
 }
 
-void GraphTestGameState::desenhaLabirinto()
+void SocialGraphState::desenhaLabirinto()
 {
 	glPushMatrix();
-	glTranslatef(0, 0, 0.05);
+	glTranslatef((GLfloat)0, (GLfloat)0, (GLfloat)0.05);
 	glScalef(5, 5, 5);
 	for (int i = 0; i<numNos; i++){
 		glPushMatrix();
 		desenhaNo(nos[i]);
 		glPopMatrix();
 	}
-	material(emerald);
 	for (int i = 0; i < numArcos; i++)
 	{
 		glPushMatrix();
@@ -225,8 +174,8 @@ void GraphTestGameState::desenhaLabirinto()
 	glPopMatrix();
 }
 
-void GraphTestGameState::desenhaEixo(){
-	gluCylinder(modelo.quad, 0.5, 0.5, 20, 16, 15);
+void SocialGraphState::desenhaEixo(){
+	/*gluCylinder(modelo.quad, 0.5, 0.5, 20, 16, 15);
 	glPushMatrix();
 	glTranslatef(0, 0, 20);
 	glPushMatrix();
@@ -234,50 +183,19 @@ void GraphTestGameState::desenhaEixo(){
 	gluDisk(modelo.quad, 0.5, 2, 16, 6);
 	glPopMatrix();
 	gluCylinder(modelo.quad, 2, 0, 5, 16, 15);
-	glPopMatrix();
+	glPopMatrix();*/
 }
 
 #define EIXO_X		1
 #define EIXO_Y		2
 #define EIXO_Z		3
 
-void GraphTestGameState::desenhaPlanoDrag(int eixo){
-	glPushMatrix();
-	glTranslated(estado.eixo[0], estado.eixo[1], estado.eixo[2]);
-	switch (eixo) {
-	case EIXO_Y:
-		if (abs(estado.camera.dir_lat)<M_PI / 4)
-			glRotatef(-90, 0, 0, 1);
-		else
-			glRotatef(90, 1, 0, 0);
-		material(red_plastic);
-		break;
-	case EIXO_X:
-		if (abs(estado.camera.dir_lat)>M_PI / 6)
-			glRotatef(90, 1, 0, 0);
-		material(azul);
-		break;
-	case EIXO_Z:
-		if (abs(cos(estado.camera.dir_long))>0.5)
-			glRotatef(90, 0, 0, 1);
-
-		material(emerald);
-		break;
-	}
-	glBegin(GL_QUADS);
-	glNormal3f(0, 1, 0);
-	glVertex3f(-100, 0, -100);
-	glVertex3f(100, 0, -100);
-	glVertex3f(100, 0, 100);
-	glVertex3f(-100, 0, 100);
-	glEnd();
-	glPopMatrix();
-}
 
 
-void GraphTestGameState::desenhaEixos(){
 
-	glPushMatrix();
+void SocialGraphState::desenhaEixos(){
+
+	/*glPushMatrix();
 	glTranslated(estado.eixo[0], estado.eixo[1], estado.eixo[2]);
 	material(emerald);
 	glPushName(EIXO_Z);
@@ -297,10 +215,10 @@ void GraphTestGameState::desenhaEixos(){
 	desenhaEixo();
 	glPopMatrix();
 	glPopName();
-	glPopMatrix();
+	glPopMatrix();*/
 }
 
-void GraphTestGameState::setCamera(){
+void SocialGraphState::setCamera(){
 	Vertice eye;
 	eye[0] = estado.camera.center[0] + estado.camera.dist*cos(estado.camera.dir_long)*cos(estado.camera.dir_lat);
 	eye[1] = estado.camera.center[1] + estado.camera.dist*sin(estado.camera.dir_long)*cos(estado.camera.dir_lat);
@@ -316,7 +234,19 @@ void GraphTestGameState::setCamera(){
 	}
 }
 
-GraphTestGameState::GraphTestGameState()
+void SocialGraphState::setProjection(int x, int y, GLboolean picking){
+	glLoadIdentity();
+	if (picking) { // se está no modo picking, lê viewport e define zona de picking
+		GLint vport[4];
+		glGetIntegerv(GL_VIEWPORT, vport);
+		gluPickMatrix(x, glutGet(GLUT_WINDOW_HEIGHT) - y, 4, 4, vport); // Inverte o y do rato para corresponder à jana
+	}
+
+	gluPerspective(estado.camera.fov, (GLfloat)glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT), 1, 500);
+
+}
+
+SocialGraphState::SocialGraphState()
 {
 	estado.camera.dir_lat = M_PI / 4;
 	estado.camera.dir_long = -M_PI / 4;
@@ -328,6 +258,7 @@ GraphTestGameState::GraphTestGameState()
 	estado.camera.center[0] = 0;
 	estado.camera.center[1] = 0;
 	estado.camera.center[2] = 0;
+	estado.camera.moving = false;
 	estado.light = GL_FALSE;
 	estado.apresentaNormais = GL_FALSE;
 	estado.lightViewer = 1;
@@ -347,130 +278,82 @@ GraphTestGameState::GraphTestGameState()
 	activeInst = this;
 }
 
-GraphTestGameState::~GraphTestGameState()
+SocialGraphState::~SocialGraphState()
 {
 }
 
-void GraphTestGameState::Draw()
+
+// DRAW
+
+void SocialGraphState::Draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	setCamera();
 
 	material(slate);
-	desenhaSolo();
-
-
-	desenhaEixos();
-
+	//desenhaSolo();
 	desenhaLabirinto();
-
-	if (estado.eixoTranslaccao) {
-		// desenha plano de translacção
-		cout << "Translate... " << estado.eixoTranslaccao << endl;
-		desenhaPlanoDrag(estado.eixoTranslaccao);
-
-	}
-
 	glFlush();
 	glutSwapBuffers();
 }
 
-void GraphTestGameState::setProjection(int x, int y, GLboolean picking){
-	glLoadIdentity();
-	if (picking) { // se está no modo picking, lê viewport e define zona de picking
-		GLint vport[4];
-		glGetIntegerv(GL_VIEWPORT, vport);
-		gluPickMatrix(x, glutGet(GLUT_WINDOW_HEIGHT) - y, 4, 4, vport); // Inverte o y do rato para corresponder à jana
-	}
+// RESHAPE
 
-	gluPerspective(estado.camera.fov, (GLfloat)glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT), 1, 500);
-
-}
-
-void GraphTestGameState::myReshape(int w, int h){
+void SocialGraphState::Reshape(int w, int h){
 	glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);
 	setProjection(0, 0, GL_FALSE);
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void GraphTestGameState::HandleInput(unsigned char key, int special, bool val)
+void SocialGraphState::ReshapeWrapper(int w, int h)
 {
-	switch (key)
+	activeInst->Reshape(w, h);
+}
+
+
+// INPUT HANDLING
+
+void SocialGraphState::HandleInput(unsigned char key, int special, bool val)
+{
+	printf("[Key Pressed] key: %c | special: %d | val: %d\n", key, special, val);
+	if (key != 0) // if special key pressed (arrows, F keys, ESC, ...)
 	{
-	case 27:
-		exit(0);
-		break;
-	case 'h':
-	case 'H':
-		imprime_ajuda();
-		break;
-	case 'l':
-	case 'L':
-		if (estado.lightViewer)
-			estado.lightViewer = 0;
-		else
-			estado.lightViewer = 1;
-		glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, estado.lightViewer);
-		glutPostRedisplay();
-		break;
-	case 'k':
-	case 'K':
-		estado.light = !estado.light;
-		glutPostRedisplay();
-		break;
-	case 'w':
-	case 'W':
-		glDisable(GL_LIGHTING);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glutPostRedisplay();
-		break;
-	case 'p':
-	case 'P':
-		glDisable(GL_LIGHTING);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
-		glutPostRedisplay();
-		break;
-	case 's':
-	case 'S':
-		glEnable(GL_LIGHTING);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		glutPostRedisplay();
-		break;
-	case 'c':
-	case 'C':
-		if (glIsEnabled(GL_CULL_FACE))
-			glDisable(GL_CULL_FACE);
-		else
-			glEnable(GL_CULL_FACE);
-		glutPostRedisplay();
-		break;
-	case 'n':
-	case 'N':
-		estado.apresentaNormais = !estado.apresentaNormais;
-		glutPostRedisplay();
-		break;
-	case 'i':
-	case 'I':
-		glutPostRedisplay();
-		break;
+		switch (key)
+		{
+		case 27:
+			exit(0);
+			break;
+		}
+	}		
+	else // if normal ASCII mapped key pressed (a, A, C, 2, backspace, ...)
+	{
+		switch (special)
+		{
+		case GLUT_KEY_UP:
+			estado.camera.moving = val;
+		}
+
+	}
+		
+}
+
+// UPDATING
+
+void SocialGraphState::Update()
+{
+	if (estado.camera.moving)
+	{
+		estado.camera.dir_lat += CAMVEL;
 	}
 }
 
-void GraphTestGameState::Update()
-{
+// INIT ON STACK
 
-}
-
-void GraphTestGameState::myReshapeWrapper(int w, int h)
+void SocialGraphState::Load()
 {
-	activeInst->myReshape(w, h);
-}
-
-void GraphTestGameState::Load()
-{
-	glutReshapeFunc(myReshapeWrapper);
+	glutReshapeFunc(&ReshapeWrapper);
 	GLfloat LuzAmbiente[] = { 0.5, 0.5, 0.5, 0.0 };
 
 	glClearColor(0.0, 0.0, 0.0, 0.0);
@@ -494,7 +377,9 @@ void GraphTestGameState::Load()
 	leGrafo();
 }
 
-void GraphTestGameState::Unload()
+// DE INIT
+
+void SocialGraphState::Unload()
 {
 
 }
