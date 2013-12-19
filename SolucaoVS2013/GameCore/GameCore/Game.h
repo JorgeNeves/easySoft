@@ -7,7 +7,7 @@
 #include "Exception.h"
 #include "LOCALE_EN.h"
 #include "GameStateManager.h"
-#include "GraphTestGameState.h"
+#include "SocialGraphState.h"
 
 using namespace std;
 
@@ -16,7 +16,6 @@ class Game
 
 private:
 	static Game* _instance;
-	static void Redraw();
 
 	// Components
 	GameStateManager* gsmanager;
@@ -24,14 +23,14 @@ private:
 
 	// private object creators for singleton implementation
 	Game();
-	Game(Game &const);
-	Game& operator=(Game const&){};
+	Game(const Game&);
+	Game& operator=(const Game&){};
 
 public:
 	static Game* Instance();
 	void Init(string title, int argc, char* argv[]);
 	void Start();
 	void Stop();
-
+	void RegisterGSM(GameStateManager* gsm, int delay);
 	~Game();
 };
