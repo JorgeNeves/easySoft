@@ -1,6 +1,7 @@
 %% Recebe uma string no formato compara("FORCA","A",L) e devolve o
 %% codigo ASCII da palavra encontrada ou seja L=[65].
 %% Outro exemplo: compara ("JOAO","O",L) retorna L=[79,79].
+
 palavra(1,"OLX").
 palavra(2,"INFORMATICA").
 palavra(3,"ANGELO").

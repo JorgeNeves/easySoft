@@ -34,6 +34,8 @@ typedef struct{
 	int	nerros;
 	char* letra;
 	//letras usadas
+
+	int *acertou;
 }Jogo;
 
 Estado estado;
@@ -54,13 +56,18 @@ void ligacao(void){
 		palavra.nletras = palavra.pal.length();
 		palavra.p = palavra.pal.c_str();
 
+		jogo.acertou = new int(palavra.nletras);
+		for (int i = 0; i < palavra.nletras; i++){
+			jogo.acertou[i] = 0;
+		}
+
 }
 
 /* Inicialização do ambiente OPENGL */
 void Init(void)
 {
 
-	ligacao();
+	
 
 	jogo.nerros = 0;
 
@@ -204,12 +211,16 @@ void desenhaLetra(int pos){
 	float posxi = -0.9;
 
 	for (int i = 0; i < pos+1; i++){
-		glColor3f(1.0f, 0.0f, 0.3f);
-		glRasterPos2f(posxi + 0.05f, -0.6f);
+		if (jogo.acertou[i] == 1){
+			glColor3f(1.0f, 0.0f, 0.3f);
+			glRasterPos2f(posxi + 0.05f, -0.6f);
 
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, palavra.p[i]);
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, palavra.p[i]);
+			
+		}
 		posxi += inc;
 	}
+	
 }
 
 void tracinhos(){
@@ -233,7 +244,7 @@ void tracinhos(){
 
 			glRectf(posxi, -0.65f, posxi + inc_D, -0.45f);
 
-			//desenhaLetra(i);
+			desenhaLetra(i);
 
 		}
 		posxi += inc;
@@ -242,29 +253,78 @@ void tracinhos(){
 
 }
 
-void existe(){	
+
+//função para conversão de strings em inteiros (atoi dava erro)
+//http://www.kumobius.com/2013/08/c-string-to-int/
+// Does this handle all the edge cases? Who knows...
+// Better make sure you test it thoroughly if you write it yourself!
+bool String2Int(const std::string& str, int& result)
+{
+	std::string::const_iterator i = str.begin();
+
+	if (i == str.end())
+		return false;
+
+	bool negative = false;
+
+	if (*i == '-')
+	{
+		negative = true;
+		++i;
+
+		if (i == str.end())
+			return false;
+	}
+
+	result = 0;
+
+	for (; i != str.end(); ++i)
+	{
+		if (*i < '0' || *i > '9')
+			return false;
+
+		result *= 10;
+		result += *i - '0';
+	}
+
+	if (negative)
+	{
+		result = -result;
+	}
+
+	return true;
+}
+
+void existe(unsigned char key){
 	printf("Letra -----  %c\n", jogo.letra);
 		
 
 	char* argv[] = { "libswipl.dll", "-s", "forca.pl", NULL };
 	PlEngine p(3, argv);
 	PlTermv av(3);
-	string palavraTemp = "" + palavra.pal;
+	//string palavraTemp = "\"" + palavra.pal + "\"";
+
+	string palavraTemp = "\"ANGELA\"";
 	av[0] = PlCompound(palavraTemp.c_str());
 
-	string letra = jogo.letra;
+	string letra = "\"";
+	letra += (char)key;
+	letra +="\"";
 	av[1] = PlCompound(letra.c_str());
 	PlQuery query("comparacont", av);
 	
 	if (!query.next_solution()){
 		palavra.nletras += 1;
 	}else{
-		char *pos = (char*)av[2];
-		int xxx = 0;
+		string pos = (char*)av[2];
+		int tamanho = pos.length();
+		int *l = new int(tamanho);
+		for (int i = 0; i < tamanho; i++){
+			char s = pos.at(i);
+			int index = (int)s;
+			jogo.acertou[index-1] = 1;
+		}
 	}
-
-
-
 }
 // Callback de desenho
 
@@ -378,7 +438,7 @@ void Key(unsigned char key, int x, int y)
 	}
 	jogo.letra = (char *)key;
 	
-	existe();
+	existe(key);
 	if (DEBUG)
 		printf("Carregou na tecla %c\n", key);
 
@@ -387,6 +447,10 @@ void Key(unsigned char key, int x, int y)
 
 int main(int argc, char **argv)
 {
+
+	ligacao();
+
+
 	estado.doubleBuffer = GL_TRUE;
 
 	glutInit(&argc, argv);
@@ -398,7 +462,7 @@ int main(int argc, char **argv)
 
 	Init();
 
-	imprime_ajuda();
+	//imprime_ajuda();
 
 	// Registar callbacks do GLUT
 
