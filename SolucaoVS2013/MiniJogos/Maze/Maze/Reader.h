@@ -21,7 +21,7 @@ public:
 
 	~Reader();
 
-	Maze*** getMaze(const string f);
+	Maze** getMaze(const string f);
 
 	int getMazeSize(const string f);
 };

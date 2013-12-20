@@ -78,21 +78,21 @@ bool String2Int(const std::string& str, int& result)
 }
 
 //criar um quadrado no labirinto
-Maze& createQuadrado(const int n, const int s, const int e, const int w, const int v)
+Maze createQuadrado(const int n, const int s, const int e, const int w, const int v)
 {
 	//inserir valores no quadrado
-	Maze* quad = new Maze; 
-	quad->north = n;
-	quad->south = s;
-	quad->east = e;
-	quad->west = w;
-	quad->value = v;
+	Maze quad;
+	quad.north = n;
+	quad.south = s;
+	quad.east = e;
+	quad.west = w;
+	quad.value = v;
 
-	return *quad;
+	return quad;
 }
 
 //descobrir o quadrado correspondente ao tipo escolhido e devolver
-Maze& getQuadrado(const int numQuadrado)
+Maze getQuadrado(const int numQuadrado)
 {
 	switch (numQuadrado){
 	case 0:
@@ -151,7 +151,7 @@ Maze& getQuadrado(const int numQuadrado)
 }
 
 //define o value de uma posição no labirinto
-void makePos(Maze*** m, const int value, const int size)
+void makePos(Maze** m, const int value, const int size)
 {
 	//definir posição aleatoria
 	srand((unsigned)time(0));
@@ -160,9 +160,9 @@ void makePos(Maze*** m, const int value, const int size)
 	int j = (rand() % size);
 
 	//inserir valor na posição aleatória escolhida
-	if (m[i][j]->value != 0)
+	if (m[i][j].value != 0)
 	{
-		m[i][j]->value = value;
+		m[i][j].value = value;
 	}
 }
 
@@ -178,7 +178,7 @@ int Reader::getMazeSize(const string f)
 }
 
 //criar o labirinto
-Maze*** Reader::getMaze(const string f)
+Maze** Reader::getMaze(const string f)
 {
 	//inizialização de variaveis
 	ifstream file(f);
@@ -190,12 +190,12 @@ Maze*** Reader::getMaze(const string f)
 	String2Int(str,size);
 
 	//inicialização do labirinto
-	Maze*** labirinto = new Maze**[size];
+	Maze** labirinto = new Maze*[size];
 	for (int i = 0; i < size; i++)
 	{
-		labirinto[i] = new Maze*[size];
+		labirinto[i] = new Maze[size];
 	}
-
+	int cont = 0;
 	//por cada linha no ficheiro criar linha do labirinto
 	while (getline(file, str))
 	{
@@ -203,15 +203,15 @@ Maze*** Reader::getMaze(const string f)
 		vector<string> linha = explode(str, ',');
 		for (int i = 0; i < size; i++)
 		{
-			for (int j = 0; j < size; j++)
-			{
+
 				//obter quadrado
 				int quad;
 				String2Int(linha.at(i), quad);
 				Maze quadrado = getQuadrado(quad);
-				labirinto[i][j] = &quadrado;
-			}
+				labirinto[cont][i] = quadrado;
+
 		}
+		cont++;
 	}
 
 	//criar posição inicial

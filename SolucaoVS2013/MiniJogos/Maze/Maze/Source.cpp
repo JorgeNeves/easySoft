@@ -46,10 +46,11 @@ typedef struct {
 
 
 Estado estado;
-Maze maze[40][40];
+Maze **maze;
 Modelo modelo;
 Avatar avatar;
 int mSize;
+bool first;
 
 
 
@@ -58,10 +59,14 @@ int mSize;
 void Init(void)
 {
 
-	mSize = 40;
+	
+	Reader r;
+	mSize = r.getMazeSize("maze40.txt");
+	maze = r.getMaze("maze40.txt");
+	first = true;
 
 	//delay para o timer
-	estado.delay = 1000;
+	/*estado.delay = 1000;
 	for (int i = 0; i < 40; i++)
 	{
 		for (int j = 0; j < 40; j++)
@@ -92,7 +97,9 @@ void Init(void)
 	maze[30][30].east = 0;
 	maze[30][30].south = 1;
 	maze[30][30].west = 1;
-	maze[30][30].value = 2;
+	maze[30][30].value = 2;*/
+
+
 	/*maze[0][1].north = 1;
 	maze[0][1].east = 1;
 	maze[0][1].south = 0;
