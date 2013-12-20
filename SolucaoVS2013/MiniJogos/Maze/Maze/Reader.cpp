@@ -158,11 +158,23 @@ void makePos(Maze** m, const int value, const int size)
 	int i = (rand() % size);
 	srand((unsigned)time(0));
 	int j = (rand() % size);
+	bool notready = true;
 
-	//inserir valor na posição aleatória escolhida
-	if (m[i][j].value != 0)
+	while (notready)
 	{
-		m[i][j].value = value;
+		//inserir valor na posição aleatória escolhida
+		if (m[i][j].value != 0)
+		{
+			m[i][j].value = value;
+			notready = true;
+		}
+		else
+		{
+			srand((unsigned)time(0));
+			i = (rand() % size);
+			srand((unsigned)time(0));
+			j = (rand() % size);
+		}
 	}
 }
 
