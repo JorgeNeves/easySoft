@@ -1,5 +1,6 @@
 #include "Reader.h"
 #include <ctime>
+#include <random>
 Reader::Reader()
 {
 }
@@ -150,30 +151,49 @@ Maze getQuadrado(const int numQuadrado)
 	}
 }
 
+//devolve numero aleatorio
+int getRandom(int size)
+{
+	int i, min, max, decisao, res = 0;
+	
+	srand((unsigned)time(0));
+	decisao = (rand() % 2);
+	min = decisao * (rand() % (size / 2));
+	max = (rand() % size);
+	if (max < size / 2) max + (size / 2);
+
+	srand((unsigned)time(0));
+	res = (rand() % (max));
+	while (res < min)
+	{
+		srand((unsigned)time(0));
+		res + (rand() % min);
+		if (res < min) res++;
+	}
+	
+	return res;
+}
+
 //define o value de uma posição no labirinto
 void makePos(Maze** m, const int value, const int size)
 {
-	//definir posição aleatoria
-	srand((unsigned)time(0));
-	int i = (rand() % size);
-	srand((unsigned)time(0));
-	int j = (rand() % size);
+	int	i = getRandom(size);
+	int j = getRandom(size);
+	
 	bool notready = true;
 
 	while (notready)
 	{
 		//inserir valor na posição aleatória escolhida
-		if (m[i][j].value != 0)
+		if (m[i][j].value == 0)
 		{
 			m[i][j].value = value;
-			notready = true;
+			notready = false;
 		}
 		else
 		{
-			srand((unsigned)time(0));
-			i = (rand() % size);
-			srand((unsigned)time(0));
-			j = (rand() % size);
+			i = getRandom(size);
+			j = getRandom(size);
 		}
 	}
 }
