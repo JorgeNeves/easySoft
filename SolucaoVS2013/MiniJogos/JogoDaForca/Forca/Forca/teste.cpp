@@ -4,11 +4,16 @@
 #include <math.h>
 #include <time.h>
 #include <GL/glut.h>
-#include <algorithm>
+#include <tchar.h> 
 #include <cctype>
 #include <Windows.h>
 #include <SWI-cpp.h>
 #include<iostream>
+
+
+
+#include<string.h>
+
 using namespace std;
 #ifndef M_PI
 #define M_PI 3.1415926535897932384626433832795
@@ -34,8 +39,8 @@ typedef struct{
 	int	nerros;
 	char* letra;
 	//letras usadas
-
 	int *acertou;
+	bool ganhou;
 }Jogo;
 
 Estado estado;
@@ -70,7 +75,7 @@ void Init(void)
 	
 
 	jogo.nerros = 0;
-
+	jogo.ganhou = 0;
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 
 }
@@ -291,10 +296,19 @@ bool String2Int(const std::string& str, int& result)
 	return true;
 }
 
-void existe(unsigned char key){
-	printf("Letra -----  %c\n", jogo.letra);
-		
+bool ganhou(){
 
+	for (int i = 0; i < palavra.nletras; i++){
+		if (jogo.acertou[i] != 1){
+			return false;
+		}
+	}
+	jogo.ganhou = 1;
+	return true;
+
+}
+
+void existe(unsigned char key){
 	char* argv[] = { "libswipl.dll", "-s", "forca.pl", NULL };
 	PlEngine p(3, argv);
 	PlTermv av(3);
@@ -324,10 +338,14 @@ void existe(unsigned char key){
 				jogo.acertou[index - 1] = 1;
 			}
 		}
-		
+	}
+
+	if (ganhou()){
+		MessageBox(0, _T("Parabéns!!! \nGanhou!"), _T("Ganhou"), MB_ICONINFORMATION);
 	}
 }
 // Callback de desenho
+
 
 void Draw(void)
 {
@@ -339,6 +357,7 @@ void Draw(void)
 
 	tracinhos();
 	desenhaLetra();
+	
 
 	if (jogo.nerros == 1){
 		cabeca();
@@ -405,7 +424,8 @@ void Timer(int value)
 	glutTimerFunc(estado.delay, Timer, 0);
 
 	// redesenhar o ecra 
-	glutPostRedisplay();
+
+		glutPostRedisplay();
 }
 
 
@@ -433,16 +453,23 @@ void imprime_ajuda(void)
 
 void Key(unsigned char key, int x, int y)
 {
-	if (jogo.nerros != MAXERROS){
-		switch (key) {
-		case 27:
-			exit(1);
-		}
+	switch (key) {
+	case 27:
+		exit(1);
+	}
 
-		jogo.letra = (char *)key;
+	if (jogo.ganhou == 1){
+		MessageBox(0, _T("Parabéns!!! \nGanhou!"), _T("Ganhou"), MB_ICONINFORMATION);
+		return;
+	}
+	if (jogo.nerros != MAXERROS){
+				jogo.letra = (char *)key;
 		existe(key);
 		if (DEBUG)
 			printf("Carregou na tecla %c\n", key);
+	}
+	else{		
+		MessageBox(0, _T("UPS :( \n Perdeu!"), _T("Info"), MB_ICONEXCLAMATION);
 	}
 	
 
