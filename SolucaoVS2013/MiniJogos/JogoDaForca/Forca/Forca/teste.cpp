@@ -5,7 +5,7 @@
 #include <time.h>
 #include <GL/glut.h>
 #include <algorithm>
-#include <ctype.h>
+#include <cctype>
 #include <Windows.h>
 #include <SWI-cpp.h>
 #include<iostream>
@@ -15,7 +15,7 @@ using namespace std;
 #endif
 
 #define DEBUG 1
-
+#define MAXERROS 6
 /* VARIAVEIS GLOBAIS */
 
 typedef struct {
@@ -206,7 +206,8 @@ void perna(int n){
 
 }
 
-void desenhaLetra(int pos){
+void desenhaLetra(){
+	int pos = palavra.nletras;
 	float inc = 1.8 / palavra.nletras;
 	float posxi = -0.9;
 
@@ -214,7 +215,6 @@ void desenhaLetra(int pos){
 		if (jogo.acertou[i] == 1){
 			glColor3f(1.0f, 0.0f, 0.3f);
 			glRasterPos2f(posxi + 0.05f, -0.6f);
-
 			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, palavra.p[i]);
 			
 		}
@@ -243,12 +243,8 @@ void tracinhos(){
 			glColor3f(1.0f, 1.0f, 0.3f);
 
 			glRectf(posxi, -0.65f, posxi + inc_D, -0.45f);
-
-			desenhaLetra(i);
-
 		}
 		posxi += inc;
-		
 	}
 
 }
@@ -302,9 +298,8 @@ void existe(unsigned char key){
 	char* argv[] = { "libswipl.dll", "-s", "forca.pl", NULL };
 	PlEngine p(3, argv);
 	PlTermv av(3);
-	//string palavraTemp = "\"" + palavra.pal + "\"";
+	string palavraTemp = "\"" + palavra.pal + "\"";
 
-	string palavraTemp = "\"ANGELA\"";
 	av[0] = PlCompound(palavraTemp.c_str());
 
 	string letra = "\"";
@@ -317,13 +312,19 @@ void existe(unsigned char key){
 		palavra.nletras += 1;
 	}else{
 		string pos = (char*)av[2];
-		int tamanho = pos.length();
-		int *l = new int(tamanho);
-		for (int i = 0; i < tamanho; i++){
-			char s = pos.at(i);
-			int index = (int)s;
-			jogo.acertou[index-1] = 1;
+		if (pos == "[]"){
+			jogo.nerros += 1;
 		}
+		else{
+			int tamanho = pos.length();
+			int *l = new int(tamanho);
+			for (int i = 0; i < tamanho; i++){
+				char s = pos.at(i);
+				int index = (int)s;
+				jogo.acertou[index - 1] = 1;
+			}
+		}
+		
 	}
 }
 // Callback de desenho
@@ -337,6 +338,7 @@ void Draw(void)
 	forca();
 
 	tracinhos();
+	desenhaLetra();
 
 	if (jogo.nerros == 1){
 		cabeca();
@@ -431,16 +433,18 @@ void imprime_ajuda(void)
 
 void Key(unsigned char key, int x, int y)
 {
-	switch (key) {
-	case 27:
-		exit(1);
-		// ... accoes sobre outras teclas ... 
+	if (jogo.nerros != MAXERROS){
+		switch (key) {
+		case 27:
+			exit(1);
+		}
+
+		jogo.letra = (char *)key;
+		existe(key);
+		if (DEBUG)
+			printf("Carregou na tecla %c\n", key);
 	}
-	jogo.letra = (char *)key;
 	
-	existe(key);
-	if (DEBUG)
-		printf("Carregou na tecla %c\n", key);
 
 }
 
@@ -449,7 +453,6 @@ int main(int argc, char **argv)
 {
 
 	ligacao();
-
 
 	estado.doubleBuffer = GL_TRUE;
 
