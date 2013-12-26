@@ -117,6 +117,7 @@ void Reshape(int width, int height)
 
 // ... definicao das rotinas auxiliares de desenho ...
 
+//Desenho relativo à base da forca
 void forca()
 {
 	glBegin(GL_LINES); //Begins drawing of a 3D line
@@ -144,6 +145,7 @@ void forca()
 	glEnd(); //End drawing
 }
 
+//Desenho relativo à cabeça do jogador :)
 void cabeca(){
 	int i;
 	int lineAmount = 100; //# of triangles used to draw circle
@@ -161,6 +163,7 @@ void cabeca(){
 	glEnd();
 }
 
+//Desenho relativo ao pescoço
 void pescoco(){
 	glBegin(GL_LINES); //Begins drawing of a 3D line
 	glColor3f(1.0f, 1.0f, 0.0f); //sets color of line
@@ -169,6 +172,7 @@ void pescoco(){
 	glEnd(); //End drawing
 }
 
+//Desenho relativo ao tronco
 void tronco(){
 	glBegin(GL_LINES); //Begins drawing of a 3D line
 	glColor3f(1.0f, 1.0f, 0.0f); //sets color of line
@@ -177,6 +181,8 @@ void tronco(){
 	glEnd(); //End drawing
 }
 
+// n = 1 Desenha 1 braço
+// n = 2 Desenha 2 braços
 void braco(int n){
 	
 		glBegin(GL_LINES);
@@ -194,6 +200,8 @@ void braco(int n){
 	
 }
 
+// n = 1 Desenha 1 perna
+// n = 2 Desenha 2 pernas
 void perna(int n){
 
 	glBegin(GL_LINES);
@@ -211,6 +219,7 @@ void perna(int n){
 
 }
 
+// Desenha todas as letras que já foram descobertas
 void desenhaLetra(){
 	int pos = palavra.nletras;
 	float inc = 1.8 / palavra.nletras;
@@ -228,6 +237,7 @@ void desenhaLetra(){
 	
 }
 
+// Desenha todos os tracinhos relativos ao numero de letras
 void tracinhos(){
 	
 	float n = palavra.nletras*0.5;
@@ -296,6 +306,7 @@ bool String2Int(const std::string& str, int& result)
 	return true;
 }
 
+// Verifica se o user já descobriu a palavra
 bool ganhou(){
 
 	for (int i = 0; i < palavra.nletras; i++){
@@ -308,6 +319,7 @@ bool ganhou(){
 
 }
 
+// Verifica se a letra que o user submeteu existe na palavra
 void existe(unsigned char key){
 	char* argv[] = { "libswipl.dll", "-s", "forca.pl", NULL };
 	PlEngine p(3, argv);
@@ -317,7 +329,7 @@ void existe(unsigned char key){
 	av[0] = PlCompound(palavraTemp.c_str());
 
 	string letra = "\"";
-	letra += (char)key;
+	letra += toupper(key);
 	letra +="\"";
 	av[1] = PlCompound(letra.c_str());
 	PlQuery query("comparacont", av);
@@ -344,9 +356,9 @@ void existe(unsigned char key){
 		MessageBox(0, _T("Parabéns!!! \nGanhou!"), _T("Ganhou"), MB_ICONINFORMATION);
 	}
 }
+
+
 // Callback de desenho
-
-
 void Draw(void)
 {
 
@@ -425,7 +437,7 @@ void Timer(int value)
 
 	// redesenhar o ecra 
 
-		glutPostRedisplay();
+	glutPostRedisplay();
 }
 
 
@@ -463,7 +475,7 @@ void Key(unsigned char key, int x, int y)
 		return;
 	}
 	if (jogo.nerros != MAXERROS){
-				jogo.letra = (char *)key;
+		jogo.letra = (char *)key;
 		existe(key);
 		if (DEBUG)
 			printf("Carregou na tecla %c\n", key);
