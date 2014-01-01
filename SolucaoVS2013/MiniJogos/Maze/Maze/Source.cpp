@@ -1,11 +1,14 @@
 #include <stdio.h>
-#include <string.h>
+#include <string>
 #include <stdlib.h>
 #include <math.h>
 #include <list>
 #include <time.h>
 #include <iostream>
+#include <sstream>
 #include <GL/glut.h>
+#include "Reader.h"
+#include "MazeController.h"
 
 using namespace std;
 
@@ -13,7 +16,8 @@ using namespace std;
 #define M_PI 3.1415926535897932384626433832795
 #define SIDE 300
 #define MARGEM 5
-#define RAIO 5
+#define MARGEM_META 50
+#define RAIO 50
 #endif
 
 #define DEBUG 1
@@ -33,16 +37,10 @@ typedef struct {
 }Modelo;
 
 typedef struct {
-	int west;
-	int north;
-	int east;
-	int south;
-	int value; // 0 representa um caminho, 1 representa o inicio, 2 representa o fim
-}Maze;
-
-typedef struct {
-	int       a;
-	int     b;
+	int       aX;
+	int       aY;
+	int       bX;
+	int       bY;
 }Liga;
 
 typedef struct {
@@ -53,35 +51,115 @@ typedef struct {
 
 
 Estado estado;
-Maze maze[40][40];
+Maze **maze;
 Modelo modelo;
 Avatar avatar;
 int mSize;
+bool first;
+
+string convertInt(int number)
+{
+	stringstream ss;//create a stringstream
+	ss << number;//add number to the stream
+	return ss.str();//return a string with the contents of the stream
+}
 
 
+void ligacoes(int value)
+{
+	std::list<Liga> p;
+	for (int i = 0; i < mSize; i++)
+	{
+		for (int j = 0; j < mSize; j++)
+		{
+			/*if (maze[i][j].north == 0){ Liga l; l.aX = i; l.aY = j; l.bX = i; l.bY =j - 1;  p.push_back(l); }
+			if (maze[i][j].south == 0){ Liga l; l.aX = i; l.aY = j; l.bX = i; l.bY = j + 1;  p.push_back(l); }
+			if (maze[i][j].east == 0) { Liga l; l.aX = i; l.aY = j; l.bX = i + 1; l.bY = j;  p.push_back(l); }
+			if (maze[i][j].west == 0) { Liga l; l.aX = i; l.aY = j; l.bX = i - 1; l.bY = j;  p.push_back(l); }*/
+			if (maze[i][j].north == 0){ Liga l; l.aX = j; l.aY = i; l.bX = j; l.bY = i - 1;  p.push_back(l); }
+			if (maze[i][j].south == 0){ Liga l; l.aX = j; l.aY = i; l.bX = j; l.bY = i + 1;  p.push_back(l); }
+			if (maze[i][j].east == 0) { Liga l; l.aX = j; l.aY = i; l.bX = j + 1; l.bY = i;  p.push_back(l); }
+			if (maze[i][j].west == 0) { Liga l; l.aX = j; l.aY = i; l.bX = j - 1; l.bY = i;  p.push_back(l); }
 
+		}
+	}
+
+	char* argv[] = { "libswipl.dll", "-s", "labirinto.pl", NULL };
+	PlEngine pEngine(3, argv);
+
+	
+	int i = 0;
+	while (!p.empty())
+	{
+		PlTermv av(1);
+		string arg1 = "(";
+		string arg2 = "(";
+		Liga x = p.front();
+		arg1 += convertInt(x.aX) + ",";
+		arg1 += convertInt(x.aY) + ")";
+		arg2 += convertInt(x.bX) + ",";
+		arg2 += convertInt(x.bY) + ")";
+		p.pop_front();
+		string ligacao = "liga(" + arg1 + "," + arg2 + ")";
+
+		av[0] = PlCompound(ligacao.c_str());
+		PlQuery query("assert", av);
+		if (query.next_solution()) cout << ligacao << i << endl; i++;
+
+	}
+
+	PlTermv av23(2);
+	av23[0] = PlCompound("(0,1)");
+	PlQuery query2("liga", av23);
+	string f2;
+	query2.next_solution();
+	f2 += (char*)av23[1];
+
+	PlTermv av2(3);
+	av2[0] = PlCompound("(0,0)");
+	av2[1] = PlCompound("(0,3)");
+	PlQuery query("cam_curto", av2);
+	string f;
+	query.next_solution();
+	f += (char*)av2[2];
+
+	
+	PlTermv sdf(3);
+
+}
 
 /* Inicialização do ambiente OPENGL */
 void Init(void)
 {
 
-	mSize = 40;
 
+	Reader r;
+	mSize = r.getMazeSize("maze40.txt");
+	maze = r.getMaze("maze40.txt");
+	first = true;
+	ligacoes(0);
 	//delay para o timer
-	estado.delay = 1000;
+	/*estado.delay = 1000;
 	for (int i = 0; i < 40; i++)
 	{
-		for (int j = 0; j < 40; j++)
-		{
-			maze[i][j].north = 1;
-			maze[i][j].east = 1;
-			maze[i][j].south = 1;
-			maze[i][j].west = 1;
-			maze[i][j].value = 0;
-		}
+	for (int j = 0; j < 40; j++)
+	{
+	maze[i][j].north = 1;
+	maze[i][j].east = 1;
+	maze[i][j].south = 1;
+	maze[i][j].west = 1;
+	if ((i % 2) == 0)
+	{
+	maze[i][j].value = 3;
+	}
+	else
+	{
+	maze[i][j].value = 0;
+	}
+	}
 
 	}
-	maze[0][0].north=1;
+	maze[0][0].north = 1;
 	maze[0][0].east = 0;
 	maze[0][0].south = 1;
 	maze[0][0].west = 1;
@@ -89,10 +167,12 @@ void Init(void)
 
 
 	maze[30][30].north = 1;
-	maze[0][30].east = 0;
+	maze[30][30].east = 0;
 	maze[30][30].south = 1;
 	maze[30][30].west = 1;
-	maze[30][30].value = 2;
+	maze[30][30].value = 2;*/
+
+
 	/*maze[0][1].north = 1;
 	maze[0][1].east = 1;
 	maze[0][1].south = 0;
@@ -120,9 +200,9 @@ void Init(void)
 			}
 		}
 	}
-	
 
-	
+
+
 
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 
@@ -132,31 +212,7 @@ void Init(void)
 
 }
 
-void ligacoes(int value)
-{
-	std::list<Liga> p;
-	for (int i = 0; i < mSize; i++)
-	{
-		for (int j = 0; j < mSize; j++)
-		{
-			if (maze[i][j].north == 0){ Liga l; l.a = i * 10 + j; l.b = (i - 1) * 10 + j;  p.push_back(l); }
-			if (maze[i][j].south == 0){ Liga l; l.a = i * 10 + j; l.b = i + 1 * 10 + j;  p.push_back(l); }
-			if (maze[i][j].east == 0) { Liga l; l.a = i * 10 + j; l.b = i * 10 + j + 1;  p.push_back(l); }
-			if (maze[i][j].west == 0) { Liga l; l.a = i * 10 + j; l.b = i * 10 + j - 1;  p.push_back(l); }
 
-		}
-	}
-
-	while (!p.empty())
-	{
-		Liga x = p.front();
-		cout << "Liga(" << x.a << "," << x.b << ")." << endl;
-		p.pop_front();
-	}
-
-
-
-}
 
 /**************************************
 ***  callbacks de janela/desenho    ***
@@ -172,7 +228,6 @@ void Reshape(int width, int height)
 		size = width;
 	else
 		size = height;
-
 	// glViewport(botom, left, width, height)
 	// define parte da janela a ser utilizada pelo OpenGL
 
@@ -201,28 +256,19 @@ void Reshape(int width, int height)
 
 void Draw(void)
 {
-	ligacoes(0);
+	glFlush();
+	glClear(GL_COLOR_BUFFER_BIT);
 	for (int i = 0; i < mSize; i++) {
 		for (int j = 0; j < mSize; j++) {
-			
-			if (avatar.mPosX == i && avatar.mPosY == j){
-				cout << "avatar:" << avatar.mPosX << "," << avatar.mPosY << endl;
-				glColor3f(0.2, 0.3, 1.0);
-				glBegin(GL_TRIANGLE_FAN);
-				float x1 = SIDE*.5 + SIDE * j + RAIO;
-				float y1 = SIDE*.5 + SIDE * i - RAIO;
-				//glVertex2f(x1, y1);
 
-				for (int angle = 0; angle < 360; angle += 5){
-
-					glVertex2f(x1 + sin(angle) * RAIO, y1 + cos(angle) * RAIO);
-
-
-				}
+			if (maze[i][j].value == 3){
+				glBegin(GL_QUADS);
+				glVertex2f(SIDE * j + MARGEM, SIDE*i + MARGEM);
+				glVertex2f(SIDE * j + MARGEM, SIDE*i + SIDE - MARGEM);
+				glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + SIDE - MARGEM);
+				glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + MARGEM);
 				glEnd();
-				glColor3f(1.0, 1.0, 1.0);
 			}
-
 			if (maze[i][j].south == 1) {
 
 				glBegin(GL_LINES);
@@ -236,7 +282,7 @@ void Draw(void)
 				glBegin(GL_LINES);
 				glVertex2f(SIDE + SIDE * j, SIDE*i);
 				glVertex2f(SIDE * j, SIDE*i);
-				
+
 				glEnd();
 			}
 			if (maze[i][j].east == 1) {
@@ -254,31 +300,50 @@ void Draw(void)
 			if (maze[i][j].value == 1){
 				glColor3f(0.0, 0.2, 1.0);
 				glBegin(GL_LINE_LOOP);
-				
-				glVertex2f(SIDE * j + MARGEM, SIDE*i + MARGEM);
-				glVertex2f(SIDE * j + MARGEM, SIDE*i + SIDE - MARGEM);
-					glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + SIDE - MARGEM);
-					glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + MARGEM);
 
-					glEnd();
-					glColor3f(1.0, 1.0, 1.0);
+				glVertex2f(SIDE * j + MARGEM_META, SIDE*i + MARGEM_META);
+				glVertex2f(SIDE * j + MARGEM_META, SIDE*i + SIDE - MARGEM_META);
+				glVertex2f(SIDE - MARGEM_META + SIDE * j, SIDE*i + SIDE - MARGEM_META);
+				glVertex2f(SIDE - MARGEM_META + SIDE * j, SIDE*i + MARGEM_META);
+
+				glEnd();
+				glColor3f(1.0, 1.0, 1.0);
 			}
 			if (maze[i][j].value == 2){
 				glColor3f(1.0, 0.2, 0.0);
 				glBegin(GL_LINE_LOOP);
 
-				glVertex2f(SIDE * j + MARGEM, SIDE*i + MARGEM);
-				glVertex2f(SIDE * j + MARGEM, SIDE*i + SIDE - MARGEM);
-				glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + SIDE - MARGEM);
-				glVertex2f(SIDE - MARGEM + SIDE * j, SIDE*i + MARGEM);
+				glVertex2f(SIDE * j + MARGEM_META, SIDE*i + MARGEM_META);
+				glVertex2f(SIDE * j + MARGEM_META, SIDE*i + SIDE - MARGEM_META);
+				glVertex2f(SIDE - MARGEM_META + SIDE * j, SIDE*i + SIDE - MARGEM_META);
+				glVertex2f(SIDE - MARGEM_META + SIDE * j, SIDE*i + MARGEM_META);
 
 				glEnd();
 				glColor3f(1.0, 1.0, 1.0);
 			}
-			
+
+
+
+			if (avatar.mPosX == i && avatar.mPosY == j){
+				cout << "avatar:" << avatar.mPosX << "," << avatar.mPosY << endl;
+				glColor3f(0.5, 0.0, 0.5);
+				glBegin(GL_TRIANGLE_FAN);
+				float x1 = SIDE*.35 + SIDE * j + RAIO;
+				float y1 = SIDE*.6 + SIDE * i - RAIO;
+				glVertex2f(x1, y1);
+
+				for (int angle = 0; angle < 360; angle += 5){
+
+					glVertex2f(x1 + sin(angle) * RAIO, y1 + cos(angle) * RAIO);
+
+
+				}
+				glEnd();
+				glColor3f(1.0, 1.0, 1.0);
+				glFlush();
+			}
 		}
 	}
-
 
 
 	glFlush();
@@ -364,8 +429,9 @@ void Key(unsigned char key, int x, int y)
 	case 's':
 	case 'S':
 		if (maze[avatar.mPosX][avatar.mPosY].south == 0)
-		{ avatar.mPosX++;
-		  glutPostRedisplay(); // redesenhar o ecrã
+		{
+			avatar.mPosX++;
+			glutPostRedisplay(); // redesenhar o ecrã
 		}
 		break;
 	case 'w':
