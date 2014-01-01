@@ -5,7 +5,6 @@
 #include <GL\glut.h>
 
 #include "Exception.h"
-#include "LOCALE_EN.h"
 #include "GameStateManager.h"
 #include "SocialGraphState.h"
 

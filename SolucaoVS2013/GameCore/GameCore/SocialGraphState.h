@@ -69,6 +69,7 @@ typedef struct Camera{
 	GLfloat dist;
 	Vertice center;
 	GLboolean moving;
+	int dir;
 
 }Camera;
 

@@ -259,6 +259,7 @@ SocialGraphState::SocialGraphState()
 	estado.camera.center[1] = 0;
 	estado.camera.center[2] = 0;
 	estado.camera.moving = false;
+	estado.camera.dir = 1;
 	estado.light = GL_FALSE;
 	estado.apresentaNormais = GL_FALSE;
 	estado.lightViewer = 1;
@@ -333,8 +334,13 @@ void SocialGraphState::HandleInput(unsigned char key, int special, bool val)
 		{
 		case GLUT_KEY_UP:
 			estado.camera.moving = val;
+			estado.camera.dir = 1;
+			break;
+		case GLUT_KEY_DOWN:
+			estado.camera.moving = val;
+			estado.camera.dir = -1;
+			break;
 		}
-
 	}
 		
 }
@@ -345,7 +351,7 @@ void SocialGraphState::Update()
 {
 	if (estado.camera.moving)
 	{
-		estado.camera.dir_lat += CAMVEL;
+		estado.camera.center[2] += 3 * estado.camera.dir;
 	}
 }
 
