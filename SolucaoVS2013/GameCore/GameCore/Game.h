@@ -27,7 +27,7 @@ private:
 
 public:
 	static Game* Instance();
-	void Init(string title, int argc, char* argv[]);
+	void Init(string title, int width, int height, int argc, char* argv[]);
 	void Start();
 	void Stop();
 	void RegisterGSM(GameStateManager* gsm, int delay);
