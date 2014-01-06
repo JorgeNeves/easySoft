@@ -59,18 +59,20 @@ inline tipo_material operator++(tipo_material &rs, int) {
 typedef	GLdouble Vertice[3];
 typedef	GLdouble Vector[4];
 
+typedef struct KeyStates {
+	GLboolean up, down, left, right, q, a;
+}KeyStates;
 
-#define CAMVEL 2
 
+#define CAMERASPEED 3
+#define CAMERAROT 0.10
 typedef struct Camera{
 	GLfloat fov;
 	GLdouble dir_lat;
 	GLdouble dir_long;
 	GLfloat dist;
 	Vertice center;
-	GLboolean moving;
-	int dir;
-
+	Vertice eyeVer;
 }Camera;
 
 typedef struct Estado{
@@ -102,6 +104,7 @@ class SocialGraphState : public GameState
 private:
 	Estado estado;
 	Modelo modelo;
+	KeyStates keys;
 	static SocialGraphState* activeInst;
 	void putLights(GLfloat*);
 	void desenhaNo(No no);
