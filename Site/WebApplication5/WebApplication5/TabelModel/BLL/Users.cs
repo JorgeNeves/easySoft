@@ -100,6 +100,17 @@ namespace WebApplication5.TabelModel.BLL
 
 
         }
+
+        public static int getUserID(string username)
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "select UserID from Users where Nick = '" + username + "'";
+            DataSet rs = dal.ReturnDataSet(sql);
+            return (int)rs.Tables[0].Rows[0][0];
+
+
+        }
+       
         public static DataSet getUser(string username)
         {
             BDAcess dal = new BDAcess();

@@ -4,15 +4,34 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
 using WebApplication5.TabelModel.BLL;
+using System.Data;
+
 namespace WebApplication5.Profile
 {
-    public partial class Profile : System.Web.UI.Page
+    public partial class FriendProfile : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            DataSet dt = Users.getUser(Session["username"].ToString());
+            int id_profile= Users.getUserID(Request.QueryString["nome"]);
+            int utilizador= Users.getUserID(Session["username"].ToString());
+
+            if (Relationships.checkRelation(utilizador, id_profile))
+            {
+                Button1.Visible = false;
+            }
+            
+            string user="";
+            if (Request.QueryString["nome"] != null)
+            {
+                user = Request.QueryString["nome"];
+            }
+            else
+            {
+                user = Session["username"].ToString();
+            }
+                
+            DataSet dt = Users.getUser(user);
 
             string Mail = dt.Tables[0].Rows[0][3].ToString();
             string FirstName = dt.Tables[0].Rows[0][4].ToString();
@@ -24,7 +43,7 @@ namespace WebApplication5.Profile
             string facebook = dt.Tables[0].Rows[0][10].ToString();
             string LinkedIn = dt.Tables[0].Rows[0][11].ToString();
 
-            Label2.Text = Session["username"].ToString();
+            Label2.Text = user;
             Label1.Text = FirstName + " " + LastName;
             Label3.Text = date;
             Label4.Text = Users.getEstado(EstadoHumor);
@@ -33,38 +52,14 @@ namespace WebApplication5.Profile
             Label7.Text = LinkedIn;
             Label8.Text = Pais;
             Image1.ImageUrl = avatar;
-            int id=Users.getUserID(Session["username"].ToString());
-            DataSet data=Relationships.checkPedidos(id);
-            if (data != null)
-            {
-                Button2.Text="Pedidos Pendentes ("+data.Tables[0].Rows.Count+")";
-            }
-
-        }
-
-        protected void LinkButton3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void LinkButton1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void LinkButton2_Click(object sender, EventArgs e)
-        {
-
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("EditProfile.aspx");
-        }
+            int id_profile= Users.getUserID(Request.QueryString["nome"]);
+            int utilizador= Users.getUserID(Session["username"].ToString());
 
-        protected void Button2_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Requests.aspx");
+            Relationships.addRelation(utilizador, id_profile, 10, System.DateTime.Today.ToString());
         }
     }
 }
