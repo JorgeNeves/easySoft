@@ -67,7 +67,13 @@ namespace WebApplication5
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["username"] != null)
+            {
+                var view = (LoginView)(Page.Master.FindControl("LoginView"));
 
+                
+                view.Visible = false;
+            }
         }
     }
 }

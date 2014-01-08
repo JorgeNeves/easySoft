@@ -39,7 +39,11 @@ namespace WebApplication5.Profile
             {
                 Button2.Text="Pedidos Pendentes ("+data.Tables[0].Rows.Count+")";
             }
-
+            DataSet ds=Relationships.checkAmigos(Convert.ToInt32(Session["userID"].ToString()));
+            if (ds != null)
+            {
+                Label10.Text =""+ ds.Tables[0].Rows.Count;
+            }
         }
 
         protected void LinkButton3_Click(object sender, EventArgs e)
@@ -64,7 +68,17 @@ namespace WebApplication5.Profile
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Requests.aspx");
+            int id = Users.getUserID(Session["username"].ToString());
+            DataSet data = Relationships.checkPedidos(id);
+            if (data==null)
+            {
+                Label9.Visible = true;
+            }
+            else
+            {
+                Response.Redirect("Requests.aspx");
+            }
+           
         }
     }
 }

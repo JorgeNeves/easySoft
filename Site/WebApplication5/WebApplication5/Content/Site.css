@@ -434,7 +434,8 @@ fieldset {
         font-weight: 600;
         padding: 7px;
         margin-right: 8px;
-        }
+    text-align: justify;
+}
 
     td input[type="submit"],
     td input[type="button"],
@@ -442,7 +443,8 @@ fieldset {
         font-size: 1em;
         padding: 4px;
         margin-right: 4px;
-    }
+    text-align: center;
+}
 
 /* info and errors */
 .message-info {

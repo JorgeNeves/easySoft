@@ -186,6 +186,8 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Game\Download.aspx" />
+    <Content Include="Game\ola.txt" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\bullet.png" />
     <Content Include="Images\heroAccent.png" />
@@ -206,6 +208,7 @@
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Profile\EditProfile.aspx" />
     <Content Include="Profile\FriendProfile.aspx" />
+    <Content Include="Profile\Friends.aspx" />
     <Content Include="Profile\Profile.aspx" />
     <Content Include="Profile\Requests.aspx" />
     <Content Include="Scripts\jquery-1.8.2.js" />
@@ -301,6 +304,13 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Game\Download.aspx.cs">
+      <DependentUpon>Download.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Game\Download.aspx.designer.cs">
+      <DependentUpon>Download.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -317,6 +327,13 @@
     </Compile>
     <Compile Include="Profile\FriendProfile.aspx.designer.cs">
       <DependentUpon>FriendProfile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Profile\Friends.aspx.cs">
+      <DependentUpon>Friends.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Profile\Friends.aspx.designer.cs">
+      <DependentUpon>Friends.aspx</DependentUpon>
     </Compile>
     <Compile Include="Profile\Profile.aspx.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
