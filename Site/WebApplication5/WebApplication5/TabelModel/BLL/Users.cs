@@ -124,5 +124,7 @@ namespace WebApplication5.TabelModel.BLL
 
 
         }
+
+        
     }
 }

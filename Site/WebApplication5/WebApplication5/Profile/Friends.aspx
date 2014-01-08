@@ -1,18 +1,16 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Requests.aspx.cs" Inherits="WebApplication5.Profile.Requests" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Friends.aspx.cs" Inherits="WebApplication5.Profile.Friends" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="FeaturedContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" Height="24px" Width="59px" OnDataBound="GridView1_DataBound" OnRowDataBound="GridView1_RowDataBound" HorizontalAlign="Center" ShowHeader="False" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" OnRowCommand="GridView1_RowCommand">
+    <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" HorizontalAlign="Center" ShowHeader="False">
         <AlternatingRowStyle BackColor="White" />
         <Columns>
-            <asp:ButtonField ButtonType="Button"  Text="Aceitar" CommandName="Aceitar" >
-            <ControlStyle BorderColor="#009900" />
-            </asp:ButtonField>
-            <asp:ButtonField ButtonType="Button" Text="Recusar" CommandName="Recusar" >
-            <ControlStyle BorderColor="Red" />
-            </asp:ButtonField>
+            <asp:ImageField>
+            </asp:ImageField>
+            <asp:ButtonField ButtonType="Button" Text="Ver Perfil" />
+            <asp:ButtonField ButtonType="Button" Text="Remover" />
         </Columns>
         <EditRowStyle BackColor="#2461BF" />
         <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
