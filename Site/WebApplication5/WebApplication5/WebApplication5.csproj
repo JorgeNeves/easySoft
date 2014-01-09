@@ -212,6 +212,8 @@
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Profile\Consult.aspx" />
+    <Content Include="Profile\Consulta.aspx" />
     <Content Include="Profile\EditProfile.aspx" />
     <Content Include="Profile\FriendProfile.aspx" />
     <Content Include="Profile\Friends.aspx" />
@@ -320,6 +322,20 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Profile\Consult.aspx.cs">
+      <DependentUpon>Consult.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Profile\Consult.aspx.designer.cs">
+      <DependentUpon>Consult.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Profile\Consulta.aspx.cs">
+      <DependentUpon>Consulta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Profile\Consulta.aspx.designer.cs">
+      <DependentUpon>Consulta.aspx</DependentUpon>
     </Compile>
     <Compile Include="Profile\EditProfile.aspx.cs">
       <DependentUpon>EditProfile.aspx</DependentUpon>
