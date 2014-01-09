@@ -20,13 +20,14 @@ namespace SocialiteWebService
          */
         public String Login(string username, string password)
         {
-            string rightUser = "user";
-            string rightPw = "pw";
+            easysoftdbEntities db = new easysoftdbEntities();
+            Users user = db.Users.First(u => u.Nick == username);
             string hashed = EncryptionHelpers.MD5.GetHash(password);
-            if(username == rightUser && password == rightPw)
+            if(user != null)
             {
                 CurrentUsersLoggedIn++;
-                return Guid.NewGuid().ToString();
+                return user.Password;
+                //return Guid.NewGuid().ToString();
             }
             else
             {
