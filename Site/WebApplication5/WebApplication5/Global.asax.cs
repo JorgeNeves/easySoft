@@ -17,18 +17,32 @@ namespace WebApplication5
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterOpenAuth();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            Application["UsersOnline"] = 0;
         }
 
         void Application_End(object sender, EventArgs e)
         {
-            //  Code that runs on application shutdown
+            Application.Lock();
+            Application["UsersOnline"] = (int)Application["UsersOnline"] - 1;
+            Application.UnLock();
 
         }
-
         void Application_Error(object sender, EventArgs e)
         {
             // Code that runs when an unhandled error occurs
 
+        }
+
+        public void Session_OnStart()
+        {
+            
+        }
+
+        public void Session_OnEnd()
+        {
+            Application.Lock();
+            Application["UsersOnline"] = (int)Application["UsersOnline"] - 1;
+            Application.UnLock();
         }
     }
 }

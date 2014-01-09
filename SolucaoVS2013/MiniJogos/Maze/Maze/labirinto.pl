@@ -1,6 +1,4 @@
 :-dynamic(liga/2).
-liga((0,0),(0,1)).
-liga((0,1),(0,2)).
 
 encontra_caminho((Xi,Yi),(Xf,Yf),L):-
 	encontra_caminho((Xi,Yi), (Xf,Yf), [(Xi,Yi)],L).

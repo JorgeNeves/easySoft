@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FacebookAPI">
+      <HintPath>..\packages\Facebook\FacebookAPI.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -45,6 +49,8 @@
     <Reference Include="System.Core" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
@@ -186,6 +192,8 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Game\Download.aspx" />
+    <Content Include="Game\ola.txt" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\bullet.png" />
     <Content Include="Images\heroAccent.png" />
@@ -204,8 +212,11 @@
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Profile\Consult.aspx" />
+    <Content Include="Profile\Consulta.aspx" />
     <Content Include="Profile\EditProfile.aspx" />
     <Content Include="Profile\FriendProfile.aspx" />
+    <Content Include="Profile\Friends.aspx" />
     <Content Include="Profile\Profile.aspx" />
     <Content Include="Profile\Requests.aspx" />
     <Content Include="Scripts\jquery-1.8.2.js" />
@@ -234,6 +245,7 @@
     <Content Include="Scripts\WebForms\WebForms.js" />
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
+    <Content Include="Services\SuggestedFriends.svc" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -301,8 +313,29 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Game\Download.aspx.cs">
+      <DependentUpon>Download.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Game\Download.aspx.designer.cs">
+      <DependentUpon>Download.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Profile\Consult.aspx.cs">
+      <DependentUpon>Consult.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Profile\Consult.aspx.designer.cs">
+      <DependentUpon>Consult.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Profile\Consulta.aspx.cs">
+      <DependentUpon>Consulta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Profile\Consulta.aspx.designer.cs">
+      <DependentUpon>Consulta.aspx</DependentUpon>
     </Compile>
     <Compile Include="Profile\EditProfile.aspx.cs">
       <DependentUpon>EditProfile.aspx</DependentUpon>
@@ -317,6 +350,13 @@
     </Compile>
     <Compile Include="Profile\FriendProfile.aspx.designer.cs">
       <DependentUpon>FriendProfile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Profile\Friends.aspx.cs">
+      <DependentUpon>Friends.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Profile\Friends.aspx.designer.cs">
+      <DependentUpon>Friends.aspx</DependentUpon>
     </Compile>
     <Compile Include="Profile\Profile.aspx.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
@@ -333,6 +373,10 @@
       <DependentUpon>Requests.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ISuggestedFriends.cs" />
+    <Compile Include="Services\SuggestedFriends.svc.cs">
+      <DependentUpon>SuggestedFriends.svc</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -348,6 +392,7 @@
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="TabelModel\BLL\Relationships.cs" />
+    <Compile Include="TabelModel\BLL\Services.cs" />
     <Compile Include="TabelModel\BLL\Users.cs" />
     <Compile Include="TabelModel\DAL\BDAcess.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
