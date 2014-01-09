@@ -7,13 +7,15 @@ using System.Web.UI.WebControls;
 using WebApplication5.TabelModel.BLL;
 using System.Text.RegularExpressions;
 
+
+
 namespace WebApplication5.Account
 {
     public partial class Register : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+           
         }
 
         protected void Button1_Click(object sender, EventArgs e)
