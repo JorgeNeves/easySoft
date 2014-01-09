@@ -31,6 +31,15 @@ namespace WebApplication5 {
         protected global::System.Web.UI.WebControls.LoginView LoginView;
         
         /// <summary>
+        /// LogOff control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LogOff;
+        
+        /// <summary>
         /// FeaturedContent control.
         /// </summary>
         /// <remarks>
@@ -47,5 +56,23 @@ namespace WebApplication5 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
+        
+        /// <summary>
+        /// RegistedUsers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label RegistedUsers;
+        
+        /// <summary>
+        /// OnlineUsers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label OnlineUsers;
     }
 }
