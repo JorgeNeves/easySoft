@@ -12,8 +12,8 @@ namespace SocialiteWebService
     public interface SocialiteOperations
     {
         [OperationContract]
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/login/{username}@{pwhash}")]
-        String Login(string username, string pwhash);
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/login?user={username}&pw={password}")]
+        String Login(string username, string password);
 
         [OperationContract]
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/logout/{username}")]

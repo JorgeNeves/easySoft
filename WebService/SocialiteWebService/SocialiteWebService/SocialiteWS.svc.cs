@@ -14,18 +14,23 @@ namespace SocialiteWebService
 
         private int CurrentUsersLoggedIn;
 
-        public String Login(string username, string pwhash)
+        /* Efetua o login de um utilizador via REST utilizando uma username e password
+         * Em caso de sucesso é incrementado o valor de numero de utilizadores a utilizar a API 
+         * de acesso a dados da rede social (ou seja, pessoas a utilizar o client)
+         */
+        public String Login(string username, string password)
         {
             string rightUser = "user";
             string rightPw = "pw";
-            if(username == rightUser && pwhash == rightPw)
+            string hashed = EncryptionHelpers.MD5.GetHash(password);
+            if(username == rightUser && password == rightPw)
             {
                 CurrentUsersLoggedIn++;
                 return Guid.NewGuid().ToString();
             }
             else
             {
-                return "0";
+                return hashed;
             }
         }
 
