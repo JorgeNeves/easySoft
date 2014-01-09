@@ -21,7 +21,7 @@ namespace WebApplication5.Game
             Response.AddHeader("Content-Disposition", "attachment; filename=ola.txt");
             Response.WriteFile(Server.MapPath("ola.txt"));
             Response.End();
-            Label2.Visible = true;
+            //Label2.Visible = true;
         }
     }
 }

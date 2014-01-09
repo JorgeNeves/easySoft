@@ -1,36 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="WebApplication5.Profile.Profile" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
     <style type="text/css">
-        .auto-style1 {
-            width: 716px;
-        }
-        .auto-style2 {
-            width: 380px;
-        }
-        .auto-style3 {
-            width: 716px;
-            height: 309px;
-        }
-        .auto-style4 {
-            width: 380px;
-            height: 309px;
-        }
-        .auto-style5 {
-            width: 273px;
-        }
         .newStyle1 {
             font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
             font-size: x-large;
         }
-        .auto-style6 {
-            width: 716px;
-            height: 21px;
-        }
-        .auto-style7 {
-            width: 380px;
-            height: 21px;
-        }
-    </style>
+        </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="FeaturedContent" runat="server">
     <p>

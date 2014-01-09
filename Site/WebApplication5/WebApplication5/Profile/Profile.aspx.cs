@@ -44,6 +44,7 @@ namespace WebApplication5.Profile
             {
                 Label10.Text =""+ ds.Tables[0].Rows.Count;
             }
+            
         }
 
         protected void LinkButton3_Click(object sender, EventArgs e)

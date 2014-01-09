@@ -4,13 +4,12 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="FeaturedContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" HorizontalAlign="Center" ShowHeader="False">
+    <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" HorizontalAlign="Center" ShowHeader="False" OnRowCommand="GridView1_RowCommand" OnRowDataBound="GridView1_RowDataBound" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
         <AlternatingRowStyle BackColor="White" />
         <Columns>
-            <asp:ImageField>
-            </asp:ImageField>
-            <asp:ButtonField ButtonType="Button" Text="Ver Perfil" />
-            <asp:ButtonField ButtonType="Button" Text="Remover" />
+            <asp:ButtonField ButtonType="Button" Text="Ver Perfil" CommandName="Ver Perfil" />
+            <asp:ButtonField ButtonType="Button" Text="Remover" CommandName="Remover" />
+            <asp:ButtonField ButtonType="Image" />
         </Columns>
         <EditRowStyle BackColor="#2461BF" />
         <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
