@@ -5,35 +5,30 @@
         <div class="content-wrapper">
             <hgroup class="title">
                 <h1><%: Title %>.</h1>
-                <h2>Modify this template to jump-start your ASP.NET application.</h2>
+                <h2>EasySoft -&nbsp; Social Network</h2>
             </hgroup>
             <p>
-                To learn more about ASP.NET, visit <a href="http://asp.net" title="ASP.NET Website">http://asp.net</a>.
-                The page features <mark>videos, tutorials, and samples</mark> to help you get the most from ASP.NET.
-                If you have any questions about ASP.NET visit
-                <a href="http://forums.asp.net/18.aspx" title="ASP.NET Forum">our forums</a>.
-            </p>
+                JUNTA-TE A NÓS!</p>
         </div>
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <h3>We suggest the following:</h3>
+    <h3>Três passos para entrares na nossa rede social:</h3>
     <ol class="round">
         <li class="one">
-            <h5>Getting Started</h5>
-            ASP.NET Web Forms lets you build dynamic websites using a familiar drag-and-drop, event-driven model.
-            A design surface and hundreds of controls and components let you rapidly build sophisticated, powerful UI-driven sites with data access.
-            <a href="http://go.microsoft.com/fwlink/?LinkId=245146">Learn more…</a>
+            <h5>Regista-te na nossa Rede Social</h5>
+            Ao registares-te no nosso site vais poder entrar na nossa comunidade, vais ter um perfil, amigos e muito mais.&nbsp;
+            <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click">Registar</asp:LinkButton>
         </li>
         <li class="two">
-            <h5>Add NuGet packages and jump-start your coding</h5>
-            NuGet makes it easy to install and update free libraries and tools.
-            <a href="http://go.microsoft.com/fwlink/?LinkId=245147">Learn more…</a>
+            <h5>Edita o ter perfil e faz amigos! Quantos mais amigos mais pontos!</h5>
+            Podes editar o teu perfil. Podes colocar uma imagem a teu gosto, um estado de humor, etc&nbsp;
+            <asp:LinkButton ID="LinkButton2" runat="server" OnClick="LinkButton2_Click">Perfil</asp:LinkButton>
         </li>
         <li class="three">
-            <h5>Find Web Hosting</h5>
-            You can easily find a web hosting company that offers the right mix of features and price for your applications.
-            <a href="http://go.microsoft.com/fwlink/?LinkId=245143">Learn more…</a>
+            <h5>Faz o download do jogo!</h5>
+            Agora é so fazeres o download do jogo e divertir-te. Podes fazer o download do jogo neste link
+            <asp:LinkButton ID="LinkButton3" runat="server" OnClick="LinkButton3_Click">Download</asp:LinkButton>
         </li>
     </ol>
 </asp:Content>

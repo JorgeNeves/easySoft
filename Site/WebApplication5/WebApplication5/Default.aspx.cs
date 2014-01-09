@@ -11,7 +11,22 @@ namespace WebApplication5
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            
+        }
 
+        protected void LinkButton1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Account/Register.aspx");
+        }
+
+        protected void LinkButton2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Profile/Profile.aspx");
+        }
+
+        protected void LinkButton3_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Game/Download.aspx");
         }
     }
 }
