@@ -14,11 +14,11 @@
         <br />
         <asp:Button ID="Button7" runat="server" Text="Sugestões de Amigos" Width="288px" />
         <br />
-        <asp:Button ID="Button8" runat="server" Text="Tamanho da Sua Rede Social" Width="288px" />
+        <asp:Button ID="Button8" runat="server" Text="Tamanho da Sua Rede Social" Width="288px" OnClick="Button8_Click" />
         <br />
-        <asp:Button ID="Button3" runat="server" Text="Tag cloud das tags de todos os utilizadores" Width="288px" />
+        <asp:Button ID="btnuserstags" runat="server" Text="Tag cloud das tags de todos os utilizadores" Width="288px" OnClick="btnuserstags_Click" />
         <br />
-        <asp:Button ID="Button4" runat="server" Text="Tag cloud das tags de todas as relações" Width="288px" />
+        <asp:Button ID="Button4" runat="server" Text="Tag cloud das tags de todas as relações" Width="288px" OnClick="Button4_Click" />
         <br />
         <br />
         <asp:Label ID="Label2" runat="server" Text="Qualquer Utilizador"></asp:Label>

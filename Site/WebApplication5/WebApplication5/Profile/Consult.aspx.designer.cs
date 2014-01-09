@@ -49,13 +49,13 @@ namespace WebApplication5.Profile {
         protected global::System.Web.UI.WebControls.Button Button8;
         
         /// <summary>
-        /// Button3 control.
+        /// btnuserstags control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button3;
+        protected global::System.Web.UI.WebControls.Button btnuserstags;
         
         /// <summary>
         /// Button4 control.

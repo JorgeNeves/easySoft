@@ -181,29 +181,7 @@ namespace WebApplication5.TabelModel.BLL
 
         }
 
-        public static DataSet getUserTags(int idUser)
-        {
-            BDAcess dal = new BDAcess();
-            string sql = "Select distinct Tags.Palavra FROM Tags,Users,User_Tag where (Tags.TagID=User_Tag.TagID and User_Tag.UserID=" + idUser + ")";
-            DataSet rs = dal.ReturnDataSet(sql);
-            if (rs.Tables[0].Rows.Count > 0)
-            {
-                return rs;
-            }
-            else return null;
-        }
-
-        public static DataSet getRelationsTags(int idUser)
-        {
-            BDAcess dal = new BDAcess();
-            string sql = "Select distinct Tags.Palavra FROM Tags,Users,Ligacao_Tag,Ligacaos where ((Ligacaos.LigacaoID=Ligacao_Tag.LigacaoID) and (Tags.TagID=Ligacao_Tag.TagID) and (Ligacaos.User1ID=" + idUser + " OR Ligacaos.User2ID=" + idUser + "))";
-            DataSet rs = dal.ReturnDataSet(sql);
-            if (rs.Tables[0].Rows.Count > 0)
-            {
-                return rs;
-            }
-            else return null;
-        }
+        
         
     }
 }

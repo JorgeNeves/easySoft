@@ -52,5 +52,43 @@ namespace WebApplication5.Profile
             }
             lbltag.Text = temp;
         }
+
+        protected void btnuserstags_Click(object sender, EventArgs e)
+        {
+            lbltipotag.Text = "Tags de utilizador existentes";
+            DataSet ds = Users.getAllUserTags();
+            string temp = "";
+
+            foreach (DataRow data in ds.Tables[0].Rows)
+            {
+
+                foreach (object item in data.ItemArray)
+                {
+                    temp += "<u>" + item.ToString() + "</u> ";
+                }
+
+            }
+            lbltag.Text = temp;
+        }
+
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            lbltipotag.Text = "Tags de Relações existentes";
+            DataSet ds = Users.getAllRelationsTags();
+            string temp = "";
+
+            foreach (DataRow data in ds.Tables[0].Rows)
+            {
+
+                foreach (object item in data.ItemArray)
+                {
+                    temp += "<u>" + item.ToString() + "</u> ";
+                }
+
+            }
+            lbltag.Text = temp;
+        }
+
+        
     }
 }
