@@ -12,7 +12,7 @@ Reader::~Reader()
 
 //repartir uma string em várias partes através de um "split"
 //retirado de: http://stackoverflow.com/questions/890164/how-can-i-split-a-string-by-a-delimiter-into-an-array
-vector<string> explode(const string& str, const char& ch) {
+vector<string> Reader::explode(const string& str, const char& ch) {
 	string next;
 	vector<string> result;
 
@@ -244,10 +244,12 @@ Maze** Reader::getMaze(const string f)
 
 		}
 		cont++;
+		if (cont >= size) break;
 	}
 
 	//criar posição inicial
 	makePos(labirinto, 1, size);
+	
 	//criar posição final
 	makePos(labirinto, 2, size);
 
