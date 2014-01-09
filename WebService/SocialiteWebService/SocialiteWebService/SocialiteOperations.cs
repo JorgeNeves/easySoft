@@ -12,23 +12,23 @@ namespace SocialiteWebService
     public interface SocialiteOperations
     {
         [OperationContract]
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/login?user={username}&pw={password}")]
         String Login(string username, string password);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/logout/{username}")]
-        String Logout(string username);
-
+        String Logout(string token);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/checkstatus")]
-        String CheckStatus();
-
-        [OperationContract]
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/onlineusers")]
-        int CurrentOnlineUsers();
-
+        ServiceStatus Status();
     }
 
-        
+    [DataContract]
+    public class ServiceStatus
+    {
+        [DataMember(Order = 1)]
+        public string Status { get; set; }
+        [DataMember(Order = 2)]
+        public int TotalUsers { get; set; }
+        [DataMember(Order = 3)]
+        public int OnlineUsers { get; set; }
+    }
 }
