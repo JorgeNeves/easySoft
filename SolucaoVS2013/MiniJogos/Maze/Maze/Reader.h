@@ -21,6 +21,8 @@ public:
 
 	~Reader();
 
+	vector<string> explode(const string& str, const char& ch);
+
 	Maze** getMaze(const string f);
 
 	int getMazeSize(const string f);
