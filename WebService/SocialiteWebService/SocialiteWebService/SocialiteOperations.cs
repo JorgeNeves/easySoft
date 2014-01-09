@@ -16,8 +16,8 @@ namespace SocialiteWebService
         String Login(string username, string password);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/logout/{username}")]
-        String Logout(string username);
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/logout/{token}")]
+        String Logout(string token);
 
 
         [OperationContract]
@@ -25,8 +25,8 @@ namespace SocialiteWebService
         String CheckStatus();
 
         [OperationContract]
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/onlineusers")]
-        int CurrentOnlineUsers();
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/numonlineusers")]
+        int NumLoggedUsers();
 
     }
 

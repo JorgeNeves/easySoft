@@ -11,41 +11,40 @@ namespace SocialiteWebService
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class SocialiteWS : SocialiteOperations
     {
-
-        private int CurrentUsersLoggedIn;
+        private easysoftdbEntities db = new easysoftdbEntities();
+        private Dictionary<string, Users> LoggedUsers = new Dictionary<string, Users>();
 
         /* Efetua o login de um utilizador via REST utilizando uma username e password
          * Em caso de sucesso é incrementado o valor de numero de utilizadores a utilizar a API 
-         * de acesso a dados da rede social (ou seja, pessoas a utilizar o client)
+         * de acesso a dados da rede social (ou seja, pessoas a utilizar o client).
+         * Verifica se um utilizador se encontra na base de dados, caso contrário, a verificação devolve null 
+         * e o login falha. Caso sucesso, verifica a password. Se sucesso, cria um access token,
+         * e guarda o utilizador num dicionario de token|utilizador para controlo de acessos.
          */
         public String Login(string username, string password)
         {
-            easysoftdbEntities db = new easysoftdbEntities();
-            Users user = db.Users.First(u => u.Nick == username);
-            string hashed = EncryptionHelpers.MD5.GetHash(password);
-            if(user != null)
+            Users user = db.Users.FirstOrDefault(u => u.Nick == username);
+            if(user != null && user.Password == password)
             {
-                CurrentUsersLoggedIn++;
-                return user.Password;
-                //return Guid.NewGuid().ToString();
+                string token =  Guid.NewGuid().ToString();
+                LoggedUsers.Add(token, user);
+                return token;
             }
-            else
-            {
-                return hashed;
-            }
+            return "Login failed";
         }
 
-        public String Logout(string username)
+        /* Efetua logout de um utilizador via token. Caso token se encontre no dicionario de utilizadores
+         * ligados, remove o utilizador da lista, bloqueando o seu acesso sem proceder a um novo login
+         * a fim de obter um novo token.
+         */
+        public String Logout(string token)
         {
-            if(CurrentUsersLoggedIn > 0)
+            if(LoggedUsers.ContainsKey(token))
             {
-                CurrentUsersLoggedIn--;
-                return "OK";
+                LoggedUsers.Remove(token);
+                return "Logged out";
             }
-            else
-            {
-                return "ERROR";
-            }
+            return "Logout failed";
         }
 
         public String CheckStatus()
@@ -53,9 +52,9 @@ namespace SocialiteWebService
             return "OK - WS Running";
         }
 
-        public int CurrentOnlineUsers()
+        public int NumLoggedUsers()
         {
-            return CurrentUsersLoggedIn;
+            return LoggedUsers.Count;
         }
 
     }

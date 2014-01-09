@@ -86,7 +86,7 @@
     <Compile Include="EstadoDeLigacaos.cs">
       <DependentUpon>SocialiteDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="HelpersLibrary.cs" />
+    <Compile Include="App_Code\HelpersLibrary.cs" />
     <Compile Include="Ligacaos.cs">
       <DependentUpon>SocialiteDatabase.tt</DependentUpon>
     </Compile>
