@@ -1,15 +1,11 @@
 #include <stdio.h>
 #include <string>
 #include <stdlib.h>
-#include <math.h>
-#include <list>
-#include <time.h>
-#include <iostream>
-#include <sstream>
 #include <GL/glut.h>
-#include "Reader.h"
+#include<cctype>
+#include<algorithm>
 #include "MazeController.h"
-
+#include <windows.h>
 using namespace std;
 
 #ifndef M_PI
@@ -36,12 +32,12 @@ typedef struct {
 	GLenum      tipoPoligono;
 }Modelo;
 
-typedef struct {
-	int       aX;
-	int       aY;
-	int       bX;
-	int       bY;
-}Liga;
+//typedef struct {
+//	int       aX;
+//	int       aY;
+//	int       bX;
+//	int       bY;
+//}Liga;
 
 typedef struct {
 	int       mPosX;
@@ -49,83 +45,136 @@ typedef struct {
 }Avatar;
 
 
-
+MazeController controller;
 Estado estado;
 Maze **maze;
 Modelo modelo;
 Avatar avatar;
+Avatar meta;
 int mSize;
 bool first;
 
-string convertInt(int number)
-{
-	stringstream ss;//create a stringstream
-	ss << number;//add number to the stream
-	return ss.str();//return a string with the contents of the stream
+//string convertInt(int number)
+//{
+//	stringstream ss;//create a stringstream
+//	ss << number;//add number to the stream
+//	return ss.str();//return a string with the contents of the stream
+//}
+
+
+//void ligacoes(int value)
+//{
+//	std::list<Liga> p;
+//	for (int i = 0; i < mSize; i++)
+//	{
+//		for (int j = 0; j < mSize; j++)
+//		{
+//			if (i == 5 && j == 5)
+//				printf("asdsa");
+//			/*if (maze[i][j].north == 0){ Liga l; l.aX = i; l.aY = j; l.bX = i; l.bY =j - 1;  p.push_back(l); }
+//			if (maze[i][j].south == 0){ Liga l; l.aX = i; l.aY = j; l.bX = i; l.bY = j + 1;  p.push_back(l); }
+//			if (maze[i][j].east == 0) { Liga l; l.aX = i; l.aY = j; l.bX = i + 1; l.bY = j;  p.push_back(l); }
+//			if (maze[i][j].west == 0) { Liga l; l.aX = i; l.aY = j; l.bX = i - 1; l.bY = j;  p.push_back(l); }*/
+//			if (maze[i][j].north == 0){ Liga l; l.aX = j; l.aY = i; l.bX = j; l.bY = i - 1;  p.push_back(l); }
+//			if (maze[i][j].south == 0){ Liga l; l.aX = j; l.aY = i; l.bX = j; l.bY = i + 1;  p.push_back(l); }
+//			if (maze[i][j].east == 0) { Liga l; l.aX = j; l.aY = i; l.bX = j + 1; l.bY = i;  p.push_back(l); }
+//			if (maze[i][j].west == 0) { Liga l; l.aX = j; l.aY = i; l.bX = j - 1; l.bY = i;  p.push_back(l); }
+//
+//		}
+//	}
+//
+//	char* argv[] = { "libswipl.dll", "-s", "labirinto.pl", NULL };
+//	PlEngine pEngine(3, argv);
+//
+//	ofstream myfile;
+//	myfile.open("example.txt");
+//	int i = 0;
+//	while (!p.empty())
+//	{
+//		PlTermv av(1);
+//		string arg1 = "(";
+//		string arg2 = "(";
+//		Liga x = p.front();
+//		arg1 += convertInt(x.aX) + ",";
+//		arg1 += convertInt(x.aY) + ")";
+//		arg2 += convertInt(x.bX) + ",";
+//		arg2 += convertInt(x.bY) + ")";
+//		p.pop_front();
+//		string ligacao = "liga(" + arg1 + "," + arg2 + ")";
+//
+//		av[0] = PlCompound(ligacao.c_str());
+//		PlQuery query("asserta", av);
+//		
+//		if (query.next_solution()) myfile << ligacao << "." << endl;
+//			i++;
+//
+//		PlTermv parm(2);
+//		parm[0] = PlCompound(arg1.c_str());
+//		PlQuery query2("liga", parm);
+//		//cout << endl << endl;
+//		while (query2.next_solution()){
+//			cout << arg1 <<  " ---> ";
+//			printf(parm[1]);
+//			cout << " " << endl;
+//		}
+//
+//	}
+//	myfile.close();
+//	PlTermv av23(2);
+//	av23[0] = PlCompound("(0,1)");
+//	PlQuery query2("liga", av23);
+//	string f2;
+//	query2.next_solution();
+//	f2 += (char*)av23[1];
+//
+//	
+//	
+//	
+//	//PlTermv sdf(3);
+//
+//}
+
+string ReplaceString(std::string subject, const std::string& search,
+	const std::string& replace) {
+	size_t pos = 0;
+	while ((pos = subject.find(search, pos)) != std::string::npos) {
+		subject.replace(pos, search.length(), replace);
+		pos += replace.length();
+	}
+	return subject;
 }
 
-
-void ligacoes(int value)
-{
-	std::list<Liga> p;
+void resetAjuda(){
 	for (int i = 0; i < mSize; i++)
 	{
 		for (int j = 0; j < mSize; j++)
 		{
-			/*if (maze[i][j].north == 0){ Liga l; l.aX = i; l.aY = j; l.bX = i; l.bY =j - 1;  p.push_back(l); }
-			if (maze[i][j].south == 0){ Liga l; l.aX = i; l.aY = j; l.bX = i; l.bY = j + 1;  p.push_back(l); }
-			if (maze[i][j].east == 0) { Liga l; l.aX = i; l.aY = j; l.bX = i + 1; l.bY = j;  p.push_back(l); }
-			if (maze[i][j].west == 0) { Liga l; l.aX = i; l.aY = j; l.bX = i - 1; l.bY = j;  p.push_back(l); }*/
-			if (maze[i][j].north == 0){ Liga l; l.aX = j; l.aY = i; l.bX = j; l.bY = i - 1;  p.push_back(l); }
-			if (maze[i][j].south == 0){ Liga l; l.aX = j; l.aY = i; l.bX = j; l.bY = i + 1;  p.push_back(l); }
-			if (maze[i][j].east == 0) { Liga l; l.aX = j; l.aY = i; l.bX = j + 1; l.bY = i;  p.push_back(l); }
-			if (maze[i][j].west == 0) { Liga l; l.aX = j; l.aY = i; l.bX = j - 1; l.bY = i;  p.push_back(l); }
-
+			if (maze[i][j].value == 5)
+				maze[i][j].value = 0;
 		}
 	}
+}
 
-	char* argv[] = { "libswipl.dll", "-s", "labirinto.pl", NULL };
-	PlEngine pEngine(3, argv);
-
+void AjudaMatriz(string list){
 	
-	int i = 0;
-	while (!p.empty())
-	{
-		PlTermv av(1);
-		string arg1 = "(";
-		string arg2 = "(";
-		Liga x = p.front();
-		arg1 += convertInt(x.aX) + ",";
-		arg1 += convertInt(x.aY) + ")";
-		arg2 += convertInt(x.bX) + ",";
-		arg2 += convertInt(x.bY) + ")";
-		p.pop_front();
-		string ligacao = "liga(" + arg1 + "," + arg2 + ")";
-
-		av[0] = PlCompound(ligacao.c_str());
-		PlQuery query("assert", av);
-		if (query.next_solution()) cout << ligacao << i << endl; i++;
-
+	list.erase(std::remove(list.begin(), list.end(), ' '), list.end());
+	cout << endl << list << endl;
+	list = ReplaceString(list, "),(", ";");
+	list = ReplaceString(list, "[(", "");
+	list = ReplaceString(list, ")]", "");
+	cout << endl << list << endl;
+	Reader r;
+	vector<string> linha = r.explode(list, ';');
+	for (int i = 1; i < linha.size()-1; i++){
+		int x, y;
+		string pos = linha.at(i);
+		string subs1 = pos.substr(pos.find(',')+1);
+		string subs2 = ReplaceString(pos, pos.substr(pos.find(',')), "");
+		istringstream(subs1) >> x;
+		//pos.substr(pos.find(','), pos.end)
+		istringstream(subs2) >> y;
+		maze[x][y].value = 5;
 	}
-
-	PlTermv av23(2);
-	av23[0] = PlCompound("(0,1)");
-	PlQuery query2("liga", av23);
-	string f2;
-	query2.next_solution();
-	f2 += (char*)av23[1];
-
-	PlTermv av2(3);
-	av2[0] = PlCompound("(0,0)");
-	av2[1] = PlCompound("(0,3)");
-	PlQuery query("cam_curto", av2);
-	string f;
-	query.next_solution();
-	f += (char*)av2[2];
-
-	
-	PlTermv sdf(3);
-
 }
 
 /* Inicialização do ambiente OPENGL */
@@ -134,10 +183,11 @@ void Init(void)
 
 
 	Reader r;
-	mSize = r.getMazeSize("maze40.txt");
-	maze = r.getMaze("maze40.txt");
+	mSize = r.getMazeSize("maze20.txt");
+	maze = r.getMaze("maze20.txt");
 	first = true;
-	ligacoes(0);
+	//controller = MazeController();
+	controller.ligacoes(mSize, maze);
 	//delay para o timer
 	/*estado.delay = 1000;
 	for (int i = 0; i < 40; i++)
@@ -203,7 +253,7 @@ void Init(void)
 
 
 
-
+	
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 
 	glEnable(GL_POINT_SMOOTH);
@@ -256,6 +306,7 @@ void Reshape(int width, int height)
 
 void Draw(void)
 {
+	bool win = false;
 	glFlush();
 	glClear(GL_COLOR_BUFFER_BIT);
 	for (int i = 0; i < mSize; i++) {
@@ -320,12 +371,26 @@ void Draw(void)
 
 				glEnd();
 				glColor3f(1.0, 1.0, 1.0);
+				meta.mPosX = i; meta.mPosY = j;
+			}
+			if (maze[i][j].value == 5){
+				glColor3f(1.0, 0.2, 4.0);
+				glBegin(GL_LINE_LOOP);
+
+				glVertex2f(SIDE * j + MARGEM_META, SIDE*i + MARGEM_META);
+				glVertex2f(SIDE * j + MARGEM_META, SIDE*i + SIDE - MARGEM_META);
+				glVertex2f(SIDE - MARGEM_META + SIDE * j, SIDE*i + SIDE - MARGEM_META);
+				glVertex2f(SIDE - MARGEM_META + SIDE * j, SIDE*i + MARGEM_META);
+
+				glEnd();
+				glColor3f(1.0, 1.0, 1.0);
+				meta.mPosX = i; meta.mPosY = j;
 			}
 
 
 
 			if (avatar.mPosX == i && avatar.mPosY == j){
-				cout << "avatar:" << avatar.mPosX << "," << avatar.mPosY << endl;
+				cout << "avatar:" << avatar.mPosY << "," << avatar.mPosX << endl;
 				glColor3f(0.5, 0.0, 0.5);
 				glBegin(GL_TRIANGLE_FAN);
 				float x1 = SIDE*.35 + SIDE * j + RAIO;
@@ -336,8 +401,8 @@ void Draw(void)
 
 					glVertex2f(x1 + sin(angle) * RAIO, y1 + cos(angle) * RAIO);
 
-
 				}
+				if (maze[i][j].value == 2) win = TRUE;
 				glEnd();
 				glColor3f(1.0, 1.0, 1.0);
 				glFlush();
@@ -346,9 +411,14 @@ void Draw(void)
 	}
 
 
+
 	glFlush();
 	if (estado.doubleBuffer)
 		glutSwapBuffers();
+
+	if (win){
+		MessageBox(NULL, "YOU WIN!!", "Msg", MB_OK | MB_ICONERROR);
+	}
 }
 
 /*******************************
@@ -399,9 +469,12 @@ void Key(unsigned char key, int x, int y)
 		// ... accoes sobre outras teclas ... 
 
 	case 'h':
-	case 'H':
-		imprime_ajuda();
-		break;
+	case 'H':{
+				 resetAjuda();
+				 glutPostRedisplay(); // redesenhar o ecrã
+				 AjudaMatriz(controller.cam_curto(avatar.mPosY, avatar.mPosX, meta.mPosY, meta.mPosX));
+				 glutPostRedisplay(); // redesenhar o ecrã
+				 break; }
 	case '+':
 		if (modelo.numLados<32)
 		{
@@ -459,18 +532,9 @@ void Key(unsigned char key, int x, int y)
 		}
 		break;
 	case 'R':
-		if (modelo.raio<0.9)
-		{
-			modelo.raio += 0.05;
-			glutPostRedisplay(); // redesenhar o ecrã
-		}
-		break;
 	case 'r':
-		if (modelo.raio>.2)
-		{
-			modelo.raio -= 0.05;
-			glutPostRedisplay(); // redesenhar o ecrã
-		}
+		resetAjuda();
+		glutPostRedisplay(); // redesenhar o ecrã
 		break;
 
 	}
