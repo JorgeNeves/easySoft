@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using WebApplication5.TabelModel.BLL;
 
 namespace WebApplication5
 {
@@ -67,7 +68,25 @@ namespace WebApplication5
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            OnlineUsers.Text =""+ (int)Application["UsersOnline"];
+            RegistedUsers.Text = "" + Users.getUsersCount();
+            if (Session["username"] != null)
+            {
+                var view = (LoginView)(Page.Master.FindControl("LoginView"));
+                view.Visible = false;
+                LogOff.Visible = true;
+            }
+        }
 
+        protected void LogOff_Click(object sender, EventArgs e)
+        {
+            Session["userID"] = null;
+            Session["username"] = null;
+            Session["userType"] = null;
+            Application.Lock();
+            Application["UsersOnline"] = (int)Application["UsersOnline"] - 1;
+            Application.UnLock();
+            Response.Redirect("~/Account/Login.aspx");
         }
     }
 }

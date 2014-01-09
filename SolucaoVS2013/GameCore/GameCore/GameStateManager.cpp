@@ -1,6 +1,6 @@
 #include "GameStateManager.h"
 
-NotGameStateException::NotGameStateException(string source) : Exception(EX_NOTGAMESTATE, source)
+NotGameStateException::NotGameStateException(string source) : Exception("NOT A GAMESTATE", source)
 {
 
 }

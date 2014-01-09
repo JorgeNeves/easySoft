@@ -9,6 +9,54 @@ namespace WebApplication5.TabelModel.BLL
 {
     public class Users
     {
+        public static DataSet getUserTags(int idUser)
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "Select distinct Tags.Palavra FROM Tags,Users,User_Tag where (Tags.TagID=User_Tag.TagID and User_Tag.UserID=" + idUser + ")";
+            DataSet rs = dal.ReturnDataSet(sql);
+            if (rs.Tables[0].Rows.Count > 0)
+            {
+                return rs;
+            }
+            else return null;
+        }
+
+        public static DataSet getAllUserTags()
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "Select distinct Tags.Palavra FROM Tags,Users,User_Tag where Tags.TagID=User_Tag.TagID";
+            DataSet rs = dal.ReturnDataSet(sql);
+            if (rs.Tables[0].Rows.Count > 0)
+            {
+                return rs;
+            }
+            else return null;
+        }
+
+        public static DataSet getRelationsTags(int idUser)
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "Select distinct Tags.Palavra FROM Tags,Users,Ligacao_Tag,Ligacaos where ((Ligacaos.LigacaoID=Ligacao_Tag.LigacaoID) and (Tags.TagID=Ligacao_Tag.TagID) and (Ligacaos.User1ID=" + idUser + " OR Ligacaos.User2ID=" + idUser + "))";
+            DataSet rs = dal.ReturnDataSet(sql);
+            if (rs.Tables[0].Rows.Count > 0)
+            {
+                return rs;
+            }
+            else return null;
+        }
+
+        public static DataSet getAllRelationsTags()
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "Select distinct Tags.Palavra FROM Tags,Users,Ligacao_Tag,Ligacaos where ((Ligacaos.LigacaoID=Ligacao_Tag.LigacaoID) and (Tags.TagID=Ligacao_Tag.TagID))";
+            DataSet rs = dal.ReturnDataSet(sql);
+            if (rs.Tables[0].Rows.Count > 0)
+            {
+                return rs;
+            }
+            else return null;
+        }
+
         public static bool InsereUtilizador(string username, string password, string mail,string nome, string apelido, string birthday, string country)
         {
             bool existe = verifyuser(username);
@@ -100,6 +148,17 @@ namespace WebApplication5.TabelModel.BLL
 
 
         }
+
+        public static int getUserID(string username)
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "select UserID from Users where Nick = '" + username + "'";
+            DataSet rs = dal.ReturnDataSet(sql);
+            return (int)rs.Tables[0].Rows[0][0];
+
+
+        }
+       
         public static DataSet getUser(string username)
         {
             BDAcess dal = new BDAcess();
@@ -113,5 +172,38 @@ namespace WebApplication5.TabelModel.BLL
 
 
         }
+        public static int getUsersCount()
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "select * from Users ";
+            DataSet rs = dal.ReturnDataSet(sql);
+            return rs.Tables[0].Rows.Count;
+
+        }
+
+        public static DataSet getUserTags(int idUser)
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "Select distinct Tags.Palavra FROM Tags,Users,User_Tag where (Tags.TagID=User_Tag.TagID and User_Tag.UserID=" + idUser + ")";
+            DataSet rs = dal.ReturnDataSet(sql);
+            if (rs.Tables[0].Rows.Count > 0)
+            {
+                return rs;
+            }
+            else return null;
+        }
+
+        public static DataSet getRelationsTags(int idUser)
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "Select distinct Tags.Palavra FROM Tags,Users,Ligacao_Tag,Ligacaos where ((Ligacaos.LigacaoID=Ligacao_Tag.LigacaoID) and (Tags.TagID=Ligacao_Tag.TagID) and (Ligacaos.User1ID=" + idUser + " OR Ligacaos.User2ID=" + idUser + "))";
+            DataSet rs = dal.ReturnDataSet(sql);
+            if (rs.Tables[0].Rows.Count > 0)
+            {
+                return rs;
+            }
+            else return null;
+        }
+        
     }
 }

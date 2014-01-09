@@ -97,7 +97,6 @@
     <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="grafos.h" />
     <ClInclude Include="SocialGraphState.h" />
-    <ClInclude Include="LOCALE_EN.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

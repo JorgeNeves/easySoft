@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using WebApplication5.TabelModel.BLL;
+
+
 namespace WebApplication5.Account
 {
     public partial class Login : System.Web.UI.Page
@@ -26,6 +28,9 @@ namespace WebApplication5.Account
                 Session["userID"] = userID;
                 Session["username"] = user;
                 Session["userType"] = type;
+                Application.Lock();
+                Application["UsersOnline"] = (int)Application["UsersOnline"] + 1;
+                Application.UnLock();
                 if (type.Equals("normal")) { Response.Redirect("~/Profile/Profile.aspx"); }
                
                 

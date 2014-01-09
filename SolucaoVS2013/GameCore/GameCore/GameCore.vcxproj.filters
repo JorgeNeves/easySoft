@@ -44,9 +44,6 @@
     <ClInclude Include="Exception.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LOCALE_EN.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="grafos.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -29,10 +29,11 @@ void Game::RegisterGSM(GameStateManager* gsm, int delay)
 }
 
 
-void Game::Init(string title, int argc, char* argv[])
+void Game::Init(string title, int width, int height, int argc, char* argv[])
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
+	glutInitWindowSize(width, height);
 	glutCreateWindow(title.c_str());
 	
 	RegisterGSM(GameStateManager::Instance(), 30);

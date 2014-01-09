@@ -3,7 +3,6 @@
 #include <stack>
 #include <GL\glut.h>
 #include "Exception.h"
-#include "LOCALE_EN.h"
 
 class NotGameStateException : public Exception
 {

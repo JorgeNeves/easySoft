@@ -5,7 +5,6 @@
 #include <GL\glut.h>
 
 #include "Exception.h"
-#include "LOCALE_EN.h"
 #include "GameStateManager.h"
 #include "SocialGraphState.h"
 
@@ -28,7 +27,7 @@ private:
 
 public:
 	static Game* Instance();
-	void Init(string title, int argc, char* argv[]);
+	void Init(string title, int width, int height, int argc, char* argv[]);
 	void Start();
 	void Stop();
 	void RegisterGSM(GameStateManager* gsm, int delay);

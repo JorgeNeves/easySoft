@@ -430,12 +430,12 @@ fieldset {
         background-color: #d3dce0;
         border: 1px solid #787878;
         cursor: pointer;
-        font-size: 1.2em;
+        font-size: medium;
         font-weight: 600;
         padding: 7px;
         margin-right: 8px;
-        width: auto;
-    }
+    text-align: justify;
+}
 
     td input[type="submit"],
     td input[type="button"],
@@ -443,7 +443,8 @@ fieldset {
         font-size: 1em;
         padding: 4px;
         margin-right: 4px;
-    }
+    text-align: center;
+}
 
 /* info and errors */
 .message-info {

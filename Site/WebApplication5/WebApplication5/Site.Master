@@ -4,7 +4,7 @@
 <html lang="en">
 <head runat="server">
     <meta charset="utf-8" />
-    <title><%: Page.Title %> - My ASP.NET Application</title>
+    <title><%: Page.Title %>- My ASP.NET Application</title>
     <asp:PlaceHolder runat="server">     
           <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>  
@@ -40,12 +40,12 @@
         <div class="content-wrapper">
             <div class="float-left">
                 <p class="site-title">
-                    &nbsp; e<a href="~/">asySoft</a> - Social Network
+                    &nbsp; <a href="~/">easySoft</a> - Social Network
                 </p>
             </div>
             <div class="float-right">
                 <section id="login">
-                    <asp:LoginView runat="server" ViewStateMode="Disabled">
+                    <asp:LoginView id="LoginView" runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul>
                                 <li><a id="registerLink" runat="server" href="~/Account/Register">Register</a></li>
@@ -60,10 +60,11 @@
                             </p>
                         </LoggedInTemplate>
                     </asp:LoginView>
+                    <asp:LinkButton ID="LogOff" runat="server" OnClick="LogOff_Click" Visible="False">LogOff</asp:LinkButton>
                 </section>
                 <nav>
                     <ul id="menu">
-                        <li><a runat="server" href="~/">Home</a></li>
+                        <li><a runat="server" href="~/Profile/Profile.aspx">Home</a></li>
                         <li><a runat="server" href="~/About">About</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
                     </ul>
@@ -80,8 +81,12 @@
     <footer>
         <div class="content-wrapper">
             <div class="float-left">
-                <p>&copy; <%: DateTime.Now.Year %> - easySoft - 2013</p>
-                <p>&nbsp;</p>
+                <p>2014 &copy; <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=272931&clcid=0x409 --%>- easySoft</p>
+                <p>Utilizadores Registados: <asp:Label ID="RegistedUsers" runat="server"></asp:Label>
+                </p>
+                <p>Utilizadores Online:
+                    <asp:Label ID="OnlineUsers" runat="server"></asp:Label>
+                </p>
             </div>
         </div>
     </footer>

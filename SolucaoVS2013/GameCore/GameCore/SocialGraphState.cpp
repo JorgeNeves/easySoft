@@ -219,18 +219,17 @@ void SocialGraphState::desenhaEixos(){
 }
 
 void SocialGraphState::setCamera(){
-	Vertice eye;
-	eye[0] = estado.camera.center[0] + estado.camera.dist*cos(estado.camera.dir_long)*cos(estado.camera.dir_lat);
-	eye[1] = estado.camera.center[1] + estado.camera.dist*sin(estado.camera.dir_long)*cos(estado.camera.dir_lat);
-	eye[2] = estado.camera.center[2] + estado.camera.dist*sin(estado.camera.dir_lat);
+	estado.camera.center[0] = estado.camera.eyeVer[0] + estado.camera.dist*cos(estado.camera.dir_long)*cos(estado.camera.dir_lat);
+	estado.camera.center[1] = estado.camera.eyeVer[1] + estado.camera.dist*sin(estado.camera.dir_long)*cos(estado.camera.dir_lat);
+	estado.camera.center[2] = estado.camera.eyeVer[2] + estado.camera.dist*sin(estado.camera.dir_lat);
 
 	if (estado.light){
-		gluLookAt(eye[0], eye[1], eye[2], estado.camera.center[0], estado.camera.center[1], estado.camera.center[2], 0, 0, 1);
+		gluLookAt(estado.camera.eyeVer[0], estado.camera.eyeVer[1], estado.camera.eyeVer[2], estado.camera.center[0], estado.camera.center[1], estado.camera.center[2], 0, 0, 1);
 		putLights((GLfloat*)white_light);
 	}
 	else{
 		putLights((GLfloat*)white_light);
-		gluLookAt(eye[0], eye[1], eye[2], estado.camera.center[0], estado.camera.center[1], estado.camera.center[2], 0, 0, 1);
+		gluLookAt(estado.camera.eyeVer[0], estado.camera.eyeVer[1], estado.camera.eyeVer[2], estado.camera.center[0], estado.camera.center[1], estado.camera.center[2], 0, 0, 1);
 	}
 }
 
@@ -248,17 +247,16 @@ void SocialGraphState::setProjection(int x, int y, GLboolean picking){
 
 SocialGraphState::SocialGraphState()
 {
-	estado.camera.dir_lat = M_PI / 4;
+	estado.camera.dir_lat = 0;
 	estado.camera.dir_long = -M_PI / 4;
 	estado.camera.fov = 60;
 	estado.camera.dist = 100;
 	estado.eixo[0] = 0;
 	estado.eixo[1] = 0;
 	estado.eixo[2] = 0;
-	estado.camera.center[0] = 0;
-	estado.camera.center[1] = 0;
-	estado.camera.center[2] = 0;
-	estado.camera.moving = false;
+	estado.camera.eyeVer[0] = 0;
+	estado.camera.eyeVer[1] = 0;
+	estado.camera.eyeVer[2] = 0;
 	estado.light = GL_FALSE;
 	estado.apresentaNormais = GL_FALSE;
 	estado.lightViewer = 1;
@@ -276,6 +274,8 @@ SocialGraphState::SocialGraphState()
 	modelo.g_pos_luz2[2] = 5.0;
 	modelo.g_pos_luz2[3] = 0.0;
 	activeInst = this;
+
+	keys.up = keys.down = keys.left = keys.right = keys.a = keys.q = false;
 }
 
 SocialGraphState::~SocialGraphState()
@@ -322,19 +322,38 @@ void SocialGraphState::HandleInput(unsigned char key, int special, bool val)
 	{
 		switch (key)
 		{
-		case 27:
-			exit(0);
-			break;
+			// SUBIR
+			case 'q':
+			case 'Q':
+				keys.q = val;
+				break;
+			// DESCER
+			case 'a':
+			case 'A':
+				keys.a = val;
+				break;
+			case 27:
+				exit(0);
+				break;
 		}
 	}		
 	else // if normal ASCII mapped key pressed (a, A, C, 2, backspace, ...)
 	{
 		switch (special)
 		{
+		case GLUT_KEY_LEFT:
+			keys.left = val;
+			break;
+		case GLUT_KEY_RIGHT:
+			keys.right = val;
+			break;
 		case GLUT_KEY_UP:
-			estado.camera.moving = val;
-		}
-
+			keys.up = val;
+			break;
+		case GLUT_KEY_DOWN:
+			keys.down = val;
+			break;
+	}
 	}
 		
 }
@@ -343,9 +362,23 @@ void SocialGraphState::HandleInput(unsigned char key, int special, bool val)
 
 void SocialGraphState::Update()
 {
-	if (estado.camera.moving)
+	if (keys.q)
+		estado.camera.eyeVer[2] += CAMERASPEED;
+	if (keys.a)
+		estado.camera.eyeVer[2] -= CAMERASPEED;
+	if (keys.left)
+		estado.camera.dir_long += CAMERAROT;
+	if (keys.right)
+		estado.camera.dir_long -= CAMERAROT;
+	if (keys.up)
 	{
-		estado.camera.dir_lat += CAMVEL;
+		estado.camera.eyeVer[0] += CAMERASPEED * cos(estado.camera.dir_long);
+		estado.camera.eyeVer[1] += CAMERASPEED * sin(estado.camera.dir_long);
+	}
+	if (keys.down)
+	{
+		estado.camera.eyeVer[0] -= CAMERASPEED * cos(estado.camera.dir_long);
+		estado.camera.eyeVer[1] -= CAMERASPEED * sin(estado.camera.dir_long);
 	}
 }
 
