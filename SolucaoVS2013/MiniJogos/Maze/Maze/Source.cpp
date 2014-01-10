@@ -183,8 +183,8 @@ void Init(void)
 
 
 	Reader r;
-	mSize = r.getMazeSize("maze20.txt");
-	maze = r.getMaze("maze20.txt");
+	mSize = r.getMazeSize("maze40.txt");
+	maze = r.getMaze("maze40.txt");
 	first = true;
 	//controller = MazeController();
 	controller.ligacoes(mSize, maze);
@@ -445,13 +445,10 @@ void imprime_ajuda(void)
 {
 	printf("\n\nDesenho de um quadrado\n");
 	printf("h,H - Ajuda \n");
-	printf("p,P - Poligono desenhado com GL_POLYGON\n");
-	printf("t,T - Poligono desenhado com GL_TRIANGLE_FAN\n");
-	printf("l,L - Poligono desenhado com GL_LINE_LOOP\n");
-	printf("+   - Aumentar tamanho numero de Lados\n");
-	printf("-   - Diminuir tamanho numero de Lados\n");
-	printf("R   - Aumentar tamanho raio\n");
-	printf("r   - Diminuir tamanho raio\n");
+	printf("w,W - ir para cima\n");
+	printf("s,S - ir para baixo\n");
+	printf("a,A - ir para esquerda\n");
+	printf("d,D - ir para direita\n");
 	printf("ESC - Sair\n");
 }
 
