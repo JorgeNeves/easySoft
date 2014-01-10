@@ -120,37 +120,39 @@ void Reshape(int width, int height)
 //Desenho relativo à base da forca
 void forca()
 {
-	glBegin(GL_LINES); //Begins drawing of a 3D line
-	glColor3f(1.0f, 1.0f, 0.0f); //sets color of line
-	glVertex3f(-0.5f, 0.7f, 0.0f); //Here are two vertices that are used as 
-	glVertex3f(-0.5f, -0.3f, 0.0f); //endpoints for the line. Adjust the numbers inside glVertex3f() to move the line
-	glEnd(); //End drawing
+	glBegin(GL_LINES); 
+	glColor3f(1.0f, 1.0f, 0.0f); 
+	glVertex3f(-0.5f, 0.7f, 0.0f);  
+	glVertex3f(-0.5f, -0.3f, 0.0f); 
+	glEnd();
 
-	glBegin(GL_LINES); //Begins drawing of a 3D line
-	glColor3f(1.0f, 1.0f, 0.0f); //sets color of line
-	glVertex3f(-0.75f,-0.3f, 0.0f); //Here are two vertices that are used as 
-	glVertex3f(0.0f,-0.3f, 0.0f); //endpoints for the line. Adjust the numbers inside glVertex3f() to move the line
-	glEnd(); //End drawing
+	glBegin(GL_LINES); 
+	glColor3f(1.0f, 1.0f, 0.0f); 
+	glVertex3f(-0.75f,-0.3f, 0.0f);  
+	glVertex3f(0.0f,-0.3f, 0.0f); 
+	glEnd(); 
 
-	glBegin(GL_LINES); //Begins drawing of a 3D line
-	glColor3f(1.0f, 1.0f, 0.0f); //sets color of line
-	glVertex3f(-0.5f, 0.7f, 0.0f); //Here are two vertices that are used as 
-	glVertex3f(0.1f, 0.7f, 0.0f); //endpoints for the line. Adjust the numbers inside glVertex3f() to move the line
-	glEnd(); //End drawing
+	glBegin(GL_LINES); 
+	glColor3f(1.0f, 1.0f, 0.0f); 
+	glVertex3f(-0.5f, 0.7f, 0.0f); 
+	glVertex3f(0.1f, 0.7f, 0.0f); 
+	glEnd(); 
 
-	glBegin(GL_LINES); //Begins drawing of a 3D line
-	glColor3f(1.0f, 1.0f, 0.0f); //sets color of line
-	glVertex3f(0.1f, 0.7f, 0.0f); //Here are two vertices that are used as 
-	glVertex3f(0.1f, 0.6f, 0.0f); //endpoints for the line. Adjust the numbers inside glVertex3f() to move the line
-	glEnd(); //End drawing
+	glBegin(GL_LINES); 
+	glColor3f(1.0f, 1.0f, 0.0f); 
+	glVertex3f(0.1f, 0.7f, 0.0f); 
+	glVertex3f(0.1f, 0.6f, 0.0f); 
+	glEnd(); 
 }
 
 //Desenho relativo à cabeça do jogador :)
+//Baseado em:
+//https://gist.github.com/strife25/803118
 void cabeca(){
 	int i;
-	int lineAmount = 100; //# of triangles used to draw circle
+	int lineAmount = 100; // numero de triangulos para desenhar o circulo
 
-	//GLfloat radius = 0.8f; //radius
+	
 	GLfloat twicePi = 2.0f * M_PI;
 
 	glBegin(GL_LINE_LOOP);
@@ -165,37 +167,36 @@ void cabeca(){
 
 //Desenho relativo ao pescoço
 void pescoco(){
-	glBegin(GL_LINES); //Begins drawing of a 3D line
-	glColor3f(1.0f, 1.0f, 0.0f); //sets color of line
-	glVertex3f(0.1f, 0.4f, 0.0f); //Here are two vertices that are used as 
-	glVertex3f(0.1f, 0.35f, 0.0f); //endpoints for the line. Adjust the numbers inside glVertex3f() to move the line
-	glEnd(); //End drawing
+	glBegin(GL_LINES); 
+	glColor3f(1.0f, 1.0f, 0.0f); 
+	glVertex3f(0.1f, 0.4f, 0.0f); //Inicio
+	glVertex3f(0.1f, 0.35f, 0.0f); //Fim
+	glEnd();
 }
 
 //Desenho relativo ao tronco
 void tronco(){
-	glBegin(GL_LINES); //Begins drawing of a 3D line
-	glColor3f(1.0f, 1.0f, 0.0f); //sets color of line
-	glVertex3f(0.1f, 0.35f, 0.0f); //Here are two vertices that are used as 
-	glVertex3f(0.1f, 0.1f, 0.0f); //endpoints for the line. Adjust the numbers inside glVertex3f() to move the line
-	glEnd(); //End drawing
+	glBegin(GL_LINES);
+	glColor3f(1.0f, 1.0f, 0.0f);
+	glVertex3f(0.1f, 0.35f, 0.0f); //Inicio
+	glVertex3f(0.1f, 0.1f, 0.0f); //fim
+	glEnd();
 }
-
 // n = 1 Desenha 1 braço
 // n = 2 Desenha 2 braços
 void braco(int n){
 	
 		glBegin(GL_LINES);
-		glColor3f(1.0f, 1.0f, 0.0f); //sets color of line
-		glVertex3f(0.1f, 0.35f, 0.0f); //Here are two vertices that are used as 
-		glVertex3f(0.0f, 0.2f, 0.0f); //endpoints for the line. Adjust the numbers inside glVertex3f() to move the line
-		glEnd(); //End drawing
+		glColor3f(1.0f, 1.0f, 0.0f); 
+		glVertex3f(0.1f, 0.35f, 0.0f); //inicio
+		glVertex3f(0.0f, 0.2f, 0.0f); //fim
+		glEnd(); 
 		if (n == 2){
 			glBegin(GL_LINES);
-			glColor3f(1.0f, 1.0f, 0.0f); //sets color of line
-			glVertex3f(0.1f, 0.35f, 0.0f); //Here are two vertices that are used as 
-			glVertex3f(0.2f, 0.2f, 0.0f); //endpoints for the line. Adjust the numbers inside glVertex3f() to move the line
-			glEnd(); //End drawing
+			glColor3f(1.0f, 1.0f, 0.0f);
+			glVertex3f(0.1f, 0.35f, 0.0f); //inicio
+			glVertex3f(0.2f, 0.2f, 0.0f); //fim
+			glEnd(); 
 		}
 	
 }
@@ -205,16 +206,16 @@ void braco(int n){
 void perna(int n){
 
 	glBegin(GL_LINES);
-	glColor3f(1.0f, 1.0f, 0.0f); //sets color of line
-	glVertex3f(0.1f, 0.1f, 0.0f); //Here are two vertices that are used as 
-	glVertex3f(0.0f, 0.0f, 0.0f); //endpoints for the line. Adjust the numbers inside glVertex3f() to move the line
-	glEnd(); //End drawing
+	glColor3f(1.0f, 1.0f, 0.0f); 
+	glVertex3f(0.1f, 0.1f, 0.0f); //inicio
+	glVertex3f(0.0f, 0.0f, 0.0f); //fim
+	glEnd();
 	if (n == 2){
 		glBegin(GL_LINES);
-		glColor3f(1.0f, 1.0f, 0.0f); //sets color of line
-		glVertex3f(0.1f, 0.1f, 0.0f); //Here are two vertices that are used as 
-		glVertex3f(0.2f, 0.0f, 0.0f); //endpoints for the line. Adjust the numbers inside glVertex3f() to move the line
-		glEnd(); //End drawing
+		glColor3f(1.0f, 1.0f, 0.0f); 
+		glVertex3f(0.1f, 0.1f, 0.0f); //inicio
+		glVertex3f(0.2f, 0.0f, 0.0f); //fim
+		glEnd(); 
 	}
 
 }
@@ -250,10 +251,10 @@ void tracinhos(){
 	for (int i = 0; i < palavra.nletras; i++){
 		if (palavra.p[i] != ' '){
 			glBegin(GL_LINES);
-			glColor3f(1.0f, 1.0f, 0.0f); //sets color of line
-			glVertex3f(posxi, -0.7f, 0.0f); //Here are two vertices that are used as 
-			glVertex3f(posxi + inc_D, -0.7f, 0.0f); //endpoints for the line. Adjust the numbers inside glVertex3f() to move the line
-			glEnd(); //End drawing
+			glColor3f(1.0f, 1.0f, 0.0f); 
+			glVertex3f(posxi, -0.7f, 0.0f); //inicio
+			glVertex3f(posxi + inc_D, -0.7f, 0.0f); //fim
+			glEnd(); 
 
 			glColor3f(1.0f, 1.0f, 0.3f);
 
