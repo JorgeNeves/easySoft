@@ -9,6 +9,18 @@ namespace WebApplication5.TabelModel.BLL
 {
     public class Users
     {
+        public static DataSet getAllUsernames()
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "Select Users.Nick From Users";
+            DataSet rs = dal.ReturnDataSet(sql);
+            if (rs.Tables[0].Rows.Count > 0)
+            {
+                return rs;
+            }
+            else return null;
+
+        }
         public static DataSet getUserTags(int idUser)
         {
             BDAcess dal = new BDAcess();

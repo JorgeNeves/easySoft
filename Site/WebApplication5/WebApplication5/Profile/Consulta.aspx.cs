@@ -86,5 +86,58 @@ namespace WebApplication5.Profile
             lbltag.Text = temp;
         }
 
+        protected DataTable DynamicColumns()
+        {
+            // Define the new datatable
+            DataTable dt = new DataTable();
+
+            // Define 3 columns
+
+            DataColumn dc;
+            dc = new DataColumn("Position");
+            dt.Columns.Add(dc);
+            dc = new DataColumn("Username");
+            dt.Columns.Add(dc);
+            dc = new DataColumn("Pontuation");
+            dt.Columns.Add(dc);
+            return dt;
+        }
+
+        protected void btnleaderamigos_Click(object sender, EventArgs e)
+        {
+        //Baseado em:
+        //http://www.dotnetobject.com/Thread-Generate-dynamic-DataTable-c
+            ViewState["dt"] = DynamicColumns();
+            DataTable datat = DynamicColumns();
+            DataSet ds = Users.getAllUsernames();
+
+            foreach (DataRow data in ds.Tables[0].Rows)
+            {
+                DataRow nrow = datat.NewRow();
+                foreach (object item in data.ItemArray)
+                {
+                    nrow["Position"] = 1;
+                    nrow["Username"] = item.ToString();
+                    
+                    int idUser = Users.getUserID(item.ToString());
+                    int amigos = 0;
+                    
+                    DataSet rs = Relationships.checkAmigos(idUser);
+                    if (rs != null)
+                    {
+                       amigos = rs.Tables[0].Rows.Count;
+                    }
+                    nrow["Pontuation"] = amigos;
+                    datat.Rows.Add(nrow);
+                }
+
+            }
+            GridView1.Visible = true;
+            GridView1.DataSource = datat;
+            GridView1.DataBind();
+            
+
+        }
+
     }
 }

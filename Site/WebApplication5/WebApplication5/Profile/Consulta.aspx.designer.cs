@@ -31,13 +31,13 @@ namespace WebApplication5.Profile {
         protected global::System.Web.UI.WebControls.Button btnuserstags;
         
         /// <summary>
-        /// Button7 control.
+        /// btnleaderamigos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button7;
+        protected global::System.Web.UI.WebControls.Button btnleaderamigos;
         
         /// <summary>
         /// Button4 control.
@@ -49,13 +49,13 @@ namespace WebApplication5.Profile {
         protected global::System.Web.UI.WebControls.Button Button4;
         
         /// <summary>
-        /// Button8 control.
+        /// Button6 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button8;
+        protected global::System.Web.UI.WebControls.Button Button6;
         
         /// <summary>
         /// Label2 control.
@@ -85,22 +85,22 @@ namespace WebApplication5.Profile {
         protected global::System.Web.UI.WebControls.Button btnusertagsrelacoes;
         
         /// <summary>
-        /// Button5 control.
+        /// Button7 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button5;
+        protected global::System.Web.UI.WebControls.Button Button7;
         
         /// <summary>
-        /// Button6 control.
+        /// Button8 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button6;
+        protected global::System.Web.UI.WebControls.Button Button8;
         
         /// <summary>
         /// lbltipotag control.
@@ -119,5 +119,14 @@ namespace WebApplication5.Profile {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbltag;
+        
+        /// <summary>
+        /// GridView1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridView1;
     }
 }
