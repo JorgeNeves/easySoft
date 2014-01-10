@@ -95,7 +95,9 @@
     <p>
         <table style="width:100%;">
             <tr>
-                <td class="auto-style9">&nbsp;</td>
+                <td class="auto-style9">
+                    <asp:Label ID="lbltipogrid" runat="server"></asp:Label>
+                </td>
                 <td class="auto-style10">&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
