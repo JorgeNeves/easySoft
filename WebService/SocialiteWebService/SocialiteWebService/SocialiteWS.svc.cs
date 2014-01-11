@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using System.Configuration;
 
 namespace SocialiteWebService
 {
@@ -103,6 +105,17 @@ namespace SocialiteWebService
                 }
             }
             return null;
+        }
+
+        /* Devolve uma palavra gerada pelo servico de Prolog que controla o minijogo Enforcado
+         * (a pedido do Sr. Neves :D)
+         */
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/hangman/newword/")]
+        public string GetWord()
+        {
+            WebClient webClient = new WebClient();
+            string reply = webClient.DownloadString(ConfigurationManager.AppSettings["HangmanGamePrologServiceUrl"]);
+            return reply;
         }
 
     }
