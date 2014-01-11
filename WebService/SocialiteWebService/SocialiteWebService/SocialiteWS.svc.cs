@@ -68,5 +68,29 @@ namespace SocialiteWebService
             return payload;
         }
 
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/userdata?id={userid}&token={token}")]
+        public UserData GetUserData(int userid, string token)
+        {
+            if (LoggedUsers.ContainsKey(token) || token == "debug")
+            {
+                Users user = db.Users.FirstOrDefault(u => u.UserID == userid);
+                if(user != null)
+                {
+                    UserData ud = new UserData()
+                    {
+                        UserID = user.UserID,
+                        UserName = user.PrimeiroNome + " " + user.PrimeiroNome,
+                        UserMood = db.EstadoDeHumors.FirstOrDefault(eh => eh.EstadoDeHumorID == user.EstadoDeHumorID).Sentimento,
+                        Usertags = null,//db.User_Tag.Where(t => t.User_TagID == user.UserID).Select(s => s.ToString()).ToList(),
+                        UserFriendsIDs = null,//db.Ligacaos.Where(l => l.User1ID == user.UserID).Select(u => u.User2ID).ToList()
+                    };
+                    //ud.UserFriendsIDs.AddRange(db.Ligacaos.Where(l => l.User2ID == user.UserID).Select(u => u.User1ID).ToList());
+
+                    return ud;
+                }
+            }
+            return null;
+        }
+
     }
 }

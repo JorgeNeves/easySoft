@@ -19,6 +19,9 @@ namespace SocialiteWebService
 
         [OperationContract]
         ServiceStatus Status();
+
+        [OperationContract]
+        UserData GetUserData(int userid, string token);
     }
 
     [DataContract]
@@ -30,5 +33,23 @@ namespace SocialiteWebService
         public int TotalUsers { get; set; }
         [DataMember(Order = 3)]
         public int OnlineUsers { get; set; }
+    }
+
+    [DataContract]
+    public class UserData
+    {
+        [DataMember(Order = 1)]
+        public int UserID { get; set; }
+
+        [DataMember(Order = 2)]
+        public string UserName { get; set; }
+
+        [DataMember(Order = 3)]
+        public string UserMood { get; set; }
+
+        [DataMember(Order = 4)]
+        public List<string> Usertags { get; set; }
+        [DataMember(Order = 5)]
+        public List<int> UserFriendsIDs { get; set; }
     }
 }
