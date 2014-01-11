@@ -68,5 +68,42 @@ namespace SocialiteWebService
             return payload;
         }
 
+        /* Devolve os dados relativos ao utilizador, incluindo nome, estado de espirito, tags e IDs dos seus amigos
+         * 
+         */
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/userdata?id={userid}&token={token}")]
+        public UserData GetUserData(int userid, string token)
+        {
+            if (LoggedUsers.ContainsKey(token) || token == "debug")
+            {
+                Users user = db.Users.FirstOrDefault(u => u.UserID == userid);
+                if(user != null)
+                {
+                    UserData ud = new UserData()
+                    {
+                        UserID = user.UserID,
+                        UserName = user.PrimeiroNome + " " + user.PrimeiroNome,
+                        UserMood = db.EstadoDeHumors.FirstOrDefault(eh => eh.EstadoDeHumorID == user.EstadoDeHumorID).Sentimento,
+
+                        // para todas as user_tags do utilizador, juntar a tabela de tags, ir buscar o campo Palavra (nome da tag)
+                        Usertags = (from usertag in db.User_Tag
+                                    join tag in db.Tags on usertag.TagID equals tag.TagID
+                                    where usertag.UserID == user.UserID
+                                    select tag.Palavra).ToList(),
+                        // para todas as ligacoes em que o User1 e o utilizador atual, ir buscar o ID do User2 (o amigo)
+                        UserFriendsIDs = (from lig in db.Ligacaos
+                                          where lig.User1ID == user.UserID
+                                          select lig.User2ID).ToList()
+                    };
+                    // o mesmo que o de cima, mas no sentido contrario
+                    ud.UserFriendsIDs.AddRange((from lig in db.Ligacaos
+                                                where lig.User2ID == user.UserID
+                                                select lig.User1ID).ToList());
+                    return ud;
+                }
+            }
+            return null;
+        }
+
     }
 }

@@ -9,66 +9,6 @@ namespace WebApplication5.TabelModel.BLL
 {
     public class Users
     {
-        public static DataSet getAllUsernames()
-        {
-            BDAcess dal = new BDAcess();
-            string sql = "Select Users.Nick From Users";
-            DataSet rs = dal.ReturnDataSet(sql);
-            if (rs.Tables[0].Rows.Count > 0)
-            {
-                return rs;
-            }
-            else return null;
-
-        }
-        public static DataSet getUserTags(int idUser)
-        {
-            BDAcess dal = new BDAcess();
-            string sql = "Select distinct Tags.Palavra FROM Tags,Users,User_Tag where (Tags.TagID=User_Tag.TagID and User_Tag.UserID=" + idUser + ")";
-            DataSet rs = dal.ReturnDataSet(sql);
-            if (rs.Tables[0].Rows.Count > 0)
-            {
-                return rs;
-            }
-            else return null;
-        }
-
-        public static DataSet getAllUserTags()
-        {
-            BDAcess dal = new BDAcess();
-            string sql = "Select distinct Tags.Palavra FROM Tags,Users,User_Tag where Tags.TagID=User_Tag.TagID";
-            DataSet rs = dal.ReturnDataSet(sql);
-            if (rs.Tables[0].Rows.Count > 0)
-            {
-                return rs;
-            }
-            else return null;
-        }
-
-        public static DataSet getRelationsTags(int idUser)
-        {
-            BDAcess dal = new BDAcess();
-            string sql = "Select distinct Tags.Palavra FROM Tags,Users,Ligacao_Tag,Ligacaos where ((Ligacaos.LigacaoID=Ligacao_Tag.LigacaoID) and (Tags.TagID=Ligacao_Tag.TagID) and (Ligacaos.User1ID=" + idUser + " OR Ligacaos.User2ID=" + idUser + "))";
-            DataSet rs = dal.ReturnDataSet(sql);
-            if (rs.Tables[0].Rows.Count > 0)
-            {
-                return rs;
-            }
-            else return null;
-        }
-
-        public static DataSet getAllRelationsTags()
-        {
-            BDAcess dal = new BDAcess();
-            string sql = "Select distinct Tags.Palavra FROM Tags,Users,Ligacao_Tag,Ligacaos where ((Ligacaos.LigacaoID=Ligacao_Tag.LigacaoID) and (Tags.TagID=Ligacao_Tag.TagID))";
-            DataSet rs = dal.ReturnDataSet(sql);
-            if (rs.Tables[0].Rows.Count > 0)
-            {
-                return rs;
-            }
-            else return null;
-        }
-
         public static bool InsereUtilizador(string username, string password, string mail,string nome, string apelido, string birthday, string country)
         {
             bool existe = verifyuser(username);
@@ -194,6 +134,78 @@ namespace WebApplication5.TabelModel.BLL
         }
 
         
+
+        public static DataSet searchUser(string username)
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "select * from Users where Nick like '%" + username + "%'";
+            DataSet rs = dal.ReturnDataSet(sql);
+            if (rs.Tables[0].Rows.Count > 0)
+            {
+                return rs;
+            }
+            else return null;
+        }
+
+        public static DataSet getAllUsernames()
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "Select Users.Nick From Users";
+            DataSet rs = dal.ReturnDataSet(sql);
+            if (rs.Tables[0].Rows.Count > 0)
+            {
+                return rs;
+            }
+            else return null;
+
+        }
+        public static DataSet getUserTags(int idUser)
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "Select distinct Tags.Palavra FROM Tags,Users,User_Tag where (Tags.TagID=User_Tag.TagID and User_Tag.UserID=" + idUser + ")";
+            DataSet rs = dal.ReturnDataSet(sql);
+            if (rs.Tables[0].Rows.Count > 0)
+            {
+                return rs;
+            }
+            else return null;
+        }
+
+        public static DataSet getAllUserTags()
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "Select distinct Tags.Palavra FROM Tags,Users,User_Tag where Tags.TagID=User_Tag.TagID";
+            DataSet rs = dal.ReturnDataSet(sql);
+            if (rs.Tables[0].Rows.Count > 0)
+            {
+                return rs;
+            }
+            else return null;
+        }
+
+        public static DataSet getRelationsTags(int idUser)
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "Select distinct Tags.Palavra FROM Tags,Users,Ligacao_Tag,Ligacaos where ((Ligacaos.LigacaoID=Ligacao_Tag.LigacaoID) and (Tags.TagID=Ligacao_Tag.TagID) and (Ligacaos.User1ID=" + idUser + " OR Ligacaos.User2ID=" + idUser + "))";
+            DataSet rs = dal.ReturnDataSet(sql);
+            if (rs.Tables[0].Rows.Count > 0)
+            {
+                return rs;
+            }
+            else return null;
+        }
+
+        public static DataSet getAllRelationsTags()
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "Select distinct Tags.Palavra FROM Tags,Users,Ligacao_Tag,Ligacaos where ((Ligacaos.LigacaoID=Ligacao_Tag.LigacaoID) and (Tags.TagID=Ligacao_Tag.TagID))";
+            DataSet rs = dal.ReturnDataSet(sql);
+            if (rs.Tables[0].Rows.Count > 0)
+            {
+                return rs;
+            }
+            else return null;
+        }
         
     }
 }
