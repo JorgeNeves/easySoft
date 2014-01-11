@@ -44,6 +44,7 @@ namespace WebApplication5.Profile
             {
                 Label10.Text =""+ ds.Tables[0].Rows.Count;
             }
+           
             
         }
 
@@ -81,5 +82,6 @@ namespace WebApplication5.Profile
             }
            
         }
+        
     }
 }
