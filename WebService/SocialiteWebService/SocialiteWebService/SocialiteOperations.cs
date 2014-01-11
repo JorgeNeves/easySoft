@@ -52,4 +52,12 @@ namespace SocialiteWebService
         [DataMember(Order = 5)]
         public List<int> UserFriendsIDs { get; set; }
     }
+    
+    [DataContract]
+    public class Relationship
+    {
+        public int RelID { get; set; }
+        public int FriendID { get; set; }
+        public List<string> RelTags { get; set; }
+    }
 }

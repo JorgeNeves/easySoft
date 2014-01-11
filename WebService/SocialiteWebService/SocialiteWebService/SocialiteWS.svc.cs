@@ -68,6 +68,9 @@ namespace SocialiteWebService
             return payload;
         }
 
+        /* Devolve os dados relativos ao utilizador, incluindo nome, estado de espirito, tags e IDs dos seus amigos
+         * 
+         */
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/userdata?id={userid}&token={token}")]
         public UserData GetUserData(int userid, string token)
         {
@@ -81,11 +84,21 @@ namespace SocialiteWebService
                         UserID = user.UserID,
                         UserName = user.PrimeiroNome + " " + user.PrimeiroNome,
                         UserMood = db.EstadoDeHumors.FirstOrDefault(eh => eh.EstadoDeHumorID == user.EstadoDeHumorID).Sentimento,
-                        Usertags = null,//db.User_Tag.Where(t => t.User_TagID == user.UserID).Select(s => s.ToString()).ToList(),
-                        UserFriendsIDs = null,//db.Ligacaos.Where(l => l.User1ID == user.UserID).Select(u => u.User2ID).ToList()
-                    };
-                    //ud.UserFriendsIDs.AddRange(db.Ligacaos.Where(l => l.User2ID == user.UserID).Select(u => u.User1ID).ToList());
 
+                        // para todas as user_tags do utilizador, juntar a tabela de tags, ir buscar o campo Palavra (nome da tag)
+                        Usertags = (from usertag in db.User_Tag
+                                    join tag in db.Tags on usertag.TagID equals tag.TagID
+                                    where usertag.UserID == user.UserID
+                                    select tag.Palavra).ToList(),
+                        // para todas as ligacoes em que o User1 e o utilizador atual, ir buscar o ID do User2 (o amigo)
+                        UserFriendsIDs = (from lig in db.Ligacaos
+                                          where lig.User1ID == user.UserID
+                                          select lig.User2ID).ToList()
+                    };
+                    // o mesmo que o de cima, mas no sentido contrario
+                    ud.UserFriendsIDs.AddRange((from lig in db.Ligacaos
+                                                where lig.User2ID == user.UserID
+                                                select lig.User1ID).ToList());
                     return ud;
                 }
             }
