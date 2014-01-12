@@ -107,6 +107,22 @@ namespace SocialiteWebService
             return null;
         }
 
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/userdata/{token}")]
+
+        /*
+         * Devolve os dados do utilizador loggado atualmente. 
+         * FIXME: por isto tudo num controlador de backend.
+         */ 
+        public UserData GetCurrentUserData(string token)
+        {
+            if(LoggedUsers.ContainsKey(token))
+            {
+                Users current = LoggedUsers[token];
+                return GetUserData(current.UserID, token); // grrrrrrrr :S
+            }
+            return null;
+        }
+
         /* Devolve uma palavra gerada pelo servico de Prolog que controla o minijogo Enforcado
          * (a pedido do Sr. Neves :D)
          */

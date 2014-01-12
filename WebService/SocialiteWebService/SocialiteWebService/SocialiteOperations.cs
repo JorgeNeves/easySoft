@@ -24,6 +24,9 @@ namespace SocialiteWebService
         UserData GetUserData(int userid, string token);
 
         [OperationContract]
+        UserData GetCurrentUserData(string token);
+
+        [OperationContract]
         string GetWord();
     }
 
