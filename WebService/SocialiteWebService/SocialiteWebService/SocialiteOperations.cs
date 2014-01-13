@@ -34,6 +34,9 @@ namespace SocialiteWebService
 
         [OperationContract]
         string CompareWord(string palavra, string tentativa);
+
+        [OperationContract]
+        string GetDownloads();
     }
 
     [DataContract]

@@ -159,5 +159,13 @@ namespace SocialiteWebService
             
         }
 
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/downloads")]
+        public string GetDownloads()
+        {
+            WebClient webClient = new WebClient();
+            string reply = webClient.DownloadString(ConfigurationManager.AppSettings["DownloadServiceUrl"]);
+            return reply;
+        }
+
     }
 }
