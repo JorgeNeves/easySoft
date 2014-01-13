@@ -28,6 +28,12 @@ namespace SocialiteWebService
 
         [OperationContract]
         string GetWord();
+
+        [OperationContract]
+        string GetCategory();
+
+        [OperationContract]
+        string CompareWord(string palavra, string tentativa);
     }
 
     [DataContract]
