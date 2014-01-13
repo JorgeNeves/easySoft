@@ -44,44 +44,8 @@ namespace WebApplication5.Profile
             {
                 Label10.Text =""+ ds.Tables[0].Rows.Count;
             }
-            preencher_usertags();
-            preencher_relations_tags();
-        }
-        protected void preencher_relations_tags()
-        {
-            int userID = (int)Session["userID"];
-            DataSet ds = Users.getRelationsTags(userID);
-            string temp = "";
-
-            foreach (DataRow data in ds.Tables[0].Rows)
-            {
-
-                foreach (object item in data.ItemArray)
-                {
-                    temp += "<u>" + item.ToString() + "</u> ";
-                }
-
-            }
-            lblreltags.Text = temp;
-        }
-
-        protected void preencher_usertags()
-        {
-            int userID =(int) Session["userID"];
-            DataSet ds = Users.getUserTags(userID);
+           
             
-            string temp = "";
-
-            foreach (DataRow data in ds.Tables[0].Rows)
-            {
-
-                foreach (object item in data.ItemArray)
-                {
-                    temp += "<u>" + item.ToString() + "</u> ";
-                }
-
-            }
-            lblusertag.Text = temp;
         }
 
         protected void LinkButton3_Click(object sender, EventArgs e)

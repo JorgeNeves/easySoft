@@ -179,19 +179,8 @@
             <td class="auto-style3">
                 <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Editar Perfil" />
             </td>
-            <td class="auto-style2">
-                <asp:Label ID="Label11" runat="server" Font-Bold="True" Text="As suas TAGs de Utilizador:"></asp:Label>
-                <br />
-                <asp:Label ID="lblusertag" runat="server" Text="Não tem UserTags"></asp:Label>
-                <br />
-                <br />
-                <asp:Label ID="Label12" runat="server" Font-Bold="True" Text="TAGs das suas relações:"></asp:Label>
-                <br />
-                <asp:Label ID="lblreltags" runat="server" Text="Não tem TAGs de relações"></asp:Label>
-            </td>
-            <td class="auto-style2">
-                <br />
-            </td>
+            <td class="auto-style2">&nbsp;</td>
+            <td class="auto-style2">&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style3">&nbsp;</td>
