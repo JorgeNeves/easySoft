@@ -79,5 +79,11 @@ namespace WebApplication5.Account
                 return;
             }
         }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            oAuthFacebook oFB = new oAuthFacebook();
+            Response.Redirect(oFB.AuthorizationLinkGet());
+        }
     }
 }
