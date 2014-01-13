@@ -34,7 +34,7 @@ namespace SocialiteWebService
                 LoggedUsers.Add(token, user);
                 return token;
             }
-            return "Login failed";
+            return "fail";
         }
 
         /* Efetua logout de um utilizador via token. Caso token se encontre no dicionario de utilizadores
@@ -48,9 +48,9 @@ namespace SocialiteWebService
             if(LoggedUsers.ContainsKey(token))
             {
                 LoggedUsers.Remove(token);
-                return "Logged out";
+                return "ok";
             }
-            return "Logout failed";
+            return "fail";
         }
 
         /* Devolve o estado do serviço em Json, contendo o estado do mesmo, utilizadores totais
