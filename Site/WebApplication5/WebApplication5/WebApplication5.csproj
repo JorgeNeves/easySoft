@@ -194,6 +194,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Game\Download.aspx" />
+    <Content Include="Game\ndowns.aspx" />
     <Content Include="Game\ola.txt" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\bullet.png" />
@@ -328,6 +329,13 @@
     </Compile>
     <Compile Include="Game\Download.aspx.designer.cs">
       <DependentUpon>Download.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Game\ndowns.aspx.cs">
+      <DependentUpon>ndowns.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Game\ndowns.aspx.designer.cs">
+      <DependentUpon>ndowns.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
