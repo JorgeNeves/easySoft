@@ -104,6 +104,7 @@ namespace WebApplication5.Account
             webRequest.ServicePoint.Expect100Continue = false;
             webRequest.UserAgent = "LAPR5/2.0";
             webRequest.Timeout = 20000;
+           
 
             if (method == Method.POST)
             {
@@ -130,6 +131,7 @@ namespace WebApplication5.Account
 
             responseData = WebResponseGet(webRequest);
             webRequest = null;
+            
             return responseData;
         }
 
@@ -146,6 +148,7 @@ namespace WebApplication5.Account
             try
             {
                 responseReader = new StreamReader(webRequest.GetResponse().GetResponseStream());
+
                 responseData = responseReader.ReadToEnd();
             }
             catch
@@ -160,6 +163,73 @@ namespace WebApplication5.Account
             }
 
             return responseData;
+        }
+
+        public string convert(string str)
+        {
+            string strInput = str;
+            strInput = strInput.Replace("\\u00c0", "À");
+            strInput = strInput.Replace("\\u00c1", "Á");
+            strInput = strInput.Replace("\\u00c2", "Â");
+            strInput = strInput.Replace("\\u00c3", "Ã");
+            strInput = strInput.Replace("\\u00c4", "Ä");
+            strInput = strInput.Replace("\\u00c5", "Å");
+            strInput = strInput.Replace("\\u00c6", "Æ");
+            strInput = strInput.Replace("\\u00c7", "Ç");
+            strInput = strInput.Replace("\\u00c8", "È");
+            strInput = strInput.Replace("\\u00c9", "É");
+            strInput = strInput.Replace("\\u00ca", "Ê");
+            strInput = strInput.Replace("\\u00cb", "Ë");
+            strInput = strInput.Replace("\\u00cc", "Ì");
+            strInput = strInput.Replace("\\u00cd", "Í");
+            strInput = strInput.Replace("\\u00ce", "Î");
+            strInput = strInput.Replace("\\u00cf", "Ï");
+            strInput = strInput.Replace("\\u00d1", "Ñ");
+            strInput = strInput.Replace("\\u00d2", "Ò");
+            strInput = strInput.Replace("\\u00d3", "Ó");
+            strInput = strInput.Replace("\\u00d4", "Ô");
+            strInput = strInput.Replace("\\u00d5", "Õ");
+            strInput = strInput.Replace("\\u00d6", "Ö");
+            strInput = strInput.Replace("\\u00d8", "Ø");
+            strInput = strInput.Replace("\\u00d9", "Ù");
+            strInput = strInput.Replace("\\u00da", "Ú");
+            strInput = strInput.Replace("\\u00db", "Û");
+            strInput = strInput.Replace("\\u00dc", "Ü");
+            strInput = strInput.Replace("\\u00dd", "Ý");
+
+        
+            strInput = strInput.Replace("\\u00df", "ß");
+            strInput = strInput.Replace("\\u00e0", "à");
+            strInput = strInput.Replace("\\u00e1", "á");
+            strInput = strInput.Replace("\\u00e2", "â");
+            strInput = strInput.Replace("\\u00e3", "ã");
+            strInput = strInput.Replace("\\u00e4", "ä");
+            strInput = strInput.Replace("\\u00e5", "å");
+            strInput = strInput.Replace("\\u00e6", "æ");
+            strInput = strInput.Replace("\\u00e7", "ç");
+            strInput = strInput.Replace("\\u00e8", "è");
+            strInput = strInput.Replace("\\u00e9", "é");
+            strInput = strInput.Replace("\\u00ea", "ê");
+            strInput = strInput.Replace("\\u00eb", "ë");
+            strInput = strInput.Replace("\\u00ec", "ì");
+            strInput = strInput.Replace("\\u00ed", "í");
+            strInput = strInput.Replace("\\u00ee", "î");
+            strInput = strInput.Replace("\\u00ef", "ï");
+            strInput = strInput.Replace("\\u00f0", "ð");
+            strInput = strInput.Replace("\\u00f1", "ñ");
+            strInput = strInput.Replace("\\u00f2", "ò");
+            strInput = strInput.Replace("\\u00f3", "ó");
+            strInput = strInput.Replace("\\u00f4", "ô");
+            strInput = strInput.Replace("\\u00f5", "õ");
+            strInput = strInput.Replace("\\u00f6", "ö");
+            strInput = strInput.Replace("\\u00f8", "ø");
+            strInput = strInput.Replace("\\u00f9", "ù");
+            strInput = strInput.Replace("\\u00fa", "ú");
+            strInput = strInput.Replace("\\u00fb", "û");
+            strInput = strInput.Replace("\\u00fc", "ü");
+            strInput = strInput.Replace("\\u00fd", "ý");
+            strInput = strInput.Replace("\\u00ff", "ÿ");
+        return strInput;
         }
     }
 }
