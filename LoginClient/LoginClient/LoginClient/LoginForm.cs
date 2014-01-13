@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
 using System.Configuration;
+using System.Net;
 
 namespace LoginClient
 {
@@ -36,34 +37,36 @@ namespace LoginClient
 
         }
 
-        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void Login_Click(object sender, EventArgs e)
         {
             string user = usernameBox.Text;
             string pass = passwordBox.Text;
-            string remote = controller.Login(user, pass);
+            string remote = null;
+            try
+            {
+                remote = controller.Login(user, pass);
+                if (remote == "failed")
+                    throw new Exception("The username or password were incorrect.");
+            }
+            catch(WebException ex)
+            {
+                MessageBox.Show("Failed to connect. " + ex.Message, "Critical Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                return;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Critical Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                return;
+            }
             StreamWriter writer = new StreamWriter("D:\\test.txt");
             remote = (remote == null ? "null" : remote);
             writer.WriteLine(user + " " + pass + "->" + remote);
             writer.Close();
+            return;
             if (remote == "null")
                 return;
             tableLayoutPanel1.Controls.Clear();
             tableLayoutPanel1.Controls.Add(NormalModeButton);
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
         private void NormalMode_Click(object sender, EventArgs e)

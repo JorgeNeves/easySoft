@@ -20,16 +20,9 @@ namespace LoginClient
         {
             WebClient wc = new WebClient();
             string Uri = "/login?user=" + username + "&pw=" + password;
-            try
-            {
-                string result = wc.DownloadString(ConfigurationManager.AppSettings["WebServiceUrl"] + Uri);
-                return (result == "\"Login failed\"" ? null : result);
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show("Could not connect to login endpoint", "Critical Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
-                return null;
-            }
+            string result = wc.DownloadString(ConfigurationManager.AppSettings["WebServiceUrl"] + Uri);
+            result = result.Substring(1, result.Length - 2); // remover as aspas iniciais e finais
+            return result;
         }
     }
 }
