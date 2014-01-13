@@ -126,6 +126,9 @@
   <data name="login_str" xml:space="preserve">
     <value>Login</value>
   </data>
+  <data name="logout_str" xml:space="preserve">
+    <value>Logout</value>
+  </data>
   <data name="normal_str" xml:space="preserve">
     <value>Start Normal Mode</value>
   </data>
