@@ -53,14 +53,13 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 19.10828F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(634, 314);
             this.tableLayoutPanel1.TabIndex = 0;
-            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.25527F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.74473F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 203F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 205F));
             this.tableLayoutPanel2.Controls.Add(this.passwordBox, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.Login, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.username_label, 0, 0);
@@ -73,19 +72,18 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(628, 54);
             this.tableLayoutPanel2.TabIndex = 0;
-            this.tableLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel2_Paint);
             // 
             // passwordBox
             // 
-            this.passwordBox.Location = new System.Drawing.Point(144, 30);
+            this.passwordBox.Location = new System.Drawing.Point(143, 30);
             this.passwordBox.Name = "passwordBox";
             this.passwordBox.PasswordChar = '*';
-            this.passwordBox.Size = new System.Drawing.Size(277, 20);
+            this.passwordBox.Size = new System.Drawing.Size(276, 20);
             this.passwordBox.TabIndex = 1;
             // 
             // Login
             // 
-            this.Login.Location = new System.Drawing.Point(427, 3);
+            this.Login.Location = new System.Drawing.Point(425, 3);
             this.Login.Name = "Login";
             this.Login.Size = new System.Drawing.Size(75, 21);
             this.Login.TabIndex = 2;
@@ -104,9 +102,9 @@
             // 
             // usernameBox
             // 
-            this.usernameBox.Location = new System.Drawing.Point(144, 3);
+            this.usernameBox.Location = new System.Drawing.Point(143, 3);
             this.usernameBox.Name = "usernameBox";
-            this.usernameBox.Size = new System.Drawing.Size(277, 20);
+            this.usernameBox.Size = new System.Drawing.Size(276, 20);
             this.usernameBox.TabIndex = 0;
             // 
             // password_label
@@ -130,7 +128,6 @@
             this.MinimizeBox = false;
             this.Name = "LoginForm";
             this.Text = "Socialite Client";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
