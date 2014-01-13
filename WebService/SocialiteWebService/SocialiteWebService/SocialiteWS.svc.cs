@@ -88,18 +88,19 @@ namespace SocialiteWebService
                         UserMood = db.EstadoDeHumors.FirstOrDefault(eh => eh.EstadoDeHumorID == user.EstadoDeHumorID).Sentimento,
 
                         // para todas as user_tags do utilizador, juntar a tabela de tags, ir buscar o campo Palavra (nome da tag)
+                        // estado de ligação == 1 pedido de amizade, == 2 ja sao amigos
                         Usertags = (from usertag in db.User_Tag
                                     join tag in db.Tags on usertag.TagID equals tag.TagID
                                     where usertag.UserID == user.UserID
                                     select tag.Palavra).ToList(),
                         // para todas as ligacoes em que o User1 e o utilizador atual, ir buscar o ID do User2 (o amigo)
                         UserFriendsIDs = (from lig in db.Ligacaos
-                                          where lig.User1ID == user.UserID
+                                          where lig.User1ID == user.UserID && lig.EstadoDaLigacaoID == 2
                                           select lig.User2ID).ToList()
                     };
                     // o mesmo que o de cima, mas no sentido contrario
                     ud.UserFriendsIDs.AddRange((from lig in db.Ligacaos
-                                                where lig.User2ID == user.UserID
+                                                where lig.User2ID == user.UserID && lig.EstadoDaLigacaoID == 2
                                                 select lig.User1ID).ToList());
                     return ud;
                 }
