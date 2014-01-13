@@ -138,17 +138,10 @@ namespace SocialiteWebService
         public string GetWord()
         {
             string reply = GetWordAndCategory();
-            string[] palavra = reply.Split(';');
-            return palavra[1];
+            return reply;
         }
 
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json,UriTemplate = "/hangman/newword")]
-        public string GetCategory()
-        {
-            string reply = GetWordAndCategory();
-            string[] palavra = reply.Split(';');
-            return palavra[0];
-        }
+
 
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/hangman/compare/{palavra}/{tentativa}")]
         public string CompareWord(string palavra, string tentativa)
