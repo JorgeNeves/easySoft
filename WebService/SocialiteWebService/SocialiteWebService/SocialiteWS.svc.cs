@@ -141,17 +141,6 @@ namespace SocialiteWebService
             return reply;
         }
 
-
-
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/hangman/compare/{palavra}/{tentativa}")]
-        public string CompareWord(string palavra, string tentativa)
-        {
-            WebClient webClient = new WebClient();
-            string reply = webClient.DownloadString(ConfigurationManager.AppSettings["HangmanGameCompareURL"] + "?palavra=" + palavra + "&tentativa=" + tentativa);
-            return reply;
-            
-        }
-
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/downloads")]
         public string GetDownloads()
         {
