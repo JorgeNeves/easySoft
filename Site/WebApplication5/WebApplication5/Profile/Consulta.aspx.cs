@@ -11,11 +11,22 @@ namespace WebApplication5.Profile
 {
     public partial class Consulta : System.Web.UI.Page
     {
-
-
-        protected void btnuserstags_Click(object sender, EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
         {
-            lbltipotag.Text = "Tags de utilizador existentes";
+            if (!IsPostBack)
+            {
+                carregar_tags_utilizadores();
+                carregar_tags_relacoes();
+                leaderboard();
+                lbldimrede.Text = Users.getUsersCount().ToString();
+
+
+            }
+        }
+
+        protected void carregar_tags_utilizadores()
+        {
+            //lbltipotag.Text = "Tags de utilizador existentes";
             DataSet ds = Users.getAllUserTags();
             string temp = "";
 
@@ -28,12 +39,11 @@ namespace WebApplication5.Profile
                 }
 
             }
-            lbltag.Text = temp;
+            lbltagutilizadores.Text = temp;
         }
 
-        protected void Button4_Click1(object sender, EventArgs e)
+        protected void carregar_tags_relacoes()
         {
-            lbltipotag.Text = "Tags de Relações existentes";
             DataSet ds = Users.getAllRelationsTags();
             string temp = "";
 
@@ -46,45 +56,28 @@ namespace WebApplication5.Profile
                 }
 
             }
-            lbltag.Text = temp;
+            lbltagrelacoes.Text = temp;
         }
 
-        protected void btnusertag_Click(object sender, EventArgs e)
-        {
-            //int userID =(int) Session["userID"];
-            DataSet ds = Users.getUserTags(1);
-            lbltipotag.Text = "Tags do Utilizador";
-            string temp = "";
+        
 
-            foreach (DataRow data in ds.Tables[0].Rows)
-            {
+        //protected void btnusertagsrelacoes_Click(object sender, EventArgs e)
+        //{
+        //    lbltipotag.Text = "Tags das suas relações";
+        //    DataSet ds = Users.getRelationsTags(1);
+        //    string temp = "";
 
-                foreach (object item in data.ItemArray)
-                {
-                    temp += "<u>" + item.ToString() + "</u> ";
-                }
+        //    foreach (DataRow data in ds.Tables[0].Rows)
+        //    {
 
-            }
-            lbltag.Text = temp;
-        }
+        //        foreach (object item in data.ItemArray)
+        //        {
+        //            temp += "<u>" + item.ToString() + "</u> ";
+        //        }
 
-        protected void btnusertagsrelacoes_Click(object sender, EventArgs e)
-        {
-            lbltipotag.Text = "Tags das suas relações";
-            DataSet ds = Users.getRelationsTags(1);
-            string temp = "";
-
-            foreach (DataRow data in ds.Tables[0].Rows)
-            {
-
-                foreach (object item in data.ItemArray)
-                {
-                    temp += "<u>" + item.ToString() + "</u> ";
-                }
-
-            }
-            lbltag.Text = temp;
-        }
+        //    }
+        //    lbltag.Text = temp;
+        //}
 
         protected DataTable DynamicColumns()
         {
@@ -94,8 +87,8 @@ namespace WebApplication5.Profile
             // Define 3 columns
 
             DataColumn dc;
-            //dc = new DataColumn("Position");
-            //dt.Columns.Add(dc);
+            dc = new DataColumn("Position");
+            dt.Columns.Add(dc);
             dc = new DataColumn("Username");
             dt.Columns.Add(dc);
             dc = new DataColumn("Pontuation");
@@ -103,7 +96,7 @@ namespace WebApplication5.Profile
             return dt;
         }
 
-        protected void btnleaderamigos_Click(object sender, EventArgs e)
+        protected void leaderboard()
         {
         //DataTable Baseado em:
         //http://www.dotnetobject.com/Thread-Generate-dynamic-DataTable-c
@@ -116,6 +109,7 @@ namespace WebApplication5.Profile
                 DataRow nrow = datat.NewRow();
                 foreach (object item in data.ItemArray)
                 {
+                    nrow["Position"] = 1;
                     nrow["Username"] = item.ToString();
                     
                     int idUser = Users.getUserID(item.ToString());
@@ -134,7 +128,22 @@ namespace WebApplication5.Profile
             }
             DataView dv = new DataView(datat);
             dv.Sort = "Pontuation DESC";
+
             datat = dv.ToTable();
+            int position=1;
+            foreach (DataRow DRow in datat.Rows)
+            {
+                TableRow tRow = new TableRow();
+                foreach (DataColumn dCol in datat.Columns)
+                {
+                    
+                    DRow["Position"]=position;
+                    
+                }
+                position++;
+                               
+            }
+            
             GridView1.Visible = true;
             GridView1.DataSource = datat;
             GridView1.DataBind();
