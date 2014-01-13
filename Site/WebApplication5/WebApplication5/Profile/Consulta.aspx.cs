@@ -61,25 +61,7 @@ namespace WebApplication5.Profile
 
         
 
-        //protected void btnusertagsrelacoes_Click(object sender, EventArgs e)
-        //{
-        //    lbltipotag.Text = "Tags das suas relações";
-        //    DataSet ds = Users.getRelationsTags(1);
-        //    string temp = "";
-
-        //    foreach (DataRow data in ds.Tables[0].Rows)
-        //    {
-
-        //        foreach (object item in data.ItemArray)
-        //        {
-        //            temp += "<u>" + item.ToString() + "</u> ";
-        //        }
-
-        //    }
-        //    lbltag.Text = temp;
-        //}
-
-        protected DataTable DynamicColumns()
+       protected DataTable DynamicColumns()
         {
             // Define the new datatable
             DataTable dt = new DataTable();
@@ -98,6 +80,8 @@ namespace WebApplication5.Profile
 
         protected void leaderboard()
         {
+        //SE ESTIVER UMA SESSAO ATIVA OBTER O USERNAME
+        
         //DataTable Baseado em:
         //http://www.dotnetobject.com/Thread-Generate-dynamic-DataTable-c
             ViewState["dt"] = DynamicColumns();
@@ -126,6 +110,7 @@ namespace WebApplication5.Profile
                 c++;
 
             }
+            
             DataView dv = new DataView(datat);
             dv.Sort = "Pontuation DESC";
 
