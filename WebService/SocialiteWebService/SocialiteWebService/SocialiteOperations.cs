@@ -29,10 +29,6 @@ namespace SocialiteWebService
         [OperationContract]
         string GetWord();
 
-
-        [OperationContract]
-        string CompareWord(string palavra, string tentativa);
-
         [OperationContract]
         string GetDownloads();
     }
