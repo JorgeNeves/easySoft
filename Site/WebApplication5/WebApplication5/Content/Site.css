@@ -12,6 +12,7 @@ body {
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
     margin: 0;
     padding: 0;
+    text-align: center;
 }
 
 a {
@@ -407,7 +408,8 @@ fieldset {
         font-size: 1.2em;
         margin: 5px 0 6px 0;
         padding: 5px;
-        }
+    text-align: left;
+}
 
     textarea {
         font-family: inherit;
