@@ -127,12 +127,36 @@ namespace SocialiteWebService
         /* Devolve uma palavra gerada pelo servico de Prolog que controla o minijogo Enforcado
          * (a pedido do Sr. Neves :D)
          */
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/hangman/newword/")]
-        public string GetWord()
-        {
+
+        private string GetWordAndCategory(){
             WebClient webClient = new WebClient();
             string reply = webClient.DownloadString(ConfigurationManager.AppSettings["HangmanGamePrologServiceUrl"]);
             return reply;
+        }
+
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/hangman/newword/")]
+        public string GetWord()
+        {
+            string reply = GetWordAndCategory();
+            string[] palavra = reply.Split(';');
+            return palavra[1];
+        }
+
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json,UriTemplate = "/hangman/newword")]
+        public string GetCategory()
+        {
+            string reply = GetWordAndCategory();
+            string[] palavra = reply.Split(';');
+            return palavra[0];
+        }
+
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/hangman/compare/{palavra}/{tentativa}")]
+        public string CompareWord(string palavra, string tentativa)
+        {
+            WebClient webClient = new WebClient();
+            string reply = webClient.DownloadString(ConfigurationManager.AppSettings["HangmanGameCompareURL"] + "?palavra=" + palavra + "&tentativa=" + tentativa);
+            return reply;
+            
         }
 
     }

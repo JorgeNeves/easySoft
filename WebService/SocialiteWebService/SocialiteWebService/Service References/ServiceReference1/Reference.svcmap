@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="cbb82fd9-591a-4b31-878d-9b1470a9d631" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:7077/SocialiteWS.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="SocialiteWS.xsd" MetadataType="Schema" ID="4c49f897-e6d5-4c12-bd7b-5c961509bc8b" SourceId="1" SourceUrl="http://localhost:7077/SocialiteWS.svc?xsd=xsd3" />
+    <MetadataFile FileName="SocialiteWS1.xsd" MetadataType="Schema" ID="d3c9fb06-8322-45d3-8998-690c0cc099d0" SourceId="1" SourceUrl="http://localhost:7077/SocialiteWS.svc?xsd=xsd2" />
+    <MetadataFile FileName="SocialiteWS2.xsd" MetadataType="Schema" ID="7dd24405-a67f-40a9-af25-ecc73edbac96" SourceId="1" SourceUrl="http://localhost:7077/SocialiteWS.svc?xsd=xsd1" />
+    <MetadataFile FileName="SocialiteWS3.xsd" MetadataType="Schema" ID="799eaec9-264f-4c7c-8630-87df5551b826" SourceId="1" SourceUrl="http://localhost:7077/SocialiteWS.svc?xsd=xsd0" />
+    <MetadataFile FileName="SocialiteWS.disco" MetadataType="Disco" ID="29c187a2-5c45-406f-8773-07da1f5e074b" SourceId="1" SourceUrl="http://localhost:7077/SocialiteWS.svc?disco" />
+    <MetadataFile FileName="SocialiteWS.wsdl" MetadataType="Wsdl" ID="13bc5415-bcda-42cb-b16c-3eab9c692f7c" SourceId="1" SourceUrl="http://localhost:7077/SocialiteWS.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
