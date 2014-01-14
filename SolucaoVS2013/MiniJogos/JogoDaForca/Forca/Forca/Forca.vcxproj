@@ -85,7 +85,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(ProjectDir)\libs\prolog\lib;$(ProjectDir)\libs\freeglut\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libswipl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libswipl.lib;kernel32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

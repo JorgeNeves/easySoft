@@ -24,6 +24,17 @@ namespace WebApplication5.TabelModel.BLL
             sql += " UNION select User1ID from Ligacaos where User2ID = " + username + " and EstadoDaLigacaoID=2;";
 
             DataSet rs = dal.ReturnDataSet(sql);
+            int id;
+            for (int i = 0; i < rs.Tables[0].Rows.Count; i++)
+            {
+                id = ((int)rs.Tables[0].Rows[i][0]);
+                BDAcess dal2 = new BDAcess();
+                string sql2 = "select User2ID from Ligacaos where User1ID = " + id + "and EstadoDaLigacaoID=2";
+                sql2 += " UNION select User1ID from Ligacaos where User2ID = " + id + " and EstadoDaLigacaoID=2;";
+                DataSet rs2 = dal2.ReturnDataSet(sql2);
+
+            }
+                
         }
 
         public static void logDownload(int iduser)

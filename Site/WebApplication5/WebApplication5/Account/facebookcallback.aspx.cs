@@ -60,8 +60,6 @@ namespace WebApplication5.Account
                     body += "Utilizador: "+username+"\n";
                     body += "Password: "+password +"\n\n";
                     body += "Já pode fazer login e editar a sua informação pessoal! http://wvm054.dei.isep.ipp.pt\n";
-                    
-
 
                     // smtp settings
                     var smtp = new System.Net.Mail.SmtpClient();

@@ -39,8 +39,8 @@
         <tr>
             <td class="auto-style2">Password</td>
             <td class="auto-style7">
-                <asp:TextBox ID="TextBox2" runat="server" TextMode="Password"></asp:TextBox>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+&nbsp;&nbsp;<asp:TextBox ID="TextBox2" runat="server" TextMode="Password"></asp:TextBox>
+                &nbsp;&nbsp;&nbsp; </td>
             <td>
                 <asp:Label ID="Label2" runat="server" ForeColor="Red" Text="* must be filled" Visible="False"></asp:Label>
             </td>
