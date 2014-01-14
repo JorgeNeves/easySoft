@@ -25,7 +25,7 @@ public:
 	wstring UserMood;
 	wstring UserName;
 	list<string> UserTags;
-	list<Node> friends;
+	list<Node*> friends;
 };
 
 class Arch
@@ -63,7 +63,12 @@ public:
 		switch (fieldMap[name])
 		{
 		case FieldValue::UserFriendsIDs:
-			//op
+			for (auto iterInner = value.cbegin(); iterInner != value.cend(); ++iterInner)
+			{
+				Node* userfriend = new Node();
+				userfriend->UserID = iterInner->second.as_integer();
+				node->friends.push_back(userfriend);
+			}
 			break;
 		case FieldValue::UserID:
 			node->UserID = value.as_integer();
@@ -90,7 +95,7 @@ public:
 
 			SetField(propertyName.as_string(), propertyValue, node);
 		}
-
+		graph.nodelist.push_back(node);
 		return graph;
 	}
 };
