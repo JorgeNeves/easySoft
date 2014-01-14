@@ -4,7 +4,7 @@
 
 USERSLOG=/tmp/userslog
 URL=http://wvm054.dei.isep.ipp.pt/SocialLiteWS/SocialiteWS.svc/status
-N_USERS=$(curl -i -H "Accept: application/json" -H "Content-Type: application/json" $URL | tail -1 | cut -d ':' -f3 | cut -d ',' -f1)
+N_USERS=$(curl -i -H "Accept: application/json" -H "Content-Type: application/json" $URL | tail -1 | cut -d ':' -f3 | cut -d ',' -f1) #Alterar para ir buscar o valor ao Webservice
 
 if [ -f $USERSLOG ]; then
         N_USERS_OLD=$(head $USERSLOG)
@@ -23,3 +23,4 @@ else
         echo "O numero de utilizadores foi alterado:Antes 0 Agora :$N_USERS";
         exit 1;
 fi
+
