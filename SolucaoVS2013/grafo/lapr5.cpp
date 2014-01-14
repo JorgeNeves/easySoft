@@ -3,6 +3,8 @@
 #include <stdlib.h>     
 #include <GL\glut.h>
 #include <iostream>
+#include <windows.h>
+#include <tchar.h>
 #include "grafos.h"
 
 using namespace std;
@@ -758,15 +760,45 @@ void keyboard(unsigned char key, int x, int y)
 			break;
 		case '1':
 			retCode = system("Mini_Jogos\\Jogo_do_Galo\\TestJogoGalo.exe");
-			cout << retCode << endl;
+			//cout << retCode << endl;
+			if (retCode == 1)
+			{
+				MessageBox(NULL, _T("Ganhou o jogo do galo!"),
+					_T("Resultado"), MB_OK | MB_ICONEXCLAMATION);
+			}
+			else 
+			{
+				MessageBox(NULL, _T("Perdeu!"),
+					_T("Resultado"), MB_OK | MB_ICONERROR);
+			}
 			break;
 		case '2':
 			retCode = system("Mini_Jogos\\Jogo_da_Forca\\Forca.exe");
-			cout << retCode << endl;
+			//cout << retCode << endl;
+			if (retCode == 1)
+			{
+				MessageBox(NULL, _T("Ganhou o jogo da forca!"),
+					_T("Resultado"), MB_OK | MB_ICONEXCLAMATION);
+			}
+			else
+			{
+				MessageBox(NULL, _T("Perdeu!"),
+					_T("Resultado"), MB_OK | MB_ICONERROR);
+			}
 			break;
 		case '3':
 			retCode = system("Mini_Jogos\\Jogo_do_Labirinto\\Labirinto.exe");
-			cout << retCode << endl;
+			//cout << retCode << endl;
+			if (retCode == 1)
+			{
+				MessageBox(NULL, _T("Ganhou o jogo do labirinto!"),
+					_T("Resultado"), MB_OK | MB_ICONEXCLAMATION);
+			}
+			else
+			{
+				MessageBox(NULL, _T("Perdeu!"),
+					_T("Resultado"), MB_OK | MB_ICONERROR);
+			}
 			break;
 	}
 }
