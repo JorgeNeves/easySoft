@@ -145,7 +145,12 @@ namespace SocialiteWebService
         public string GetDownloads()
         {
             WebClient webClient = new WebClient();
-            string reply = webClient.DownloadString(ConfigurationManager.AppSettings["DownloadServiceUrl"]);
+            
+            string respostahtml = webClient.DownloadString(ConfigurationManager.AppSettings["DownloadServiceUrl"]);
+            string sstart="<span id=\"lbldowns\">";
+            int start = respostahtml.IndexOf(sstart,0)+sstart.Length;
+            int end = respostahtml.IndexOf("</span>",start);
+            string reply=respostahtml.Substring(start,end-start);
             return reply;
         }
 
