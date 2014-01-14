@@ -190,16 +190,28 @@ namespace SocialiteWebService
             for(int i=0;i<ds.Count;i++){
                 object o =ds[i];
                 string nome=TabelModel.BLL.Users.getUserNick(Convert.ToInt32(o.ToString()));
-                if (i == ds.Count - 1)
-                {
-                    cenas += nome;
+                DataSet dt = TabelModel.BLL.Users.getUserTags(Convert.ToInt32(o.ToString()));
+                cenas += "utilizador(" + nome + ",L[";
+                for(int u=0;u<dt.Tables[0].Rows.Count;u++){
+                    if (u == dt.Tables[0].Rows.Count - 1)
+                    {
+                        cenas += dt.Tables[0].Rows[u][0].ToString();
+                    }
+                    else
+                    {
+                        cenas += dt.Tables[0].Rows[u][0].ToString() + ",";
+                    }
+                    
                 }
-                else{
-                    cenas += nome + ";";
-                }
-                
+                cenas+="]).\n";
+                   
             }
+                // Write the string to a file.
+                System.IO.StreamWriter file = new System.IO.StreamWriter("~/users.pl");
+                file.WriteLine(cenas);
 
+                file.Close();
+            
             return cenas;
         }
 
