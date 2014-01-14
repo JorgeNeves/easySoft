@@ -26,5 +26,11 @@
     <ClInclude Include="grafos.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\GameCore\GameCore\AdvancedModeLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
