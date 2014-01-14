@@ -32,7 +32,16 @@ namespace WebApplication5.Profile
             TextBox4.Text = Mail;
             TextBox5.Text = facebook;
             TextBox6.Text = LinkedIn;
+            preencher_gridtags();
             }
+        }
+
+        private void preencher_gridtags()
+        {
+            DataSet usertags = Users.getUserTags(1);
+            
+            GridView1.DataSource = usertags;
+            GridView1.DataBind();
         }
 
         protected void Button2_Click(object sender, EventArgs e)
@@ -82,5 +91,27 @@ namespace WebApplication5.Profile
                 }
             }
         }
+
+        protected void GridView1_SelectedIndexChanged(object sender, GridViewDeleteEventArgs e)
+        {
+            GridViewRow row=GridView1.Rows[e.RowIndex];
+            string deletingtag = row.Cells[1].Text;
+            int idtag = Users.getTAGID(deletingtag);
+            int iduser=Users.getUserID((Session["username"]).ToString());
+            Users.deleteTAGfromUSER(iduser,idtag);
+            preencher_gridtags();
+        }
+
+        protected void btnok_Click(object sender, EventArgs e)
+        {
+            int idtag=Users.getTAGID(lblnewtag.Text);
+            if (idtag == -1)
+            {
+                lblnewtag.Enabled = false;
+                lbltagexistence.Visible = true;
+            }
+        }
+
+        
     }
 }
