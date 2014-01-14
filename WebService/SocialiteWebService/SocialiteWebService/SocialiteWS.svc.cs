@@ -7,6 +7,9 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 using System.Configuration;
+using SocialiteWebService.TabelModel.BLL;
+using System.Data;
+using System.Collections;
 
 namespace SocialiteWebService
 {
@@ -152,6 +155,27 @@ namespace SocialiteWebService
             int end = respostahtml.IndexOf("</span>",start);
             string reply=respostahtml.Substring(start,end-start);
             return reply;
+        }
+
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/friends?id={userid}")]
+        public string friends(int userid)
+        {
+            ArrayList ds= Services.suggestedFriends(userid);
+            string cenas="";
+            for(int i=0;i<ds.Count;i++){
+                object o =ds[i];
+                string nome=TabelModel.BLL.Users.getUserNick(Convert.ToInt32(o.ToString()));
+                if (i == ds.Count - 1)
+                {
+                    cenas += nome;
+                }
+                else{
+                    cenas += nome + ";";
+                }
+                
+            }
+
+            return cenas;
         }
 
     }

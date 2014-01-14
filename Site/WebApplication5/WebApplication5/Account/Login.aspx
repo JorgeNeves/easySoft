@@ -39,11 +39,11 @@
                 <td class="auto-style3"></td>
             </tr>
             <tr>
-                <td class="auto-style1">&nbsp;</td>
-                <td>
+                <td class="auto-style2"></td>
+                <td class="auto-style3">
                     <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Login" />
                 </td>
-                <td>&nbsp;</td>
+                <td class="auto-style3"></td>
             </tr>
             <tr>
                 <td class="auto-style1">&nbsp;</td>

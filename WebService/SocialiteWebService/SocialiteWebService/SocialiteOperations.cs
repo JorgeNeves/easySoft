@@ -5,7 +5,8 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
-
+using System.Data;
+using System.Collections;
 namespace SocialiteWebService
 {
     [ServiceContract]
@@ -31,6 +32,9 @@ namespace SocialiteWebService
 
         [OperationContract]
         string GetDownloads();
+
+        [OperationContract]
+        string friends(int userid);
     }
 
     [DataContract]
