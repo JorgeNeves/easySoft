@@ -580,6 +580,7 @@ void winMsg(){
 	if (player.posX == meta.posX && player.posY == meta.posY){
 		MessageBox(NULL, _T("Chegaste a meta!!"), 
 			_T("PARABÉNS!"), MB_OK | MB_ICONERROR);
+		exit(1);
 	}
 }
 
