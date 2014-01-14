@@ -9,14 +9,15 @@ RESPONSE=$(curl -i -H "Accept: application/json" -H "Content-Type: application/j
 
 if [ ! -z $RESPONSE ]; then
 
-        if [ $RESPONSE == "OK" ]; then
+	if [ $RESPONSE == "OK" ]; then
                  echo "O WS retorna um valor valido-Operacional";
                  exit 0;
-        else
-                echo "O WS retorna um valor invalido-Inoperacional";
-                exit 1;
-        fi
+	else
+		echo "O WS retorna um valor invalido-Inoperacional";
+		exit 1;
+	fi
 else
-        echo "O WS retorna um valor nulo-Inoperacional";
-        exit 1;
+	echo "O WS retorna um valor nulo-Inoperacional";
+	exit 1;
 fi
+
