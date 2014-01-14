@@ -104,11 +104,36 @@ namespace WebApplication5.Profile
 
         protected void btnok_Click(object sender, EventArgs e)
         {
+            int iduser = Users.getUserID((Session["username"]).ToString());
             int idtag=Users.getTAGID(lblnewtag.Text);
             if (idtag == -1)
             {
+                btnok.Enabled = false;
                 lblnewtag.Enabled = false;
                 lbltagexistence.Visible = true;
+            }
+            else
+            {
+                Users.addTAGUSER(idtag, iduser);
+            }
+
+
+        }
+
+        protected void btnokoriginal_Click(object sender, EventArgs e)
+        {
+            int iduser = Users.getUserID((Session["username"]).ToString());
+            string novapalavra=lblnewtag.Text;
+            string palavraoriginal = txttagoriginal.Text;
+            Users.addTAGORIGINAL(palavraoriginal,novapalavra);
+            int idtag = Users.getTAGID(novapalavra);
+            if (idtag == -1)
+            {
+                
+            }
+            else
+            {
+                Users.addTAGUSER(idtag, iduser);
             }
         }
 

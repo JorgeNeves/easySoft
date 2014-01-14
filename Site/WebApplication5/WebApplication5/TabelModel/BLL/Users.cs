@@ -131,10 +131,32 @@ namespace WebApplication5.TabelModel.BLL
             DataSet rs = dal.ReturnDataSet(sql);
             if (rs.Tables[0].Rows.Count > 0)
             {
-                return (int)rs.Tables[0].Rows[0]["Table"];
+                return (int)rs.Tables[0].Rows[0]["TagID"];
             }
             return -1;
         }
+
+        public static void addTAGUSER(int idtag, int userid)
+        {
+
+        }
+
+        public static void addTAGORIGINAL(string original,string nova)
+        {
+            BDAcess dal = new BDAcess();
+            string sql="Insert Into TagOriginals values('"+original+"');";
+            dal.ReturnDataSet(sql);
+
+            sql = "select TagOriginals.TagOriginalID FROM TagOriginals Where TagOriginals.PalavraOriginal='" + original + "';";
+            DataSet rs = dal.ReturnDataSet(sql);
+            if (rs.Tables[0].Rows.Count > 0)
+            {
+                int ntagid = (int)rs.Tables[0].Rows[0]["TagOriginalID"]; //testar nome tabela
+                sql = "Insert Into Tags values ("+ntagid+",'"+nova+"';";
+                dal.ReturnDataSet(sql);
+            }
+        }
+
         public static void deleteTAGfromUSER(int iduser,int TAGID)
         {
             BDAcess dal = new BDAcess();

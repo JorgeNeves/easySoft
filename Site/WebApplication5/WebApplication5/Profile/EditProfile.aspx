@@ -18,6 +18,17 @@
             height: 31px;
             width: 239px;
         }
+        .auto-style6 {
+            width: 244px;
+            height: 50px;
+        }
+        .auto-style7 {
+            height: 50px;
+        }
+        .auto-style8 {
+            width: 239px;
+            height: 50px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="FeaturedContent" runat="server">
@@ -106,16 +117,20 @@
             </td>
             <td class="auto-style4">&nbsp;</td>
             <td>
-                <asp:Label ID="lbltagexistence" runat="server" Text="A TAG não existe na BD" Visible="False"></asp:Label>
+                <asp:Label ID="lbltagexistence" runat="server" Text="A TAG não existe na BD insira a original" Visible="False"></asp:Label>
             </td>
         </tr>
         <tr>
-            <td class="auto-style1">Avatar </td>
-            <td>
+            <td class="auto-style6">Avatar </td>
+            <td class="auto-style7">
                 <asp:FileUpload ID="FileUpload1" runat="server" Width="364px" />
             </td>
-            <td class="auto-style4">&nbsp;</td>
-            <td>&nbsp;</td>
+            <td class="auto-style8"></td>
+            <td class="auto-style7">
+                <asp:Label ID="lbltagoriginal" runat="server" Text="TagOriginal:"></asp:Label>
+                <asp:TextBox ID="txttagoriginal" runat="server" Width="83px"></asp:TextBox>
+                <asp:Button ID="btnokoriginal" runat="server" Height="29px" OnClick="btnokoriginal_Click" Text="OK" Width="36px" />
+            </td>
         </tr>
         <tr>
             <td class="auto-style1">&nbsp;</td>
