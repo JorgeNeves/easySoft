@@ -12,7 +12,15 @@
 
 
 
-#include<string.h>
+#include <string>
+#include <msclr\marshal_cppstd.h>
+
+#using <System.dll>
+
+
+
+using namespace System::Web;
+using namespace System::Net;
 
 using namespace std;
 #ifndef M_PI
@@ -32,6 +40,7 @@ typedef struct {
 	GLint		nletras;
 	string      pal;
 	const char* p;
+	const char* cat;
 	const char* paux;
 }Palavra;
 
@@ -48,8 +57,37 @@ Jogo jogo;
 Palavra palavra;
 
 
+
+//repartir uma string em várias partes através de um "split"
+//retirado de: http://stackoverflow.com/questions/890164/how-can-i-split-a-string-by-a-delimiter-into-an-array
+vector<string> explode(const string& str, const char& ch) {
+	string next;
+	vector<string> result;
+
+	// For each character in the string
+	for (string::const_iterator it = str.begin(); it != str.end(); it++) {
+		// If we've hit the terminal character
+		if (*it == ch) {
+			// If we have some characters accumulated
+			if (!next.empty()) {
+				// Add them to the result vector
+				result.push_back(next);
+				next.clear();
+			}
+		}
+		else {
+			// Accumulate the next character into the sequence
+			next += *it;
+		}
+	}
+	if (!next.empty())
+		result.push_back(next);
+	return result;
+}
+
+
 void ligacao(void){
-		char* argv[] = { "libswipl.dll", "-s", "forca.pl", NULL };
+		/*char* argv[] = { "libswipl.dll", "-s", "forca.pl", NULL };
 
 		PlEngine p(3, argv);
 		PlTermv av(1);
@@ -64,15 +102,34 @@ void ligacao(void){
 		jogo.acertou = new int(palavra.nletras);
 		for (int i = 0; i < palavra.nletras; i++){
 			jogo.acertou[i] = 0;
-		}
+		}*/
+
+	WebClient^ client = gcnew WebClient;
+	System::String^ address = "http://wvm054.dei.isep.ipp.pt:5000/palavra";
+	System::String^ reply = client->DownloadString(address);
+
+	msclr::interop::marshal_context context;
+	string resposta = context.marshal_as<std::string>(reply);
+	
+	vector<string> res = explode(resposta, ';');
+	string pa =res.at(1);
+	palavra.pal = pa;
+	string cat = res.at(0);
+	palavra.cat = cat.c_str();
+
+	palavra.nletras = palavra.pal.length();
+	palavra.p = palavra.pal.c_str();
+
+	jogo.acertou = new int(palavra.nletras);
+	for (int i = 0; i < palavra.nletras; i++){
+		jogo.acertou[i] = 0;
+	}
 
 }
 
 /* Inicialização do ambiente OPENGL */
 void Init(void)
 {
-
-	
 
 	jogo.nerros = 0;
 	jogo.ganhou = 0;
@@ -84,7 +141,7 @@ void Init(void)
 ***  callbacks de janela/desenho    ***
 **************************************/
 
-// CALLBACK PARA REDIMENSIONAR JANELA
+// CALLBACK PARA REDIMENSIONAR JANELsA
 
 void Reshape(int width, int height)
 {
