@@ -281,6 +281,7 @@ void JogadaPC(){
 		Draw();
 		return;
 	}
+
 	char* argv[] = { "libswipl.dll", "-s", "galo.pl", NULL };
 	PlEngine p(3,argv);
 	PlTermv av(2);
