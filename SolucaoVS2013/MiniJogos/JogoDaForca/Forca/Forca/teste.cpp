@@ -82,23 +82,6 @@ vector<string> explode(const string& str, const char& ch) {
 
 
 void ligacao(void){
-	/*char* argv[] = { "libswipl.dll", "-s", "forca.pl", NULL };
-
-	PlEngine p(3, argv);
-	PlTermv av(1);
-
-	PlQuery query("gera_palavra", av);
-	query.next_solution();
-	palavra.pal = (char*)av[0];
-
-	palavra.nletras = palavra.pal.length();
-	palavra.p = palavra.pal.c_str();
-
-	jogo.acertou = new int(palavra.nletras);
-	for (int i = 0; i < palavra.nletras; i++){
-	jogo.acertou[i] = 0;
-	}*/
-
 	WebClient^ client = gcnew WebClient;
 	System::String^ address = "http://wvm054.dei.isep.ipp.pt:5000/palavra";
 	System::String^ reply = client->DownloadString(address);
