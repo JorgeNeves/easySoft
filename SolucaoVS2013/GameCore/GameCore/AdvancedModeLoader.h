@@ -15,7 +15,7 @@ using namespace web::http::client;
 
 using namespace std;
 
-enum FieldValue { UserFriendsIDs, UserID, UserMood, UserName, UserTags};
+enum FieldValue { UserFriendsIDs, UserID, UserMood, UserName, UserTags };
 
 class Node
 {
@@ -24,7 +24,7 @@ public:
 	int x, y, z;
 	wstring UserMood;
 	wstring UserName;
-	list<string> UserTags;
+	list<wstring> UserTags;
 	list<Node*> friends;
 };
 
@@ -33,7 +33,7 @@ class Arch
 public:
 	int friend1;
 	int friend2;
-	list<string> tags;
+	list<wstring> tags;
 };
 
 class Graph
@@ -41,6 +41,17 @@ class Graph
 public:
 	list<Node*> nodelist;
 	list<Arch*> archlist;
+
+	Node* GetUserFromId(int id)
+	{
+		Node* node = nullptr;
+		for (std::list<Node*>::iterator it = nodelist.begin(); it != nodelist.end(); it++)
+		{
+			if ((*it)->UserID == id)
+				return (*it);
+		}
+
+	}
 };
 
 class AdvancedGraphGenerator
@@ -66,8 +77,12 @@ public:
 			for (auto iterInner = value.cbegin(); iterInner != value.cend(); ++iterInner)
 			{
 				Node* userfriend = new Node();
-				userfriend->UserID = iterInner->second.as_integer();
-				node->friends.push_back(userfriend);
+				int id = iterInner->second.as_integer();
+				if (graph.GetUserFromId(id) == nullptr)
+				{
+					userfriend->UserID = id;
+					node->friends.push_back(userfriend);
+				}
 			}
 			break;
 		case FieldValue::UserID:
@@ -133,5 +148,3 @@ pplx::task<void> GetAll()
 		member.Display();*/
 	});
 }
-
-#endif
