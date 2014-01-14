@@ -15,7 +15,7 @@ using namespace web::http::client;
 
 using namespace std;
 
-enum FieldValue { UserFriendsIDs, UserID, UserMood, UserName, UserTags};
+enum FieldValue { UserFriendsIDs, UserID, UserMood, UserName, UserTags };
 
 class Node
 {
@@ -24,7 +24,7 @@ public:
 	int x, y, z;
 	wstring UserMood;
 	wstring UserName;
-	list<string> UserTags;
+	list<wstring> UserTags;
 	list<Node*> friends;
 };
 
@@ -33,7 +33,7 @@ class Arch
 public:
 	int friend1;
 	int friend2;
-	list<string> tags;
+	list<wstring> tags;
 };
 
 class Graph
@@ -41,21 +41,40 @@ class Graph
 public:
 	list<Node*> nodelist;
 	list<Arch*> archlist;
+
+	Node* GetUserFromId(int id)
+	{
+		for (std::list<Node*>::iterator it = nodelist.begin(); it != nodelist.end(); it++)
+		{
+			if ((*it)->UserID == id)
+				return (*it);
+		}
+
+	}
 };
 
 class AdvancedGraphGenerator
 {
 	std::map <std::wstring, FieldValue> fieldMap;
-	Graph graph;
+	Graph* graph;
 
 public:
-	AdvancedGraphGenerator()
+	wstring url;
+
+	AdvancedGraphGenerator(wstring url)
 	{
 		fieldMap[L"UserFriendsIDs"] = FieldValue::UserFriendsIDs;
 		fieldMap[L"UserID"] = FieldValue::UserID;
 		fieldMap[L"UserMood"] = FieldValue::UserMood;
 		fieldMap[L"UserName"] = FieldValue::UserName;
 		fieldMap[L"Usertags"] = FieldValue::UserTags;
+		graph = new Graph();
+		this->url = url;
+	}
+
+	Graph* GetGeneratedGraph()
+	{
+		return graph;
 	}
 
 	void SetField(std::wstring name, json::value value, Node* node)
@@ -66,8 +85,18 @@ public:
 			for (auto iterInner = value.cbegin(); iterInner != value.cend(); ++iterInner)
 			{
 				Node* userfriend = new Node();
-				userfriend->UserID = iterInner->second.as_integer();
-				node->friends.push_back(userfriend);
+				int id = iterInner->second.as_integer();
+				if (graph->GetUserFromId(id) == nullptr)
+				{
+					userfriend->UserID = id;
+					node->friends.push_back(userfriend);
+					graph->nodelist.push_back(userfriend);
+
+					Arch* arch = new Arch();
+					arch->friend1 = node->UserID;
+					arch->friend2 = userfriend->UserID;
+					graph->archlist.push_back(arch);
+				}
 			}
 			break;
 		case FieldValue::UserID:
@@ -89,7 +118,7 @@ public:
 		}
 	}
 
-	Graph GetGraphFromJson(json::value value)
+	Graph* GetGraphFromJson(json::value value)
 	{
 		Node* node = new Node();
 		for (auto iterInner = value.cbegin(); iterInner != value.cend(); ++iterInner)
@@ -99,39 +128,34 @@ public:
 
 			SetField(propertyName.as_string(), propertyValue, node);
 		}
-		graph.nodelist.push_back(node);
+		graph->nodelist.push_back(node);
 		return graph;
 	}
-};
 
-pplx::task<void> GetAll()
-{
-	return pplx::create_task([]
+	pplx::task<void> GetRemoteUserData()
 	{
-		http_client client(L"http://wvm054.dei.isep.ipp.pt/SocialLiteWS/SocialiteWS.svc/userdata?id=1&token=debug");
-
-		return client.request(methods::GET);
-	}).then([](http_response response)
-	{
-		if (response.status_code() == status_codes::OK)
+		return pplx::create_task([this]
 		{
-			return response.extract_json();
-		}
+			http_client client(this->url);
 
-		return pplx::create_task([] { return json::value(); });
+			return client.request(methods::GET);
+		}).then([](http_response response)
+		{
+			if (response.status_code() == status_codes::OK)
+			{
+				return response.extract_json();
+			}
 
-	}).then([](json::value jsonValue)
-	{
-		if (jsonValue.is_null())
-			return;
+			return pplx::create_task([] { return json::value(); });
 
-		AdvancedGraphGenerator generator;
-		auto graph = generator.GetGraphFromJson(jsonValue);
-		/* graph build routines
-		StatusGenerator generator;
-		auto member = generator.GetStatusFromJson(jsonValue);
-		member.Display();*/
-	});
-}
+		}).then([this](json::value jsonValue)
+		{
+			if (jsonValue.is_null())
+				return;
+
+			this->GetGraphFromJson(jsonValue);
+		});
+	}
+};
 
 #endif

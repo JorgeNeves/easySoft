@@ -406,7 +406,7 @@ fieldset {
         background: #fff;
         color: #333;
         font-size: 1.2em;
-        margin: 5px 0 6px 0;
+        margin: 5px 0 6px 0px;
         padding: 5px;
     }
 
@@ -504,11 +504,13 @@ input[type="checkbox"].input-validation-error {
 /* tables
 ----------------------------------------------------------*/
 table {
+    border-style: none;
+    border-color: inherit;
+    border-width: 0;
     border-collapse: collapse;
     border-spacing: 0;
-    margin-top: 0.75em;
-    border: 0 none;
-}
+    margin-top: 0em;
+    }
 
 th {
 	font-size: 1.2em;

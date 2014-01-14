@@ -97,14 +97,18 @@ namespace LoginClient
         {
             //Process.Start(ConfigurationManager.AppSettings["GameCorePath"]);
             MessageBox.Show("3D APP START HERE");
-           // Application.Exit();
+            StreamWriter writer = new StreamWriter("launch.ini");
+            writer.WriteLine("nor");
+            writer.Close();
         }
 
         private void AdvMode_Click(object sender, EventArgs e)
         {
             //Process.Start(ConfigurationManager.AppSettings["GameCorePath"]);
             MessageBox.Show("3D ADV APP START HERE");
-            // Application.Exit();
+            StreamWriter writer = new StreamWriter("launch.ini");
+            writer.WriteLine("adv");
+            writer.Close();
         }
 
         private void LoginForm_FormClosing(object sender, FormClosingEventArgs e)

@@ -124,6 +124,48 @@ namespace WebApplication5.TabelModel.BLL
 
 
         }
+        public static int getTAGID(string Palavra)
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "select Tags.TagID FROM Tags Where Tags.Palavra='" + Palavra + "';";
+            DataSet rs = dal.ReturnDataSet(sql);
+            if (rs.Tables[0].Rows.Count > 0)
+            {
+                return (int)rs.Tables[0].Rows[0]["TagID"];
+            }
+            return -1;
+        }
+
+        public static void addTAGUSER(int idtag, int userid)
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "Insert Into User_Tag values("+userid +","+ idtag+");";
+            dal.ReturnDataSet(sql);
+        }
+
+        public static void addTAGORIGINAL(string original,string nova)
+        {
+            BDAcess dal = new BDAcess();
+            string sql="Insert Into TagOriginals values('"+original+"');";
+            dal.ReturnDataSet(sql);
+
+            sql = "select TagOriginals.TagOriginalID FROM TagOriginals Where TagOriginals.PalavraOriginal='" + original + "';";
+            DataSet rs = dal.ReturnDataSet(sql);
+            if (rs.Tables[0].Rows.Count > 0)
+            {
+                int ntagid = (int)rs.Tables[0].Rows[0]["TagOriginalID"]; //testar nome tabela
+                sql = "Insert Into Tags values ("+ntagid+",'"+nova+"');";
+                dal.ReturnDataSet(sql);
+            }
+        }
+
+        public static void deleteTAGfromUSER(int iduser,int TAGID)
+        {
+            BDAcess dal = new BDAcess();
+            string sql = "Delete FROM User_Tag Where TagID=" + TAGID + ";";
+            DataSet rs = dal.ReturnDataSet(sql);
+        }
+
         public static int getUsersCount()
         {
             BDAcess dal = new BDAcess();
@@ -162,7 +204,7 @@ namespace WebApplication5.TabelModel.BLL
         public static DataSet getUserTags(int idUser)
         {
             BDAcess dal = new BDAcess();
-            string sql = "Select distinct Tags.Palavra FROM Tags,Users,User_Tag where (Tags.TagID=User_Tag.TagID and User_Tag.UserID=" + idUser + ")";
+            string sql = "Select distinct Tags.Palavra as UserTags FROM Tags,Users,User_Tag where (Tags.TagID=User_Tag.TagID and User_Tag.UserID=" + idUser + ")";
             DataSet rs = dal.ReturnDataSet(sql);
             if (rs.Tables[0].Rows.Count > 0)
             {
