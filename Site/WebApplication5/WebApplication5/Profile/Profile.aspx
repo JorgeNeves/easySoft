@@ -65,6 +65,13 @@
             width: 347px;
             height: 29px;
         }
+        .auto-style6 {
+            width: 414px;
+            height: 29px;
+        }
+        .auto-style7 {
+            width: 414px;
+        }
     </style>
     
 </asp:Content>
@@ -114,7 +121,7 @@
         <tr>
             <td class="auto-style4">
             </td>
-            <td class="auto-style5">
+            <td class="auto-style6">
                 <h6>Tens
                     <asp:Label ID="Label10" runat="server" ForeColor="Blue"></asp:Label>
                     <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click" PostBackUrl="~/Profile/Friends.aspx">Amigos</asp:LinkButton>
@@ -155,7 +162,7 @@
                 :
                 <asp:Label ID="Label8" runat="server"></asp:Label>
             </td>
-            <td class="auto-style2">&nbsp;<br />
+            <td class="auto-style7">&nbsp;<br />
                 <asp:Button ID="Button2" runat="server" Height="36px" OnClick="Button2_Click" Text="Pedidos Pendentes (0)" />
                 <br />
                 <asp:Label ID="Label9" runat="server" ForeColor="#33CC33" Text="Não tem pedidos de momento" Visible="False"></asp:Label>
@@ -179,7 +186,7 @@
             <td class="auto-style3">
                 <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Editar Perfil" />
             </td>
-            <td class="auto-style2">
+            <td class="auto-style7">
                 <asp:Label ID="Label12" runat="server" Font-Bold="True" Text="UserTags"></asp:Label>
                 <br />
                 <asp:Label ID="lblusertags" runat="server" Text="Não tem UserTag's"></asp:Label>
@@ -189,11 +196,17 @@
                 <br />
                 <asp:Label ID="lblreltags" runat="server" Text="Não tem TAGs de relações"></asp:Label>
             </td>
-            <td class="auto-style2">&nbsp;</td>
+            <td class="auto-style2">
+                <h6>
+                    <asp:Label ID="Label13" runat="server" Text="Amigos que deves conhecer"></asp:Label>
+                </h6>
+                <p>
+                    &nbsp;</p>
+            </td>
         </tr>
         <tr>
             <td class="auto-style3">&nbsp;</td>
-            <td class="auto-style2">&nbsp;</td>
+            <td class="auto-style7">&nbsp;</td>
             <td class="auto-style2">&nbsp;</td>
         </tr>
     </table>
