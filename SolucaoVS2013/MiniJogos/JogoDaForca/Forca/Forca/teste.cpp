@@ -354,7 +354,7 @@ bool ganhou(){
 		}
 	}
 	jogo.ganhou = 1;
-	return true;
+	exit(1);
 
 }
 
@@ -520,7 +520,7 @@ void Key(unsigned char key, int x, int y)
 {
 	switch (key) {
 	case 27:
-		exit(1);
+		exit(0);
 	}
 
 	if (jogo.ganhou == 1){
@@ -535,6 +535,7 @@ void Key(unsigned char key, int x, int y)
 	}
 	else{
 		MessageBox(0, _T("UPS :( \n Perdeu!"), _T("Info"), MB_ICONEXCLAMATION);
+		exit(0);
 	}
 
 
