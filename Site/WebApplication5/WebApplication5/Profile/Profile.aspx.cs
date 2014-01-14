@@ -53,7 +53,7 @@ namespace WebApplication5.Profile
             int userID = (int)Session["userID"];
             DataSet ds = Users.getRelationsTags(userID);
             string temp = "";
-
+            if (ds != null) { 
             foreach (DataRow data in ds.Tables[0].Rows)
             {
 
@@ -64,6 +64,7 @@ namespace WebApplication5.Profile
 
             }
             lblreltags.Text = temp;
+            }
         }
 
         protected void preencher_usertags()
@@ -72,17 +73,20 @@ namespace WebApplication5.Profile
             DataSet ds = Users.getUserTags(userID);
 
             string temp = "";
-
-            foreach (DataRow data in ds.Tables[0].Rows)
+            if (ds != null)
             {
 
-                foreach (object item in data.ItemArray)
+                foreach (DataRow data in ds.Tables[0].Rows)
                 {
-                    temp += "<u>" + item.ToString() + "</u> ";
-                }
 
+                    foreach (object item in data.ItemArray)
+                    {
+                        temp += "<u>" + item.ToString() + "</u> ";
+                    }
+
+                }
+                lblusertags.Text = temp;
             }
-            lblusertag.Text = temp;
         }
         protected void LinkButton3_Click(object sender, EventArgs e)
         {
