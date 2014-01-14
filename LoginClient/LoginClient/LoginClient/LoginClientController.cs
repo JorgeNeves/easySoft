@@ -58,7 +58,7 @@ namespace LoginClient
             // %AppData%\SocialiteData\token.cfg
             string datadir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\";
             datadir += ConfigurationManager.AppSettings["DataDir"];
-            StreamWriter writer = new StreamWriter(datadir + "token.cfg");
+            StreamWriter writer = new StreamWriter("token.cfg");
             writer.WriteLine(token);
             writer.Close();
         }
