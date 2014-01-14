@@ -9,14 +9,10 @@
 #include <Windows.h>
 #include <SWI-cpp.h>
 #include<iostream>
-
-
-
 #include <string>
 #include <msclr\marshal_cppstd.h>
 
 #using <System.dll>
-
 
 
 using namespace System::Web;
@@ -39,6 +35,7 @@ typedef struct {
 typedef struct {
 	GLint		nletras;
 	string      pal;
+	string		categoria;
 	const char* p;
 	const char* cat;
 	const char* paux;
@@ -55,8 +52,6 @@ typedef struct{
 Estado estado;
 Jogo jogo;
 Palavra palavra;
-
-
 
 //repartir uma string em várias partes através de um "split"
 //retirado de: http://stackoverflow.com/questions/890164/how-can-i-split-a-string-by-a-delimiter-into-an-array
@@ -87,22 +82,22 @@ vector<string> explode(const string& str, const char& ch) {
 
 
 void ligacao(void){
-		/*char* argv[] = { "libswipl.dll", "-s", "forca.pl", NULL };
+	/*char* argv[] = { "libswipl.dll", "-s", "forca.pl", NULL };
 
-		PlEngine p(3, argv);
-		PlTermv av(1);
+	PlEngine p(3, argv);
+	PlTermv av(1);
 
-		PlQuery query("gera_palavra", av);
-		query.next_solution();
-		palavra.pal = (char*)av[0];
+	PlQuery query("gera_palavra", av);
+	query.next_solution();
+	palavra.pal = (char*)av[0];
 
-		palavra.nletras = palavra.pal.length();
-		palavra.p = palavra.pal.c_str();
+	palavra.nletras = palavra.pal.length();
+	palavra.p = palavra.pal.c_str();
 
-		jogo.acertou = new int(palavra.nletras);
-		for (int i = 0; i < palavra.nletras; i++){
-			jogo.acertou[i] = 0;
-		}*/
+	jogo.acertou = new int(palavra.nletras);
+	for (int i = 0; i < palavra.nletras; i++){
+	jogo.acertou[i] = 0;
+	}*/
 
 	WebClient^ client = gcnew WebClient;
 	System::String^ address = "http://wvm054.dei.isep.ipp.pt:5000/palavra";
@@ -110,15 +105,18 @@ void ligacao(void){
 
 	msclr::interop::marshal_context context;
 	string resposta = context.marshal_as<std::string>(reply);
-	
+
 	vector<string> res = explode(resposta, ';');
-	string pa =res.at(1);
-	palavra.pal = pa;
+	string pa = res.at(1);
 	string cat = res.at(0);
-	palavra.cat = cat.c_str();
+	palavra.pal = pa;
+	palavra.categoria = cat;
+
+	palavra.cat = palavra.categoria.c_str();
+	palavra.p = palavra.pal.c_str();
 
 	palavra.nletras = palavra.pal.length();
-	palavra.p = palavra.pal.c_str();
+
 
 	jogo.acertou = new int(palavra.nletras);
 	for (int i = 0; i < palavra.nletras; i++){
@@ -177,29 +175,29 @@ void Reshape(int width, int height)
 //Desenho relativo à base da forca
 void forca()
 {
-	glBegin(GL_LINES); 
-	glColor3f(1.0f, 1.0f, 0.0f); 
-	glVertex3f(-0.5f, 0.7f, 0.0f);  
-	glVertex3f(-0.5f, -0.3f, 0.0f); 
+	glBegin(GL_LINES);
+	glColor3f(1.0f, 1.0f, 0.0f);
+	glVertex3f(-0.5f, 0.7f, 0.0f);
+	glVertex3f(-0.5f, -0.3f, 0.0f);
 	glEnd();
 
-	glBegin(GL_LINES); 
-	glColor3f(1.0f, 1.0f, 0.0f); 
-	glVertex3f(-0.75f,-0.3f, 0.0f);  
-	glVertex3f(0.0f,-0.3f, 0.0f); 
-	glEnd(); 
+	glBegin(GL_LINES);
+	glColor3f(1.0f, 1.0f, 0.0f);
+	glVertex3f(-0.75f, -0.3f, 0.0f);
+	glVertex3f(0.0f, -0.3f, 0.0f);
+	glEnd();
 
-	glBegin(GL_LINES); 
-	glColor3f(1.0f, 1.0f, 0.0f); 
-	glVertex3f(-0.5f, 0.7f, 0.0f); 
-	glVertex3f(0.1f, 0.7f, 0.0f); 
-	glEnd(); 
+	glBegin(GL_LINES);
+	glColor3f(1.0f, 1.0f, 0.0f);
+	glVertex3f(-0.5f, 0.7f, 0.0f);
+	glVertex3f(0.1f, 0.7f, 0.0f);
+	glEnd();
 
-	glBegin(GL_LINES); 
-	glColor3f(1.0f, 1.0f, 0.0f); 
-	glVertex3f(0.1f, 0.7f, 0.0f); 
-	glVertex3f(0.1f, 0.6f, 0.0f); 
-	glEnd(); 
+	glBegin(GL_LINES);
+	glColor3f(1.0f, 1.0f, 0.0f);
+	glVertex3f(0.1f, 0.7f, 0.0f);
+	glVertex3f(0.1f, 0.6f, 0.0f);
+	glEnd();
 }
 
 //Desenho relativo à cabeça do jogador :)
@@ -209,7 +207,7 @@ void cabeca(){
 	int i;
 	int lineAmount = 100; // numero de triangulos para desenhar o circulo
 
-	
+
 	GLfloat twicePi = 2.0f * M_PI;
 
 	glBegin(GL_LINE_LOOP);
@@ -224,8 +222,8 @@ void cabeca(){
 
 //Desenho relativo ao pescoço
 void pescoco(){
-	glBegin(GL_LINES); 
-	glColor3f(1.0f, 1.0f, 0.0f); 
+	glBegin(GL_LINES);
+	glColor3f(1.0f, 1.0f, 0.0f);
 	glVertex3f(0.1f, 0.4f, 0.0f); //Inicio
 	glVertex3f(0.1f, 0.35f, 0.0f); //Fim
 	glEnd();
@@ -242,20 +240,20 @@ void tronco(){
 // n = 1 Desenha 1 braço
 // n = 2 Desenha 2 braços
 void braco(int n){
-	
+
+	glBegin(GL_LINES);
+	glColor3f(1.0f, 1.0f, 0.0f);
+	glVertex3f(0.1f, 0.35f, 0.0f); //inicio
+	glVertex3f(0.0f, 0.2f, 0.0f); //fim
+	glEnd();
+	if (n == 2){
 		glBegin(GL_LINES);
-		glColor3f(1.0f, 1.0f, 0.0f); 
+		glColor3f(1.0f, 1.0f, 0.0f);
 		glVertex3f(0.1f, 0.35f, 0.0f); //inicio
-		glVertex3f(0.0f, 0.2f, 0.0f); //fim
-		glEnd(); 
-		if (n == 2){
-			glBegin(GL_LINES);
-			glColor3f(1.0f, 1.0f, 0.0f);
-			glVertex3f(0.1f, 0.35f, 0.0f); //inicio
-			glVertex3f(0.2f, 0.2f, 0.0f); //fim
-			glEnd(); 
-		}
-	
+		glVertex3f(0.2f, 0.2f, 0.0f); //fim
+		glEnd();
+	}
+
 }
 
 // n = 1 Desenha 1 perna
@@ -263,16 +261,16 @@ void braco(int n){
 void perna(int n){
 
 	glBegin(GL_LINES);
-	glColor3f(1.0f, 1.0f, 0.0f); 
+	glColor3f(1.0f, 1.0f, 0.0f);
 	glVertex3f(0.1f, 0.1f, 0.0f); //inicio
 	glVertex3f(0.0f, 0.0f, 0.0f); //fim
 	glEnd();
 	if (n == 2){
 		glBegin(GL_LINES);
-		glColor3f(1.0f, 1.0f, 0.0f); 
+		glColor3f(1.0f, 1.0f, 0.0f);
 		glVertex3f(0.1f, 0.1f, 0.0f); //inicio
 		glVertex3f(0.2f, 0.0f, 0.0f); //fim
-		glEnd(); 
+		glEnd();
 	}
 
 }
@@ -283,35 +281,35 @@ void desenhaLetra(){
 	float inc = 1.8 / palavra.nletras;
 	float posxi = -0.9;
 
-	for (int i = 0; i < pos+1; i++){
+	for (int i = 0; i < pos + 1; i++){
 		if (jogo.acertou[i] == 1){
 			glColor3f(1.0f, 0.0f, 0.3f);
 			glRasterPos2f(posxi + 0.05f, -0.6f);
 			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, palavra.p[i]);
-			
+
 		}
 		posxi += inc;
 	}
-	
+
 }
 
 // Desenha todos os tracinhos relativos ao numero de letras
 void tracinhos(){
-	
+
 	float n = palavra.nletras*0.5;
-	
+
 	//negativos
 	float inc = 1.8 / palavra.nletras;
 	float inc_D = 1.5 / palavra.nletras;
-	float posxi =-0.9;
+	float posxi = -0.9;
 
 	for (int i = 0; i < palavra.nletras; i++){
 		if (palavra.p[i] != ' '){
 			glBegin(GL_LINES);
-			glColor3f(1.0f, 1.0f, 0.0f); 
+			glColor3f(1.0f, 1.0f, 0.0f);
 			glVertex3f(posxi, -0.7f, 0.0f); //inicio
 			glVertex3f(posxi + inc_D, -0.7f, 0.0f); //fim
-			glEnd(); 
+			glEnd();
 
 			glColor3f(1.0f, 1.0f, 0.3f);
 
@@ -388,13 +386,14 @@ void existe(unsigned char key){
 
 	string letra = "\"";
 	letra += toupper(key);
-	letra +="\"";
+	letra += "\"";
 	av[1] = PlCompound(letra.c_str());
 	PlQuery query("comparacont", av);
-	
+
 	if (!query.next_solution()){
 		palavra.nletras += 1;
-	}else{
+	}
+	else{
 		string pos = (char*)av[2];
 		if (pos == "[]"){
 			jogo.nerros += 1;
@@ -415,6 +414,19 @@ void existe(unsigned char key){
 	}
 }
 
+void desenhaCategoria(){
+	int pos = palavra.categoria.length();
+	float inc = 1.8 / pos;
+	float posxi = -0.9;
+	
+	for (int i = 0; i < pos + 1; i++){
+		glColor3f(1.0f, 0.0f, 0.3f);
+		glRasterPos2f(posxi + 0.05f, 0.9f);
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, palavra.cat[i]);
+		posxi += inc;
+	}
+
+}
 
 // Callback de desenho
 void Draw(void)
@@ -427,7 +439,7 @@ void Draw(void)
 
 	tracinhos();
 	desenhaLetra();
-	
+	desenhaCategoria();
 
 	if (jogo.nerros == 1){
 		cabeca();
@@ -490,7 +502,7 @@ void Timer(int value)
 {
 	// ... accoes do temporizador ... 
 
-	
+
 	glutTimerFunc(estado.delay, Timer, 0);
 
 	// redesenhar o ecra 
@@ -538,10 +550,10 @@ void Key(unsigned char key, int x, int y)
 		if (DEBUG)
 			printf("Carregou na tecla %c\n", key);
 	}
-	else{		
+	else{
 		MessageBox(0, _T("UPS :( \n Perdeu!"), _T("Info"), MB_ICONEXCLAMATION);
 	}
-	
+
 
 }
 
