@@ -22,6 +22,9 @@ namespace SocialiteWebService
         ServiceStatus Status();
 
         [OperationContract]
+        String GetAccessState();
+        
+        [OperationContract]
         UserData GetUserData(int userid, string token);
 
         [OperationContract]

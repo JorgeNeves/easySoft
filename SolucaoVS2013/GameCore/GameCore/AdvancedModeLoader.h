@@ -1,4 +1,5 @@
-#pragma once ADVANCEDMODELOADER
+#ifndef ADVMODE_
+#define ADVMODE_
 
 #include <cpprest\http_client.h>
 #include <cpprest\json.h>
@@ -123,3 +124,5 @@ pplx::task<void> GetAll()
 		member.Display();*/
 	});
 }
+
+#endif

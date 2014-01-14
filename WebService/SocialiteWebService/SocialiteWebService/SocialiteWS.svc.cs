@@ -144,12 +144,37 @@ namespace SocialiteWebService
             return reply;
         }
 
+        [WebInvoke(Method="GET",ResponseFormat=WebMessageFormat.Json,UriTemplate="/HttpAccess")]
+        public string GetAccessState()
+        {
+            try
+            {
+            HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["HttpaccessURL"]);
+
+            // Get the associated response for the above request.
+            HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
+            myHttpWebResponse.Close();
+            
+                //string respostahtml = wc.DownloadString(ConfigurationManager.AppSettings["HttpaccessURL"]);
+            }
+            catch(WebException e) {
+                if (e.Status == WebExceptionStatus.ProtocolError)
+                {
+                   return e.Message;
+                   
+                }
+            }
+            return "OK";   
+        }
+
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "/downloads")]
         public string GetDownloads()
         {
             WebClient webClient = new WebClient();
             
             string respostahtml = webClient.DownloadString(ConfigurationManager.AppSettings["DownloadServiceUrl"]);
+        
+
             string sstart="<span id=\"lbldowns\">";
             int start = respostahtml.IndexOf(sstart,0)+sstart.Length;
             int end = respostahtml.IndexOf("</span>",start);
