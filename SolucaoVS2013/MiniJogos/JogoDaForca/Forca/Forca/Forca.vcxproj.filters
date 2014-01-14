@@ -18,15 +18,9 @@
     <ClCompile Include="teste.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="web.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="games.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="web.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
