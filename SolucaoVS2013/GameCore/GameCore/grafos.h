@@ -1,6 +1,11 @@
 #ifndef _GRAFO_INCLUDE
 #define _GRAFO_INCLUDE
 
+#include <iostream>
+#include <list>
+
+using namespace std;
+
 #define _MAX_NOS_GRAFO 100
 #define _MAX_ARCOS_GRAFO 200
 
@@ -10,6 +15,11 @@
 
 typedef struct No{
 	float x,y,z,largura;
+	int userid;
+	string username;
+	string mood;
+	list<string> tags;
+	list<int> friends;
 }No;
 
 typedef struct Arco{

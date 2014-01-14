@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\cpprestsdk.1.4.0\build\native\cpprestsdk.props" Condition="Exists('..\packages\cpprestsdk.1.4.0\build\native\cpprestsdk.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -92,13 +93,18 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AdvancedModeLoader.h" />
     <ClInclude Include="Exception.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="grafos.h" />
     <ClInclude Include="SocialGraphState.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\cpprestsdk.1.4.0\build\native\cpprestsdk.targets" Condition="Exists('..\packages\cpprestsdk.1.4.0\build\native\cpprestsdk.targets')" />
   </ImportGroup>
 </Project>
