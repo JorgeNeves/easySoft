@@ -11,7 +11,6 @@ using namespace web::http::client;
 #include <list>
 #include <iostream>
 #include <string>
-#include "grafos.h"
 
 using namespace std;
 
@@ -66,13 +65,13 @@ public:
 			//op
 			break;
 		case FieldValue::UserID:
-			node->UserID = value.as_integer;
+			node->UserID = value.as_integer();
 			break;
 		case FieldValue::UserMood:
-			node->UserMood = value.as_string;
+			node->UserMood = value.as_string();
 			break;
 		case FieldValue::UserName:
-			node->UserName = value.as_string;
+			node->UserName = value.as_string();
 			break;
 		case FieldValue::UserTags:
 			//op
