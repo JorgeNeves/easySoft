@@ -88,6 +88,15 @@ namespace LoginClient {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Logout.
+        /// </summary>
+        internal static string logout_str {
+            get {
+                return ResourceManager.GetString("logout_str", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start Normal Mode.
         /// </summary>
         internal static string normal_str {

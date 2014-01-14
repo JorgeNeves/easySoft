@@ -50,5 +50,11 @@
     <ClInclude Include="SocialGraphState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AdvancedModeLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
