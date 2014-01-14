@@ -25,6 +25,9 @@ namespace WebApplication5.Profile
             string avatar = dt.Tables[0].Rows[0][9].ToString();
             string facebook = dt.Tables[0].Rows[0][10].ToString();
             string LinkedIn = dt.Tables[0].Rows[0][11].ToString();
+            txttagoriginal.Visible = false;
+            lbltagoriginal.Visible = false;
+            btnokoriginal.Visible = false;
 
             TextBox1.Text = FirstName;
             TextBox2.Text = LastName;
@@ -50,7 +53,10 @@ namespace WebApplication5.Profile
             {
                 Users.updateUserPass(Session["username"].ToString(), TextBox8.Text);
                 Label1.Visible = true;
-                
+                txttagoriginal.Visible = true;
+                lbltagoriginal.Visible = true;
+                btnokoriginal.Visible = true;
+
                
 
             }
@@ -111,10 +117,16 @@ namespace WebApplication5.Profile
                 btnok.Enabled = false;
                 lblnewtag.Enabled = false;
                 lbltagexistence.Visible = true;
+                //btnok.Visible = true;
+                //lblnewtag.Visible = true;
+                btnokoriginal.Visible = true;
+                txttagoriginal.Visible = true;
+                lbltagoriginal.Visible = true;
             }
             else
             {
                 Users.addTAGUSER(idtag, iduser);
+
             }
 
 
@@ -127,13 +139,23 @@ namespace WebApplication5.Profile
             string palavraoriginal = txttagoriginal.Text;
             Users.addTAGORIGINAL(palavraoriginal,novapalavra);
             int idtag = Users.getTAGID(novapalavra);
+            preencher_gridtags();
             if (idtag == -1)
             {
-                
+                //A implementar
             }
             else
             {
                 Users.addTAGUSER(idtag, iduser);
+                txttagoriginal.Visible = false;
+                lbltagoriginal.Visible = false;
+                btnokoriginal.Visible = false;
+                lblnewtag.Text = "";
+                lbltagoriginal.Text = "";
+                lbltagexistence.Visible = false;
+                lblnewtag.Enabled = true;
+                btnok.Enabled = true;
+                preencher_gridtags();
             }
         }
 
