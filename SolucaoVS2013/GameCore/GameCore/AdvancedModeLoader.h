@@ -80,7 +80,11 @@ public:
 			node->UserName = value.as_string();
 			break;
 		case FieldValue::UserTags:
-			//op
+			for (auto iterInner = value.cbegin(); iterInner != value.cend(); ++iterInner)
+			{
+				std::wstring tag = iterInner->second.as_string();
+				node->UserTags.push_back(tag);
+			}
 			break;
 		}
 	}
