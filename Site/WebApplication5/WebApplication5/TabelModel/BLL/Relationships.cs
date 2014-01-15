@@ -85,8 +85,7 @@ namespace WebApplication5.TabelModel.BLL
         public static DataSet checkPedidos(int userid)
         {
             BDAcess dal = new BDAcess();
-            string sql = "select User2ID from Ligacaos where User1ID = " + userid + "and EstadoDaLigacaoID=1";
-            sql += " UNION select User1ID from Ligacaos where User2ID = " + userid + " and EstadoDaLigacaoID=1;";
+            string sql = "select User1ID from Ligacaos where User2ID = " + userid + " and EstadoDaLigacaoID=1;";
             DataSet rs = dal.ReturnDataSet(sql);
             if(rs.Tables[0].Rows.Count == 0)
             {

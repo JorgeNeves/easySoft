@@ -15,6 +15,8 @@ namespace WebApplication5.Profile
         {
             if (Session["userID"] == null) { Response.Redirect("~/Account/Login.aspx"); }
 
+            if (!IsPostBack)
+            {
                 int id_profile = Users.getUserID(Request.QueryString["nome"]);
                 int utilizador = Users.getUserID(Session["username"].ToString());
 
@@ -59,7 +61,7 @@ namespace WebApplication5.Profile
                 Label7.Text = LinkedIn;
                 Label8.Text = Pais;
                 Image1.ImageUrl = avatar;
-            
+            }
             
         }
 
@@ -69,6 +71,8 @@ namespace WebApplication5.Profile
             int utilizador= Users.getUserID(Session["username"].ToString());
 
             Relationships.addRelation(utilizador, id_profile, 10, System.DateTime.Today.ToString());
+            Label9.Visible = true;
+            Button1.Visible = false;
         }
     }
 }
