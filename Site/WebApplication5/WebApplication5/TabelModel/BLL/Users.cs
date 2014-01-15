@@ -16,7 +16,7 @@ namespace WebApplication5.TabelModel.BLL
             if (existe == true)
             {
                 BDAcess db = new BDAcess();
-                string sql = "Insert INTO Users (Nick,Password,Mail,PrimeiroNome,UltimoNome,DataDeNascimento,Pais,EstadoDeHumorID) VALUES ('" + username + "','" + password + "','"+mail+"','"+nome+"','"+apelido+"','"+birthday+"','"+country+"',1)";
+                string sql = "Insert INTO Users (Nick,Password,Mail,PrimeiroNome,UltimoNome,DataDeNascimento,Pais,EstadoDeHumorID,AvatarUrl) VALUES ('" + username + "','" + password + "','" + mail + "','" + nome + "','" + apelido + "','" + birthday + "','" + country + "',1,'http://www.netocar.com.br/includes/tng/styles/img_not_found.gif')";
                 DataSet rs = db.ReturnDataSet(sql);
                 done = true;
             }
@@ -145,15 +145,22 @@ namespace WebApplication5.TabelModel.BLL
 
         public static void addTAGORIGINAL(string original,string nova)
         {
+            
             BDAcess dal = new BDAcess();
-            string sql="Insert Into TagOriginals values('"+original+"');";
-            dal.ReturnDataSet(sql);
-
-            sql = "select TagOriginals.TagOriginalID FROM TagOriginals Where TagOriginals.PalavraOriginal='" + original + "';";
-            DataSet rs = dal.ReturnDataSet(sql);
+            string sql = "select TagOriginals.TagOriginalID FROM TagOriginals Where TagOriginals.PalavraOriginal='"+original+"';";
+            DataSet rs =dal.ReturnDataSet(sql);
+            if (rs.Tables[0].Rows.Count == 0)
+            {
+                sql = "Insert Into TagOriginals values('" + original + "');";
+                dal.ReturnDataSet(sql);
+                sql = "select TagOriginals.TagOriginalID FROM TagOriginals Where TagOriginals.PalavraOriginal='" + original + "';";
+                rs = dal.ReturnDataSet(sql);
+            }
+            //sql = "select TagOriginals.TagOriginalID FROM TagOriginals Where TagOriginals.PalavraOriginal='" + original + "';";
+            //rs = dal.ReturnDataSet(sql);
             if (rs.Tables[0].Rows.Count > 0)
             {
-                int ntagid = (int)rs.Tables[0].Rows[0]["TagOriginalID"]; //testar nome tabela
+                int ntagid = (int)rs.Tables[0].Rows[0]["TagOriginalID"];
                 sql = "Insert Into Tags values ("+ntagid+",'"+nova+"');";
                 dal.ReturnDataSet(sql);
             }

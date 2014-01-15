@@ -13,29 +13,35 @@ namespace WebApplication5.Profile
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                DataSet ds = Relationships.checkAmigos(Users.getUserID(Session["username"].ToString()));
+            if (Session["userID"] == null) { Response.Redirect("~/Account/Login.aspx"); }
 
-                if (ds != null)
+                if (!IsPostBack)
                 {
-                    GridView1.DataSource = ds.Tables[0];
-                    GridView1.DataBind();
-                }
-                else
-                {
-                    Response.Redirect("Profile.aspx");
-                }
-                for (int i = 0; i < GridView1.Rows.Count; i++)
-                {
-                    GridViewRow gvRow = GridView1.Rows[i];
+                    DataSet ds = Relationships.checkAmigos(Users.getUserID(Session["username"].ToString()));
 
-                    ((ImageButton)gvRow.Cells[2].Controls[0]).ImageUrl = gvRow.Cells[4].Text;
-                    ((ImageButton)gvRow.Cells[2].Controls[0]).Width = 60;
-                    ((ImageButton)gvRow.Cells[2].Controls[0]).Height = 60;
-                    gvRow.Cells[4].Visible = false;
+                    if (ds != null)
+                    {
+                        GridView1.DataSource = ds.Tables[0];
+                        GridView1.DataBind();
+                    }
+                    else
+                    {
+                        Response.Redirect("Profile.aspx");
+                    }
+                    for (int i = 0; i < GridView1.Rows.Count; i++)
+                    {
+                        GridViewRow gvRow = GridView1.Rows[i];
+                        
+                        
+                        ((ImageButton)gvRow.Cells[2].Controls[0]).ImageUrl = gvRow.Cells[4].Text;
+                        
+                       
+                        ((ImageButton)gvRow.Cells[2].Controls[0]).Width = 60;
+                        ((ImageButton)gvRow.Cells[2].Controls[0]).Height = 60;
+                        gvRow.Cells[4].Visible = false;
+                    }
                 }
-            }
+            
         }
 
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)

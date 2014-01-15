@@ -48,8 +48,8 @@
                     <asp:LoginView id="LoginView" runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul>
-                                <li><a id="registerLink" runat="server" href="~/Account/Register">Register</a></li>
-                                <li><a id="loginLink" runat="server" href="~/Account/Login">Log in</a></li>
+                                <li><a id="registerLink" runat="server" href="~/Account/Register.aspx">Register</a></li>
+                                <li><a id="loginLink" runat="server" href="~/Account/Login.aspx">Log in</a></li>
                             </ul>
                         </AnonymousTemplate>
                         <LoggedInTemplate>
@@ -60,12 +60,12 @@
                             </p>
                         </LoggedInTemplate>
                     </asp:LoginView>
-                    <asp:LinkButton ID="LogOff" runat="server" OnClick="LogOff_Click" Visible="False">LogOff</asp:LinkButton>
+                    <asp:LinkButton ID="LogOff" runat="server" OnClick="LogOff_Click" Visible="False">Log out</asp:LinkButton>
                 </section>
                 <nav>
                     <ul id="menu">
-                        <li><a runat="server" href="~/Profile/Profile.aspx">Home</a></li>
-                        <li><a runat="server" href="~/About">About</a></li>
+                        <li><a runat="server" href="~/Default.aspx">Home</a></li>
+                        <li><a runat="server" href="~/Profile/Profile.aspx">Profile</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
                          <li><a runat="server" href="~/Profile/Consulta.aspx">Statistics</a></li>
                     </ul>

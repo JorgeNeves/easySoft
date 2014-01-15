@@ -80,7 +80,6 @@ namespace WebApplication5.Profile
 
         protected void leaderboard()
         {
-        //SE ESTIVER UMA SESSAO ATIVA OBTER O USERNAME
         
         //DataTable Baseado em:
         //http://www.dotnetobject.com/Thread-Generate-dynamic-DataTable-c
@@ -116,6 +115,7 @@ namespace WebApplication5.Profile
 
             datat = dv.ToTable();
             int position=1;
+
             foreach (DataRow DRow in datat.Rows)
             {
                 TableRow tRow = new TableRow();
@@ -128,7 +128,7 @@ namespace WebApplication5.Profile
                 position++;
                                
             }
-            
+
             GridView1.Visible = true;
             GridView1.DataSource = datat;
             GridView1.DataBind();
