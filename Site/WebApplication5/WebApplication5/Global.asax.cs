@@ -39,7 +39,10 @@ namespace WebApplication5
         public void Session_OnEnd()
         {
             Application.Lock();
-            Application["UsersOnline"] = (int)Application["UsersOnline"] - 1;
+            if ((int)Application["UsersOnline"] > 0)
+            {
+                Application["UsersOnline"] = (int)Application["UsersOnline"] - 1;
+            }
             Application.UnLock();
         }
     }
