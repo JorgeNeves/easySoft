@@ -253,7 +253,7 @@ bool checkWin(){
 
 	if (vitoriaazul >= 3 && vitoriavermelha < 3){
 		Draw();
-		MessageBox(NULL, "YOU WON! Level UP!", "Info", MB_ICONINFORMATION);
+		MessageBox(NULL, "YOU WON!", "Info", MB_ICONINFORMATION);
 		exit(1);
 		
 	}
