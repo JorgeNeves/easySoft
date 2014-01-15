@@ -26,7 +26,10 @@
     <ClInclude Include="grafos.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\GameCore\GameCore\AdvancedModeLoader.h">
+    <ClInclude Include="lapr5.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AdvancedModeLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

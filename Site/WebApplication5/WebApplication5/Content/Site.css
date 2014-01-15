@@ -406,9 +406,11 @@ fieldset {
         background: #fff;
         color: #333;
         font-size: 1.2em;
-        margin: 5px 0 6px 0px;
         padding: 5px;
-    }
+    margin-left: 0px;
+    margin-right: 0;
+    margin-bottom: 6px;
+}
 
     textarea {
         font-family: inherit;

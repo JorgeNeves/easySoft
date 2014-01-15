@@ -1,100 +1,4 @@
-#define _USE_MATH_DEFINES
-#include <math.h>
-#include <stdlib.h>     
-#include <GL\glut.h>
-#include <iostream>
-#include <windows.h>
-#include <tchar.h>
-#include "grafos.h"
-
-using namespace std;
-
-#define graus(X) (double)((X)*180/M_PI)
-#define rad(X)   (double)((X)*M_PI/180)
-
-// luzes e materiais
-
-const GLfloat mat_ambient[][4] = {{0.33, 0.22, 0.03, 1.0},	// brass
-								  {0.0, 0.0, 0.0},			// red plastic
-								  {0.0215, 0.1745, 0.0215},	// emerald
-								  {0.02, 0.02, 0.02},		// slate
-								  {0.0, 0.0, 0.1745},		// azul
-								  {0.02, 0.02, 0.02},		// preto
-								  {0.1745, 0.1745, 0.1745}};// cinza
-
-const GLfloat mat_diffuse[][4] = {{0.78, 0.57, 0.11, 1.0},		// brass
-								  {0.5, 0.0, 0.0},				// red plastic
-								  {0.07568, 0.61424, 0.07568},	// emerald
-								  {0.78, 0.78, 0.78},			// slate
-								  {0.0, 0.0,  0.61424},			// azul
-								  {0.08, 0.08, 0.08},			// preto
-								  {0.61424, 0.61424, 0.61424}};	// cinza
-
-const GLfloat mat_specular[][4] = {{0.99, 0.91, 0.81, 1.0},			// brass
-								   {0.7, 0.6, 0.6},					// red plastic
-								   {0.633, 0.727811, 0.633},		// emerald
-								   {0.14, 0.14, 0.14},				// slate
-								   {0.0, 0.0, 0.727811},			// azul
-								   {0.03, 0.03, 0.03},				// preto
-								   {0.727811, 0.727811, 0.727811}};	// cinza
-
-const GLfloat mat_shininess[] = {27.8,	// brass
-								 32.0,	// red plastic
-								 76.8,	// emerald
-								 18.78,	// slate
-								 30.0,	// azul
-								 75.0,	// preto
-								 60.0};	// cinza
-
-enum tipo_material {brass, red_plastic, emerald, slate, azul, preto, cinza};
-
-#ifdef __cplusplus
-	inline tipo_material operator++(tipo_material &rs, int ) {
-		return rs = (tipo_material)(rs + 1);
-	}
-#endif
-
-typedef	GLdouble Vertice[3];
-typedef	GLdouble Vector[4];
-
-
-typedef struct Camera{
-	GLfloat fov;
-	GLdouble dir_lat;
-	GLdouble dir_long;
-	GLfloat dist;
-	Vertice center;
-	Vertice eyeVer;
-	GLfloat dim, velh, velv;
-}Camera;
-
-typedef struct Estado{
-	Camera		camera;
-	int			xMouse,yMouse;
-	GLboolean	light;
-	GLboolean	apresentaNormais;
-	GLint		lightViewer;
-	GLint		eixoTranslaccao;
-	GLdouble	eixo[3];
-	GLint		delayMovimento;
-}Estado;
-
-typedef struct Modelo {
-	#ifdef __cplusplus
-		tipo_material cor_cubo;
-	#else
-		enum tipo_material cor_cubo;
-	#endif
-
-	GLfloat g_pos_luz1[4];
-	GLfloat g_pos_luz2[4];
-
-	GLfloat escala;
-	GLUquadric *quad;
-}Modelo;
-
-Estado estado;
-Modelo modelo;
+#include"lapr5.h"
 
 void initEstado(){
 	estado.camera.dir_lat=-M_PI/4;
@@ -104,9 +8,9 @@ void initEstado(){
 	estado.eixo[0]=0;
 	estado.eixo[1]=0;
 	estado.eixo[2]=0;
-	estado.camera.eyeVer[0]=50;
-	estado.camera.eyeVer[1]=50;
-	estado.camera.eyeVer[2]=50;
+	estado.camera.eyeVer[0]=100;
+	estado.camera.eyeVer[1]=100;
+	estado.camera.eyeVer[2]=100;
 	estado.camera.dim = 1;
 	estado.camera.velh = 50;
 	estado.camera.velv = 25;
@@ -766,6 +670,10 @@ void main(int argc, char **argv)
     glutInit(&argc, argv);
 
 /* need both double buffering and z buffer */
+
+	/*AdvancedGraphGenerator adv(L"http://wvm054.dei.isep.ipp.pt/SocialLiteWS/SocialiteWS.svc/userdata?id=1&token=debug");
+	adv.GetRemoteUserData();
+	adv.GetGeneratedGraph();*/
 
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowSize(640, 480);
