@@ -14,6 +14,7 @@ namespace WebApplication5
         private const string AntiXsrfTokenKey = "__AntiXsrfToken";
         private const string AntiXsrfUserNameKey = "__AntiXsrfUserName";
         private string _antiXsrfTokenValue;
+        
 
         protected void Page_Init(object sender, EventArgs e)
         {
@@ -75,6 +76,15 @@ namespace WebApplication5
                 var view = (LoginView)(Page.Master.FindControl("LoginView"));
                 view.Visible = false;
                 LogOff.Visible = true;
+            }
+
+            if (Application["Linguagem"].ToString() == "PT")
+            {
+                Linguagem.Text = "TUGA!";
+            }
+            else
+            {
+                Linguagem.Text = "INGLES!";
             }
         }
 

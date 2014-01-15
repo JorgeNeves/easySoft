@@ -88,6 +88,9 @@
                 <p>Utilizadores Online:
                     <asp:Label ID="OnlineUsers" runat="server"></asp:Label>
                 </p>
+                <p>
+                    <asp:Label ID="Linguagem" runat="server"></asp:Label>
+                </p>
             </div>
         </div>
     </footer>
