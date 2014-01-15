@@ -13,30 +13,35 @@ namespace WebApplication5.Profile
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack) { 
-            DataSet dt = Users.getUser(Session["username"].ToString());
+           if (Session["userID"] == null) { Response.Redirect("~/Account/Login.aspx"); }
+            
+                if (!IsPostBack)
+                {
+                    DataSet dt = Users.getUser(Session["username"].ToString());
 
-            string Mail = dt.Tables[0].Rows[0][3].ToString();
-            string FirstName = dt.Tables[0].Rows[0][4].ToString();
-            string LastName = dt.Tables[0].Rows[0][5].ToString();
-            string date = dt.Tables[0].Rows[0][6].ToString();
-            string Pais = dt.Tables[0].Rows[0][7].ToString();
-            int EstadoHumor = int.Parse(dt.Tables[0].Rows[0][8].ToString());
-            string avatar = dt.Tables[0].Rows[0][9].ToString();
-            string facebook = dt.Tables[0].Rows[0][10].ToString();
-            string LinkedIn = dt.Tables[0].Rows[0][11].ToString();
-            txttagoriginal.Visible = false;
-            lbltagoriginal.Visible = false;
-            btnokoriginal.Visible = false;
+                    string Mail = dt.Tables[0].Rows[0][3].ToString();
+                    string FirstName = dt.Tables[0].Rows[0][4].ToString();
+                    string LastName = dt.Tables[0].Rows[0][5].ToString();
+                    string date = dt.Tables[0].Rows[0][6].ToString();
+                    string Pais = dt.Tables[0].Rows[0][7].ToString();
+                    int EstadoHumor = int.Parse(dt.Tables[0].Rows[0][8].ToString());
+                    string avatar = dt.Tables[0].Rows[0][9].ToString();
+                    string facebook = dt.Tables[0].Rows[0][10].ToString();
+                    string LinkedIn = dt.Tables[0].Rows[0][11].ToString();
+                    txttagoriginal.Visible = false;
+                    lbltagoriginal.Visible = false;
+                    btnokoriginal.Visible = false;
 
-            TextBox1.Text = FirstName;
-            TextBox2.Text = LastName;
-            TextBox3.Text = Pais;
-            TextBox4.Text = Mail;
-            TextBox5.Text = facebook;
-            TextBox6.Text = LinkedIn;
-            preencher_gridtags();
-            }
+                    TextBox1.Text = FirstName;
+                    TextBox2.Text = LastName;
+                    TextBox3.Text = Pais;
+                    TextBox4.Text = Mail;
+                    TextBox5.Text = facebook;
+                    TextBox6.Text = LinkedIn;
+                    preencher_gridtags();
+                }
+            
+            
         }
 
         private void preencher_gridtags()

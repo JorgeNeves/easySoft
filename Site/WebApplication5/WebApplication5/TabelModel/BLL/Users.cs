@@ -16,7 +16,7 @@ namespace WebApplication5.TabelModel.BLL
             if (existe == true)
             {
                 BDAcess db = new BDAcess();
-                string sql = "Insert INTO Users (Nick,Password,Mail,PrimeiroNome,UltimoNome,DataDeNascimento,Pais,EstadoDeHumorID) VALUES ('" + username + "','" + password + "','"+mail+"','"+nome+"','"+apelido+"','"+birthday+"','"+country+"',1)";
+                string sql = "Insert INTO Users (Nick,Password,Mail,PrimeiroNome,UltimoNome,DataDeNascimento,Pais,EstadoDeHumorID,AvatarUrl) VALUES ('" + username + "','" + password + "','" + mail + "','" + nome + "','" + apelido + "','" + birthday + "','" + country + "',1,'http://www.netocar.com.br/includes/tng/styles/img_not_found.gif')";
                 DataSet rs = db.ReturnDataSet(sql);
                 done = true;
             }

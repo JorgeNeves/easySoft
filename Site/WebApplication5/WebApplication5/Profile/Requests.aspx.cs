@@ -12,21 +12,24 @@ namespace WebApplication5.Profile
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                DataSet ds = Relationships.checkPedidos(Users.getUserID(Session["username"].ToString()));
+            if (Session["userID"] == null) { Response.Redirect("~/Account/Login.aspx"); }
 
-                if (ds != null)
+                if (!IsPostBack)
                 {
-                    GridView1.DataSource = ds.Tables[0];
-                    GridView1.DataBind();
+                    DataSet ds = Relationships.checkPedidos(Users.getUserID(Session["username"].ToString()));
+
+                    if (ds != null)
+                    {
+                        GridView1.DataSource = ds.Tables[0];
+                        GridView1.DataBind();
+                    }
+                    else
+                    {
+                        Response.Redirect("Profile.aspx");
+                    }
+
                 }
-                else
-                {
-                    Response.Redirect("Profile.aspx");
-                }
-                
-            }
+            
         }
 
         protected void GridView1_DataBound(object sender, EventArgs e)

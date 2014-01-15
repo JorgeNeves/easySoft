@@ -47,7 +47,7 @@ namespace WebApplication5.Account
                     string mail = c.username + "@facebook.com"; 
                     string password = Path.GetRandomFileName();
                     password = password.Replace(".", "");
-                    Users.InsereUtilizador(username, password, mail , primeiro_nome, ultimo_nome, "", pais);
+                    bool success=Users.InsereUtilizador(username, password, mail , primeiro_nome, ultimo_nome, "", pais);
 
                     // Gmail Address from where you send the mail
                     string fromAddress = "uvm054@gmail.com";
@@ -55,11 +55,21 @@ namespace WebApplication5.Account
                     const string fromPassword = "uvm054.dei";
                     string toAddress = mail;
                     // Passing the values and make a email formate to display
+                    string body="";
+                    if (success)
+                    {
+                         body= "Obrigado por se registar! \n";
+                        body += "Utilizador: " + username + "\n";
+                        body += "Password: " + password + "\n\n";
+                        body += "Já pode fazer login e editar a sua informação pessoal! http://wvm054.dei.isep.ipp.pt\n";
+                    }
+                    else
+                    {
+                        body = "Esta conta ja está em uso! Registo falhou! \n";
+                        body += "Para recuperar a conta fale com um administrador! \n";
+                    }
                     string subject = "Registo pelo Facebook";
-                    string body = "Obrigado por se registar! \n";
-                    body += "Utilizador: "+username+"\n";
-                    body += "Password: "+password +"\n\n";
-                    body += "Já pode fazer login e editar a sua informação pessoal! http://wvm054.dei.isep.ipp.pt\n";
+                    
 
                     // smtp settings
                     var smtp = new System.Net.Mail.SmtpClient();

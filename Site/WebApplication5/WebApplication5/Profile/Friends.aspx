@@ -7,6 +7,7 @@
     <br />
     <asp:Label ID="Label2" runat="server" CssClass="message-info" Text="Amigos"></asp:Label>
     <br />
+    <br />
     <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" HorizontalAlign="Center" ShowHeader="False" OnRowCommand="GridView1_RowCommand" OnRowDataBound="GridView1_RowDataBound" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
         <AlternatingRowStyle BackColor="White" />
         <Columns>
@@ -28,6 +29,7 @@
     <br />
     <br />
     <asp:Label ID="Label1" runat="server" CssClass="message-info" Text="Sugestão de Amigos"></asp:Label>
+    <br />
     <br />
     <asp:GridView ID="GridView2" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" HorizontalAlign="Center" ShowHeader="False" Width="268px">
         <AlternatingRowStyle BackColor="White" />
