@@ -78,7 +78,7 @@ namespace WebApplication5.Profile
         protected void Button1_Click(object sender, EventArgs e)
         {
           
-            Users.updateUserInfo(Session["username"].ToString(), TextBox1.Text, TextBox2.Text, TextBox4.Text, TextBox3.Text, DropDownList1.SelectedIndex, TextBox5.Text, TextBox6.Text);
+            Users.updateUserInfo(Session["username"].ToString(), TextBox1.Text, TextBox2.Text, TextBox4.Text, TextBox3.Text, DropDownList1.SelectedIndex+1, TextBox5.Text, TextBox6.Text);
             Response.Redirect("EditProfile.aspx");
         }
 
@@ -131,7 +131,8 @@ namespace WebApplication5.Profile
             else
             {
                 Users.addTAGUSER(idtag, iduser);
-
+                preencher_gridtags();
+                lblnewtag.Text = "";
             }
 
 
