@@ -96,8 +96,9 @@
     <ClCompile Include="lapr5.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\GameCore\GameCore\AdvancedModeLoader.h" />
+    <ClInclude Include="AdvancedModeLoader.h" />
     <ClInclude Include="grafos.h" />
+    <ClInclude Include="lapr5.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -13,6 +13,8 @@ using System.Collections;
 using System.IO;
 using System.Security;
 using System.Security.Permissions;
+using System.Web.Hosting;
+using System.Diagnostics;
 
 namespace SocialiteWebService
 {
@@ -194,24 +196,24 @@ namespace SocialiteWebService
                 object o = ds[i];
                 string nome=TabelModel.BLL.Users.getUserNick(Convert.ToInt32(o.ToString()));
                 DataSet dt = TabelModel.BLL.Users.getUserTags(Convert.ToInt32(o.ToString()));
-                cenas += "utilizador(" + nome + ",L[";
-                for(int u=0;u<dt.Tables[0].Rows.Count;u++){
-                    if (u == dt.Tables[0].Rows.Count - 1)
-                    {
-                        cenas += dt.Tables[0].Rows[u][0].ToString();
+                DataSet data = TabelModel.BLL.Users.getUserTags(userid);
+                int valida = 0;
+                for(int x=0;x<data.Tables[0].Rows.Count;x++){
+                    for(int u=0;u<dt.Tables[0].Rows.Count;u++){
+
+
+                    if(data.Tables[0].Rows[x][0].ToString()==dt.Tables[0].Rows[u][0].ToString()){
+                        valida = 1;
                     }
-                    else
-                    {
-                        cenas += dt.Tables[0].Rows[u][0].ToString() + ",";
+                    
                     }
-                    cenas += "]).\n";
+                }
+                if (valida == 1)
+                {
+                    cenas += nome + " ";
                 }
                 
-                   
             }
-                // Write the string to a file.
-            
-            
             return cenas;
         }
 

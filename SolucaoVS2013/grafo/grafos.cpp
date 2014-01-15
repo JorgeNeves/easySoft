@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 
-#define __GRAFO__FILE__ "exemplo.grafo"
+#define __GRAFO__FILE__ "grafo_normal.grafo"
 
 No nos[_MAX_NOS_GRAFO];
 Arco arcos[_MAX_ARCOS_GRAFO];
@@ -116,5 +116,35 @@ void leGrafo(){
 		for(int j=0; j<numArcos; j++)
 			if ((arcos[j].noi == i || arcos[j].nof == i) && nos[i].largura < arcos[j].largura)
 				nos[i].largura = arcos[j].largura;
-	}		
+	}
+	distribuiNos(0, 0, numNos, 0);
+}
+
+void distribuiNos(float x0, float y0, int size, int actual){
+	int /*nivel = nos[actual].z,*/ num = 0, r = 15;
+	int aux[_MAX_NOS_GRAFO];
+	int auxCounter=0;
+	for (int i = 0; i < size; i++){
+		if (arcos[i].noi == actual || arcos[i].nof == actual){
+			if (arcos[i].noi != actual){
+				aux[auxCounter] = arcos[i].noi;
+			}
+			else {
+				aux[auxCounter] = arcos[i].nof;
+			}
+			num++;
+			auxCounter++;
+		}
+	}
+	double x, y;
+	float t = 0.0;
+	for (int i = 0; i < auxCounter; i++){
+			nos[aux[i]].z = 0;
+			nos[aux[i]].x = r * cos(t) + x0;
+			nos[aux[i]].y = r * sin(t) + y0;
+			t += 2.0*M_PI / num;
+	}
+	if (actual < size){
+		distribuiNos(nos[actual + 1].x, nos[actual + 1].y, size, actual + 1);
+	}
 }

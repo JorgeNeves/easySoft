@@ -1,3 +1,5 @@
+#define _USE_MATH_DEFINES
+
 #ifndef _GRAFO_INCLUDE
 #define _GRAFO_INCLUDE
 
@@ -8,6 +10,8 @@
 #define ESTE_OESTE	1
 #define PLANO		2
 
+#include <math.h>
+
 typedef struct No{
 	float x,y,z,largura;
 }No;
@@ -17,9 +21,9 @@ typedef struct Arco{
 	float peso,largura;
 }Arco;
 
-extern No nos[];
-extern Arco arcos[];
-extern int numNos, numArcos;
+ extern No nos[];
+ extern Arco arcos[];
+ extern int numNos, numArcos;
 
 void addNo(No);
 void deleteNo(int);
@@ -35,5 +39,6 @@ Arco criaArco(int, int, float, float);
 
 void gravaGrafo();
 void leGrafo();
+void distribuiNos(float x0, float y0, int size, int actual);
 
 #endif

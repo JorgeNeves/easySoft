@@ -23,7 +23,7 @@
         }
        #inputSearch
        {
-              width:350px;
+              width:581px;
               border:solid 1px #000;
               padding:3px;
        }
@@ -48,7 +48,7 @@
        }
        .display_box
        {
-              padding:4px; border-top:solid 1px #dedede;
+              padding:px; border-top:solid 1px #dedede;
               font-size:12px; height:50px;
        }
        .display_box:hover
@@ -201,7 +201,12 @@
                     <asp:Label ID="Label13" runat="server" Text="Amigos que deves conhecer"></asp:Label>
                 </h6>
                 <p>
-                    &nbsp;</p>
+                    <asp:GridView ID="GridView1" runat="server">
+                        <Columns>
+                            <asp:ButtonField ButtonType="Button" Text="Button" />
+                        </Columns>
+                    </asp:GridView>
+                </p>
             </td>
         </tr>
         <tr>

@@ -31,10 +31,10 @@
     <asp:Label ID="Label1" runat="server" CssClass="message-info" Text="Sugestão de Amigos"></asp:Label>
     <br />
     <br />
-    <asp:GridView ID="GridView2" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" HorizontalAlign="Center" ShowHeader="False" Width="268px">
+    <asp:GridView ID="GridView2" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" HorizontalAlign="Center" ShowHeader="False" Width="268px" OnRowCommand="GridView2_RowCommand">
         <AlternatingRowStyle BackColor="White" />
         <Columns>
-            <asp:ButtonField ButtonType="Button" Text="Ver Perfil" />
+            <asp:ButtonField ButtonType="Button" Text="Ver Perfil" CommandName="butao" />
         </Columns>
         <EditRowStyle BackColor="#2461BF" />
         <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
