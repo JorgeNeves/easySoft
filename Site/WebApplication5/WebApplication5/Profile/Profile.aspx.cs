@@ -6,10 +6,24 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using WebApplication5.TabelModel.BLL;
+using System.Net;
 namespace WebApplication5.Profile
 {
     public partial class Profile : System.Web.UI.Page
     {
+        protected DataTable DynamicColumns()
+        {
+            // Define the new datatable
+            DataTable dt = new DataTable();
+
+            // Define 1 columns
+
+            DataColumn dc;
+            dc = new DataColumn("Name");
+            dt.Columns.Add(dc);
+
+            return dt;
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -50,6 +64,8 @@ namespace WebApplication5.Profile
 
                 preencher_usertags();
                 preencher_relations_tags();
+
+                
             
         }
         protected void preencher_relations_tags()
