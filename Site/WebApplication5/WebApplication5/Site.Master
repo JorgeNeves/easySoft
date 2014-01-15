@@ -4,7 +4,7 @@
 <html lang="en">
 <head runat="server">
     <meta charset="utf-8" />
-    <title><%: Page.Title %>- My ASP.NET Application</title>
+    <title><%: Page.Title %>-Easysoft-Social Network</title>
     <asp:PlaceHolder runat="server">     
           <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>  
@@ -48,8 +48,8 @@
                     <asp:LoginView id="LoginView" runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul>
-                                <li><a id="registerLink" runat="server" href="~/Account/Register">Register</a></li>
-                                <li><a id="loginLink" runat="server" href="~/Account/Login">Log in</a></li>
+                                <li><a id="registerLink" runat="server" href="~/Account/Register.aspx">Register</a></li>
+                                <li><a id="loginLink" runat="server" href="~/Account/Login.aspx">Log in</a></li>
                             </ul>
                         </AnonymousTemplate>
                         <LoggedInTemplate>
@@ -60,7 +60,7 @@
                             </p>
                         </LoggedInTemplate>
                     </asp:LoginView>
-                    <asp:LinkButton ID="LogOff" runat="server" OnClick="LogOff_Click" Visible="False">LogOff</asp:LinkButton>
+                    <asp:LinkButton ID="LogOff" runat="server" OnClick="LogOff_Click" Visible="False">Log out</asp:LinkButton>
                 </section>
                 <nav>
                     <ul id="menu">

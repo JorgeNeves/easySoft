@@ -22,9 +22,7 @@ namespace WebApplication5
 
         void Application_End(object sender, EventArgs e)
         {
-            Application.Lock();
-            Application["UsersOnline"] = (int)Application["UsersOnline"] - 1;
-            Application.UnLock();
+            
 
         }
         void Application_Error(object sender, EventArgs e)

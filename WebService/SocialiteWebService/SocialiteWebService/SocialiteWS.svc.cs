@@ -10,6 +10,9 @@ using System.Configuration;
 using SocialiteWebService.TabelModel.BLL;
 using System.Data;
 using System.Collections;
+using System.IO;
+using System.Security;
+using System.Security.Permissions;
 
 namespace SocialiteWebService
 {
@@ -188,7 +191,7 @@ namespace SocialiteWebService
             ArrayList ds= Services.suggestedFriends(userid);
             string cenas="";
             for(int i=0;i<ds.Count;i++){
-                object o =ds[i];
+                object o = ds[i];
                 string nome=TabelModel.BLL.Users.getUserNick(Convert.ToInt32(o.ToString()));
                 DataSet dt = TabelModel.BLL.Users.getUserTags(Convert.ToInt32(o.ToString()));
                 cenas += "utilizador(" + nome + ",L[";
@@ -201,16 +204,13 @@ namespace SocialiteWebService
                     {
                         cenas += dt.Tables[0].Rows[u][0].ToString() + ",";
                     }
-                    
+                    cenas += "]).\n";
                 }
-                cenas+="]).\n";
+                
                    
             }
                 // Write the string to a file.
-                System.IO.StreamWriter file = new System.IO.StreamWriter("~/users.pl");
-                file.WriteLine(cenas);
-
-                file.Close();
+            
             
             return cenas;
         }

@@ -13,26 +13,43 @@ namespace WebApplication5.Profile
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack) { 
-            DataSet dt = Users.getUser(Session["username"].ToString());
+           if (Session["userID"] == null) { Response.Redirect("~/Account/Login.aspx"); }
+            
+                if (!IsPostBack)
+                {
+                    DataSet dt = Users.getUser(Session["username"].ToString());
 
-            string Mail = dt.Tables[0].Rows[0][3].ToString();
-            string FirstName = dt.Tables[0].Rows[0][4].ToString();
-            string LastName = dt.Tables[0].Rows[0][5].ToString();
-            string date = dt.Tables[0].Rows[0][6].ToString();
-            string Pais = dt.Tables[0].Rows[0][7].ToString();
-            int EstadoHumor = int.Parse(dt.Tables[0].Rows[0][8].ToString());
-            string avatar = dt.Tables[0].Rows[0][9].ToString();
-            string facebook = dt.Tables[0].Rows[0][10].ToString();
-            string LinkedIn = dt.Tables[0].Rows[0][11].ToString();
+                    string Mail = dt.Tables[0].Rows[0][3].ToString();
+                    string FirstName = dt.Tables[0].Rows[0][4].ToString();
+                    string LastName = dt.Tables[0].Rows[0][5].ToString();
+                    string date = dt.Tables[0].Rows[0][6].ToString();
+                    string Pais = dt.Tables[0].Rows[0][7].ToString();
+                    int EstadoHumor = int.Parse(dt.Tables[0].Rows[0][8].ToString());
+                    string avatar = dt.Tables[0].Rows[0][9].ToString();
+                    string facebook = dt.Tables[0].Rows[0][10].ToString();
+                    string LinkedIn = dt.Tables[0].Rows[0][11].ToString();
+                    txttagoriginal.Visible = false;
+                    lbltagoriginal.Visible = false;
+                    btnokoriginal.Visible = false;
 
-            TextBox1.Text = FirstName;
-            TextBox2.Text = LastName;
-            TextBox3.Text = Pais;
-            TextBox4.Text = Mail;
-            TextBox5.Text = facebook;
-            TextBox6.Text = LinkedIn;
-            }
+                    TextBox1.Text = FirstName;
+                    TextBox2.Text = LastName;
+                    TextBox3.Text = Pais;
+                    TextBox4.Text = Mail;
+                    TextBox5.Text = facebook;
+                    TextBox6.Text = LinkedIn;
+                    preencher_gridtags();
+                }
+            
+            
+        }
+
+        private void preencher_gridtags()
+        {
+            DataSet usertags = Users.getUserTags(1);
+            
+            GridView1.DataSource = usertags;
+            GridView1.DataBind();
         }
 
         protected void Button2_Click(object sender, EventArgs e)
@@ -41,7 +58,10 @@ namespace WebApplication5.Profile
             {
                 Users.updateUserPass(Session["username"].ToString(), TextBox8.Text);
                 Label1.Visible = true;
-                
+                txttagoriginal.Visible = true;
+                lbltagoriginal.Visible = true;
+                btnokoriginal.Visible = true;
+
                
 
             }
@@ -82,5 +102,68 @@ namespace WebApplication5.Profile
                 }
             }
         }
+
+        protected void GridView1_SelectedIndexChanged(object sender, GridViewDeleteEventArgs e)
+        {
+            GridViewRow row=GridView1.Rows[e.RowIndex];
+            string deletingtag = row.Cells[1].Text;
+            int idtag = Users.getTAGID(deletingtag);
+            int iduser=Users.getUserID((Session["username"]).ToString());
+            Users.deleteTAGfromUSER(iduser,idtag);
+            preencher_gridtags();
+        }
+
+        protected void btnok_Click(object sender, EventArgs e)
+        {
+            int iduser = Users.getUserID((Session["username"]).ToString());
+            int idtag=Users.getTAGID(lblnewtag.Text);
+            if (idtag == -1)
+            {
+                btnok.Enabled = false;
+                lblnewtag.Enabled = false;
+                lbltagexistence.Visible = true;
+                //btnok.Visible = true;
+                //lblnewtag.Visible = true;
+                btnokoriginal.Visible = true;
+                txttagoriginal.Visible = true;
+                lbltagoriginal.Visible = true;
+            }
+            else
+            {
+                Users.addTAGUSER(idtag, iduser);
+
+            }
+
+
+        }
+
+        protected void btnokoriginal_Click(object sender, EventArgs e)
+        {
+            int iduser = Users.getUserID((Session["username"]).ToString());
+            string novapalavra=lblnewtag.Text;
+            string palavraoriginal = txttagoriginal.Text;
+            Users.addTAGORIGINAL(palavraoriginal,novapalavra);
+            int idtag = Users.getTAGID(novapalavra);
+            preencher_gridtags();
+            if (idtag == -1)
+            {
+                //A implementar
+            }
+            else
+            {
+                Users.addTAGUSER(idtag, iduser);
+                txttagoriginal.Visible = false;
+                lbltagoriginal.Visible = false;
+                btnokoriginal.Visible = false;
+                lblnewtag.Text = "";
+                lbltagoriginal.Text = "";
+                lbltagexistence.Visible = false;
+                lblnewtag.Enabled = true;
+                btnok.Enabled = true;
+                preencher_gridtags();
+            }
+        }
+
+        
     }
 }

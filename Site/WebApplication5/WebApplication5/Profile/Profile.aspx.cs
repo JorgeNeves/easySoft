@@ -12,41 +12,45 @@ namespace WebApplication5.Profile
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            DataSet dt = Users.getUser(Session["username"].ToString());
 
-            string Mail = dt.Tables[0].Rows[0][3].ToString();
-            string FirstName = dt.Tables[0].Rows[0][4].ToString();
-            string LastName = dt.Tables[0].Rows[0][5].ToString();
-            string date = dt.Tables[0].Rows[0][6].ToString();
-            string Pais = dt.Tables[0].Rows[0][7].ToString();
-            int EstadoHumor = int.Parse(dt.Tables[0].Rows[0][8].ToString());
-            string avatar = dt.Tables[0].Rows[0][9].ToString();
-            string facebook = dt.Tables[0].Rows[0][10].ToString();
-            string LinkedIn = dt.Tables[0].Rows[0][11].ToString();
+            if (Session["userID"] == null) { Response.Redirect("~/Account/Login.aspx"); }
 
-            Label2.Text = Session["username"].ToString();
-            Label1.Text = FirstName + " " + LastName;
-            Label3.Text = date;
-            Label4.Text = Users.getEstado(EstadoHumor);
-            Label5.Text = Mail;
-            Label6.Text = facebook;
-            Label7.Text = LinkedIn;
-            Label8.Text = Pais;
-            Image1.ImageUrl = avatar;
-            int id=Users.getUserID(Session["username"].ToString());
-            DataSet data=Relationships.checkPedidos(id);
-            if (data != null)
-            {
-                Button2.Text="Pedidos Pendentes ("+data.Tables[0].Rows.Count+")";
-            }
-            DataSet ds=Relationships.checkAmigos(Convert.ToInt32(Session["userID"].ToString()));
-            if (ds != null)
-            {
-                Label10.Text =""+ ds.Tables[0].Rows.Count;
-            }
+                DataSet dt = Users.getUser(Session["username"].ToString());
 
-            preencher_usertags();
-            preencher_relations_tags();
+                string Mail = dt.Tables[0].Rows[0][3].ToString();
+                string FirstName = dt.Tables[0].Rows[0][4].ToString();
+                string LastName = dt.Tables[0].Rows[0][5].ToString();
+                string date = dt.Tables[0].Rows[0][6].ToString();
+                string Pais = dt.Tables[0].Rows[0][7].ToString();
+                int EstadoHumor = int.Parse(dt.Tables[0].Rows[0][8].ToString());
+                string avatar = dt.Tables[0].Rows[0][9].ToString();
+                string facebook = dt.Tables[0].Rows[0][10].ToString();
+                string LinkedIn = dt.Tables[0].Rows[0][11].ToString();
+
+                Label2.Text = Session["username"].ToString();
+                Label1.Text = FirstName + " " + LastName;
+                Label3.Text = date;
+                Label4.Text = Users.getEstado(EstadoHumor);
+                Label5.Text = Mail;
+                Label6.Text = facebook;
+                Label7.Text = LinkedIn;
+                Label8.Text = Pais;
+                Image1.ImageUrl = avatar;
+                int id = Users.getUserID(Session["username"].ToString());
+                DataSet data = Relationships.checkPedidos(id);
+                if (data != null)
+                {
+                    Button2.Text = "Pedidos Pendentes (" + data.Tables[0].Rows.Count + ")";
+                }
+                DataSet ds = Relationships.checkAmigos(Convert.ToInt32(Session["userID"].ToString()));
+                if (ds != null)
+                {
+                    Label10.Text = "" + ds.Tables[0].Rows.Count;
+                }
+
+                preencher_usertags();
+                preencher_relations_tags();
+            
         }
         protected void preencher_relations_tags()
         {
