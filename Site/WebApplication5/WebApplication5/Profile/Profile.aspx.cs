@@ -64,8 +64,11 @@ namespace WebApplication5.Profile
 
                 preencher_usertags();
                 preencher_relations_tags();
+                WebClient wc = new WebClient();
+                string result = wc.DownloadString("http://localhost:7077/SocialiteWS.svc/friends?id=" + Session["userID"].ToString());
+                result = result.Replace("\"", "");
 
-                
+                amigosugeridos.Text = result;
             
         }
         protected void preencher_relations_tags()

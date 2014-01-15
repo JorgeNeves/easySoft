@@ -201,11 +201,7 @@
                     <asp:Label ID="Label13" runat="server" Text="Amigos que deves conhecer"></asp:Label>
                 </h6>
                 <p>
-                    <asp:GridView ID="GridView1" runat="server">
-                        <Columns>
-                            <asp:ButtonField ButtonType="Button" Text="Button" />
-                        </Columns>
-                    </asp:GridView>
+                    <asp:Label ID="amigosugeridos" runat="server" Text="Label"></asp:Label>
                 </p>
             </td>
         </tr>
