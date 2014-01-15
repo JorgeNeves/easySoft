@@ -1,0 +1,39 @@
+﻿Build started 15/01/2014 12:20:13.
+     1>Project "C:\Users\Joao\Documents\easySoft\SolucaoVS2013\grafo\Lapr5.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\Joao\Documents\easySoft\SolucaoVS2013\grafo\packages\cpprestsdk.1.4.0\build\native\../../build/native/include/ /IC:\Users\Joao\Documents\easySoft\SolucaoVS2013\grafo\\libs\freeglut\include /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D HAS_CPPRESTSDK /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt grafos.cpp lapr5.cpp
+         grafos.cpp
+     1>grafos.cpp(145): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>grafos.cpp(139): warning C4101: 'y' : unreferenced local variable
+     1>grafos.cpp(139): warning C4101: 'x' : unreferenced local variable
+         lapr5.cpp
+     1>c:\users\joao\documents\easysoft\solucaovs2013\grafo\lapr5.h(22): warning C4305: 'initializing' : truncation from 'double' to 'const GLfloat'
+     1>c:\users\joao\documents\easysoft\solucaovs2013\grafo\lapr5.h(30): warning C4305: 'initializing' : truncation from 'double' to 'const GLfloat'
+     1>c:\users\joao\documents\easysoft\solucaovs2013\grafo\lapr5.h(38): warning C4305: 'initializing' : truncation from 'double' to 'const GLfloat'
+     1>c:\users\joao\documents\easysoft\solucaovs2013\grafo\lapr5.h(46): warning C4305: 'initializing' : truncation from 'double' to 'const GLfloat'
+     1>lapr5.cpp(24): warning C4305: '=' : truncation from 'double' to 'GLfloat'
+     1>lapr5.cpp(108): warning C4305: 'initializing' : truncation from 'double' to 'const GLfloat'
+     1>lapr5.cpp(147): warning C4244: 'argument' : conversion from 'int' to 'GLfloat', possible loss of data
+     1>lapr5.cpp(148): warning C4244: 'argument' : conversion from 'int' to 'GLfloat', possible loss of data
+     1>lapr5.cpp(149): warning C4244: 'argument' : conversion from 'int' to 'GLfloat', possible loss of data
+     1>lapr5.cpp(150): warning C4244: 'argument' : conversion from 'int' to 'GLfloat', possible loss of data
+     1>lapr5.cpp(161): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>lapr5.cpp(185): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>lapr5.cpp(186): warning C4244: 'argument' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>lapr5.cpp(197): warning C4305: 'argument' : truncation from 'double' to 'GLfloat'
+     1>lapr5.cpp(505): warning C4244: '-=' : conversion from 'double' to 'GLfloat', possible loss of data
+     1>lapr5.cpp(654): warning C4244: 'initializing' : conversion from 'GLdouble' to 'GLint', possible loss of data
+     1>lapr5.cpp(655): warning C4244: 'initializing' : conversion from 'GLdouble' to 'GLint', possible loss of data
+     1>lapr5.cpp(656): warning C4244: 'initializing' : conversion from 'GLdouble' to 'GLint', possible loss of data
+     1>lapr5.cpp(657): warning C4244: 'argument' : conversion from 'GLint' to 'GLfloat', possible loss of data
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Joao\Documents\easySoft\SolucaoVS2013\grafo\Release\Lapr5.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\Joao\Documents\easySoft\SolucaoVS2013\grafo\\libs\freeglut\lib C:\Users\Joao\Documents\easySoft\SolucaoVS2013\grafo\packages\cpprestsdk.1.4.0\build\native\../../build/native/lib/Win32/v120/Release/Desktop/cpprest120_1_4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Joao\Documents\easySoft\SolucaoVS2013\grafo\Release\Lapr5.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Joao\Documents\easySoft\SolucaoVS2013\grafo\Release\Lapr5.lib" /MACHINE:X86 /SAFESEH Release\grafos.obj
+         Release\lapr5.obj
+         Generating code
+         Finished generating code
+         Lapr5.vcxproj -> C:\Users\Joao\Documents\easySoft\SolucaoVS2013\grafo\Release\Lapr5.exe
+     1>Done Building Project "C:\Users\Joao\Documents\easySoft\SolucaoVS2013\grafo\Lapr5.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:07.61
