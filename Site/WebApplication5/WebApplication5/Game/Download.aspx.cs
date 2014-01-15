@@ -28,8 +28,8 @@ namespace WebApplication5.Game
 
             Response.Clear();
             Response.ContentType = "application/octet-stream";
-            Response.AddHeader("Content-Disposition", "attachment; filename=ola.txt");
-            Response.WriteFile(Server.MapPath("ola.txt"));
+            Response.AddHeader("Content-Disposition", "attachment; filename=Jogo.rar");
+            Response.WriteFile(Server.MapPath("Jogo.rar"));
             WebApplication5.TabelModel.BLL.Services.logDownload(1);
             escreve();
             Response.End();
