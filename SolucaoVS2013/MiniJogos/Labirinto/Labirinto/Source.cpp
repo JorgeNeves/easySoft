@@ -693,7 +693,7 @@ void Key(unsigned char key, int x, int y)
 {
 	switch (key) {
 	case 27:
-		exit(1);
+		exit(0);
 		// ... accoes sobre outras teclas ... 
 
 	case 'h':
