@@ -28,5 +28,26 @@ namespace WebApplication5
         {
             Response.Redirect("~/Game/Download.aspx");
         }
+
+        protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string pt = RadioButtonList1.SelectedValue;
+            
+
+            if (pt == "Portuguese")
+            {
+                Application["Linguagem"] = "PT";
+            }
+            else
+            {
+                Application["Linguagem"] = "ENG";
+            }
+            var master = (SiteMaster)Page.Master;
+            Label mpLabel = (Label)master.FindControl("Linguagem");
+            mpLabel.Text = Application["Linguagem"].ToString();
+        }
+        
+
+        
     }
 }

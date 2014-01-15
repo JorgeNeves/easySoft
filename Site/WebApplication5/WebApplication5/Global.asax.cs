@@ -18,6 +18,7 @@ namespace WebApplication5
             AuthConfig.RegisterOpenAuth();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             Application["UsersOnline"] = 0;
+            Application["Linguagem"] = "PT";
         }
 
         void Application_End(object sender, EventArgs e)

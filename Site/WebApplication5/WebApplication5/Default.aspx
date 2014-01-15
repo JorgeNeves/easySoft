@@ -5,10 +5,15 @@
         <div class="content-wrapper">
             <hgroup class="title">
                 <h1><%: Title %>.</h1>
-                <h2>EasySoft -&nbsp; Social Network</h2>
+                <h2>EasySoft -&nbsp; Social Network<br />
+                    <br />
+                    <br />
+                <asp:RadioButtonList ID="RadioButtonList1" runat="server" AutoPostBack="True" Height="0px" OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged" Width="0px">
+                    <asp:ListItem>Portuguese</asp:ListItem>
+                    <asp:ListItem>English</asp:ListItem>
+                </asp:RadioButtonList>
+                </h2>
             </hgroup>
-            <p>
-                JUNTA-TE A NÓS!</p>
         </div>
     </section>
 </asp:Content>
